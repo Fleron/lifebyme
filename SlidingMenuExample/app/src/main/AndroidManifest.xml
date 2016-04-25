@@ -11,13 +11,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logga1"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="SlidingMenuExample">
+            android:label="Life By Me">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

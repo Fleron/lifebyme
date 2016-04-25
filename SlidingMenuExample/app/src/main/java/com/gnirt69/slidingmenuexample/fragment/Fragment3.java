@@ -126,7 +126,7 @@ public class Fragment3 extends Fragment implements OnTalkToDBFinish {
 
         graph.getLegendRenderer().setVisible(true);
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        graph.setTitle("En graf");
+        graph.setTitle("Activity");
         graph.getGridLabelRenderer().setNumHorizontalLabels(6);
         graph.getGridLabelRenderer().setNumVerticalLabels(6);
         graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.rgb(0,153,51));
