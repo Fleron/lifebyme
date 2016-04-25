@@ -49,11 +49,11 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private String email;
+    private String username;
     private String password;
 
     @Override
@@ -61,7 +61,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mUsernameView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -104,11 +104,11 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        email = mEmailView.getText().toString();
+        username = mUsernameView.getText().toString();
         password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -122,13 +122,13 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        } else if (!isEmailValid(username)) {
+            mUsernameView.setError(getString(R.string.error_invalid_email));
+            focusView = mUsernameView;
             cancel = true;
         }
 
@@ -143,7 +143,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
             //start login task.
             talkToDBTask task = new talkToDBTask(this);
-            task.setUsername(email);
+            task.setUsername(username);
             task.setPwd(password);
             task.setRequestType(1);
             task.execute();
@@ -152,9 +152,9 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 
-    private boolean isEmailValid(String email) {
+    private boolean isEmailValid(String username) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -238,7 +238,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        mUsernameView.setAdapter(adapter);
     }
 
     @Override
@@ -246,9 +246,9 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         mAuthTask = null;
         showProgress(false);
         Intent r = new Intent(LoginActivity.this, MainActivity.class);
-        r.putExtra("username", email);
+        r.putExtra("username", username);
         r.putExtra("password", password);
-        System.out.println(email);
+        System.out.println(username);
         System.out.println(password);
         System.out.println("from login");
         startActivity(r);

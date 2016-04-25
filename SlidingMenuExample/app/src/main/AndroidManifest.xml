@@ -23,6 +23,7 @@
         </activity>
         <activity
             android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:label="Life By Me">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
