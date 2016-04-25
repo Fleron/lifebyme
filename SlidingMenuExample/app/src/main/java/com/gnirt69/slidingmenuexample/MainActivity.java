@@ -3,8 +3,10 @@ package com.gnirt69.slidingmenuexample;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -38,6 +40,7 @@ import java.util.List;
  */
 public class MainActivity extends ActionBarActivity implements SensorEventListener{
 
+    receiver receiver;
     private TextView textView;
     private SensorManager mSensorManager;
     private Sensor mStepCounterSensor;
@@ -60,6 +63,11 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         password = intent.getStringExtra("password");
+        receiver = new receiver();
+        IntentFilter intentFilter = new IntentFilter();
+        registerReceiver(receiver,intentFilter);
+        Intent intent2 = new Intent(MainActivity.this,stepCounterService.class);
+        startService(intent2);
 
         //init stepCounter
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -191,6 +199,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         if(null!=fragment) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
+            System.out.println(fragmenttag);
             transaction.replace(R.id.main_content, fragment,fragmenttag);
             transaction.addToBackStack(null);
             transaction.commit();
@@ -216,17 +225,20 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         Sensor sensor = event.sensor;
         float[] values = event.values;
         int value = -1;
-        System.out.println("gick in i sensor");
+        //System.out.println("gick in i sensor");
         if (values.length > 0) {
             value = (int) values[0];
         }
 
         if (sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
 
-            System.out.println("Step Counter Detected : " + value);
+            //System.out.println("Step Counter Detected : " + value);
+            //Fragment fragment = getFragmentManager().findFragmentByTag("fragment1");
+            //TextView view = (TextView)fragment.getView().findViewById(R.id.textViewStep);
+            //view.setText("Step Counter Detected : " + value);
         } else if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             // For test only. Only allowed value is 1.0 i.e. for step taken
-            System.out.println("Step Detector Detected : " + value);
+           // System.out.println("Step Detector Detected : " + value);
         }
     }
 
@@ -247,9 +259,22 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                 SensorManager.SENSOR_DELAY_FASTEST);
 
     }
+    @Override
     protected void onStop() {
+        unregisterReceiver(receiver);
         super.onStop();
         mSensorManager.unregisterListener(this, mStepCounterSensor);
         mSensorManager.unregisterListener(this, mStepDetectorSensor);
+    }
+    private class receiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int int_value = intent.getIntExtra("step",0);
+            String value = int_value +"";
+            Fragment fragment = getFragmentManager().findFragmentByTag("fragment1");
+            TextView view = (TextView)fragment.getView().findViewById(R.id.textViewStep);
+            view.setText("Step Counter Detected : " + value);
+        }
     }
 }
