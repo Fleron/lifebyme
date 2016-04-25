@@ -3,7 +3,12 @@ package com.gnirt69.slidingmenuexample;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -14,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gnirt69.slidingmenuexample.adapter.SlidingMenuAdapter;
@@ -30,7 +36,12 @@ import java.util.List;
 /**
  * Created by NgocTri on 10/18/2015.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements SensorEventListener{
+
+    private TextView textView;
+    private SensorManager mSensorManager;
+    private Sensor mStepCounterSensor;
+    private Sensor mStepDetectorSensor;
 
     private List<ItemSlideMenu> listSliding;
     private SlidingMenuAdapter adapter;
@@ -49,6 +60,13 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         password = intent.getStringExtra("password");
+
+        //init stepCounter
+        mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        mStepCounterSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        mStepDetectorSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+
+
         //Init component
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -67,7 +85,8 @@ public class MainActivity extends ActionBarActivity {
         System.out.println(password);
         System.out.println("from main");
 
-
+        //textView.findViewById(R.id.textViewStep);
+        //textView = (TextView)findViewById(R.id.textViewStep);
         //Display icon to open/ close sliding list
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -140,32 +159,39 @@ public class MainActivity extends ActionBarActivity {
 
     private void replaceFragment(int pos) {
         Fragment fragment = null;
+        String fragmenttag = "fragment";
         switch (pos) {
             case 0:
                 fragment = new Fragment1();
+                fragmenttag += "1";
                 break;
             case 1:
                 fragment = new Fragment2();
+                fragmenttag += "2";
                 break;
             case 2:
                 fragment = new Fragment3();
+                fragmenttag += "3";
                 break;
             case 3:
                 fragment = new Fragment4();
+                fragmenttag += "4";
                 break;
             case 4:
                 fragment = new Fragment5();
+                fragmenttag += "5";
                 break;
 
             default:
                 fragment = new Fragment1();
+                fragmenttag += "1";
                 break;
         }
 
         if(null!=fragment) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.main_content, fragment);
+            transaction.replace(R.id.main_content, fragment,fragmenttag);
             transaction.addToBackStack(null);
             transaction.commit();
         }
@@ -183,5 +209,47 @@ public class MainActivity extends ActionBarActivity {
     }
     public String getPassword(){
         return password;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Sensor sensor = event.sensor;
+        float[] values = event.values;
+        int value = -1;
+        System.out.println("gick in i sensor");
+        if (values.length > 0) {
+            value = (int) values[0];
+        }
+
+        if (sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
+
+            System.out.println("Step Counter Detected : " + value);
+        } else if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
+            // For test only. Only allowed value is 1.0 i.e. for step taken
+            System.out.println("Step Detector Detected : " + value);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    protected void onResume() {
+
+        super.onResume();
+
+        mSensorManager.registerListener(this, mStepCounterSensor,
+
+                SensorManager.SENSOR_DELAY_FASTEST);
+        mSensorManager.registerListener(this, mStepDetectorSensor,
+
+                SensorManager.SENSOR_DELAY_FASTEST);
+
+    }
+    protected void onStop() {
+        super.onStop();
+        mSensorManager.unregisterListener(this, mStepCounterSensor);
+        mSensorManager.unregisterListener(this, mStepDetectorSensor);
     }
 }
