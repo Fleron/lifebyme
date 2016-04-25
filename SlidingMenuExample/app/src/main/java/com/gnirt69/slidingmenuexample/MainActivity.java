@@ -72,11 +72,11 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         listSliding = new ArrayList<>();
         //Add item for sliding list
-        listSliding.add(new ItemSlideMenu(R.drawable.home, "Start"));
-        listSliding.add(new ItemSlideMenu(R.drawable.social, "My profile"));
-        listSliding.add(new ItemSlideMenu(R.drawable.arrow, "Statistics"));
-        listSliding.add(new ItemSlideMenu(R.drawable.settings, "Settings"));
-        listSliding.add(new ItemSlideMenu(R.drawable.aboutus, "About"));
+        listSliding.add(new ItemSlideMenu(R.drawable.home3, "Start"));
+        listSliding.add(new ItemSlideMenu(R.drawable.social2, "My profile"));
+        listSliding.add(new ItemSlideMenu(R.drawable.arrow2, "Statistics"));
+        listSliding.add(new ItemSlideMenu(R.drawable.settings2, "Settings"));
+        listSliding.add(new ItemSlideMenu(R.drawable.aboutus2, "About"));
 
         adapter = new SlidingMenuAdapter(this, listSliding);
         listViewSliding.setAdapter(adapter);
