@@ -3,6 +3,7 @@ package com.gnirt69.slidingmenuexample;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -33,7 +34,7 @@ import java.util.List;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<Cursor>,OnTalkToDBFinish {
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -52,6 +53,8 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private String email;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +108,8 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        email = mEmailView.getText().toString();
+        password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -137,8 +140,15 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+
+            //start login task.
+            talkToDBTask task = new talkToDBTask(this);
+            task.setUsername(email);
+            task.setPwd(password);
+            task.setRequestType(1);
+            task.execute();
+            //mAuthTask = new UserLoginTask(email, password);
+            //mAuthTask.execute((Void) null);
         }
     }
 
@@ -229,6 +239,26 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onTaskCompleted() {
+        mAuthTask = null;
+        showProgress(false);
+        Intent r = new Intent(LoginActivity.this, MainActivity.class);
+        r.putExtra("username", email);
+        r.putExtra("password", password);
+        System.out.println(email);
+        System.out.println(password);
+        System.out.println("from login");
+        startActivity(r);
+        finish();
+    }
+
+    @Override
+    public void onTaskFailed() {
+        mPasswordView.setError(getString(R.string.error_incorrect_password));
+        mPasswordView.requestFocus();
     }
 
 

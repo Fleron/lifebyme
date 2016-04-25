@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.gnirt69.slidingmenuexample.LoginActivityHomemade"
     android:background="@drawable/bakgrund">
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
         android:textSize="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_marginBottom="106dp"
+        android:layout_marginBottom="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/editText2"
         android:layout_alignStart="@+id/editText2"
@@ -57,30 +58,29 @@
         android:layout_above="@+id/login"
         android:layout_alignLeft="@+id/editText1"
         android:layout_alignStart="@+id/editText1"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginBottom="30dp" />
 
     <ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:id="@+id/imageView"
         android:src="@drawable/baraloggamartin"
-        android:layout_above="@+id/editText1"
         android:layout_centerHorizontal="true"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:layout_above="@+id/editText1" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ej användare? Registera dig!"
         android:id="@+id/button2"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/login"
-        android:layout_alignStart="@+id/login"
-        android:layout_marginBottom="36dp"
         android:background="@drawable/cornersbutton"
         android:onClick="onButtonClick"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:textSize="10dp" />
+        android:textSize="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/login"
+        android:layout_alignStart="@+id/login" />
 
 </RelativeLayout>
