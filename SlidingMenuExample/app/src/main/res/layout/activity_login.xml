@@ -46,16 +46,18 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="15dp">
+                android:layout_marginRight="60dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="30dp">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:id="@+id/imageView5"
                     android:layout_weight="0.3"
-                    android:src="@drawable/social"/>
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/social2"/>
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -65,8 +67,12 @@
                     android:inputType="textEmailAddress"
                     android:layout_weight="0.7"
                     android:maxLines="1"
+                    android:imeActionId="@+id/password"
                     android:singleLine="true"
-                    android:layout_marginLeft="15dp" />
+                    android:layout_marginLeft="15dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="20dp" />
 
             </LinearLayout>
 
@@ -74,15 +80,17 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp">
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:id="@+id/imageView6"
                     android:layout_weight="0.3"
-                    android:src="@drawable/security"/>
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/lock"/>
 
                 <EditText
                     android:id="@+id/password"
@@ -90,13 +98,16 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/login"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="0.7"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:layout_marginLeft="15dp" />
+                    android:layout_marginLeft="15dp"
+                    android:textSize="20dp" />
 
             </LinearLayout>
 
@@ -110,7 +121,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
-                android:background="#ffffff"
+                android:background="@drawable/mybutton"
                 android:textColor="#157065" />
 
             <Button
@@ -123,7 +134,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:background="#ffffff"
+                android:background="@drawable/mybutton"
                 android:textColor="#157065" />
 
         </LinearLayout>

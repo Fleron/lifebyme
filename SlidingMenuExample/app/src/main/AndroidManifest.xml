@@ -24,7 +24,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="SlidingMenuExample"></activity>
+            android:label="SlidingMenuExample">
+
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:label="Life By Me"
