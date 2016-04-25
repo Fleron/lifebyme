@@ -121,7 +121,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
-                android:background="#ffffff"
+                android:background="@drawable/mybutton"
                 android:textColor="#157065" />
 
             <Button
@@ -134,7 +134,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:background="#ffffff"
+                android:background="@drawable/mybutton"
                 android:textColor="#157065" />
 
         </LinearLayout>
