@@ -3,6 +3,7 @@ package com.gnirt69.slidingmenuexample;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -38,13 +39,16 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     String username;
+    String password;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
+        password = intent.getStringExtra("password");
         //Init component
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -58,6 +62,11 @@ public class MainActivity extends ActionBarActivity {
 
         adapter = new SlidingMenuAdapter(this, listSliding);
         listViewSliding.setAdapter(adapter);
+
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println("from main");
+
 
         //Display icon to open/ close sliding list
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -168,5 +177,11 @@ public class MainActivity extends ActionBarActivity {
             username = test.getText().toString();
             System.out.println(username);
         }
+    }
+    public String getUser(){
+        return username;
+    }
+    public String getPassword(){
+        return password;
     }
 }

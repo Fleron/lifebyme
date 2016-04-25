@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
@@ -40,7 +41,9 @@ public class Fragment3 extends Fragment implements OnTalkToDBFinish {
 
     private void getDBvalues(int request){
         task = new talkToDBTask(this);
+        user = ((MainActivity)getActivity()).getUser();
         task.setUsername(user);
+        pwd = ((MainActivity)getActivity()).getPassword();
         task.setPwd(pwd);
         task.setRequestType(request);
         task.execute();

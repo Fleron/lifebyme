@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 
+import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
@@ -46,7 +47,8 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment2, null);
-
+        username = ((MainActivity)getActivity()).getUser();
+        password = ((MainActivity)getActivity()).getPassword();
         np = (NumberPicker) rootView.findViewById(R.id.numberPicker);
 
         np.setMinValue(0);
