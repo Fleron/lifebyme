@@ -80,7 +80,7 @@ public class Fragment3 extends Fragment implements OnTalkToDBFinish {
         LineGraphSeries<DataPoint> serieslineSleep = receivedDataLine(1);
         LineGraphSeries<DataPoint> serieslineMood = receivedDataLine(3);
 
-        serieslineMood.setColor(Color.rgb(0,153,51));
+        serieslineMood.setColor(Color.parseColor("#CC5920"));
         serieslineSleep.setColor(Color.BLUE);
 
 
@@ -132,7 +132,7 @@ public class Fragment3 extends Fragment implements OnTalkToDBFinish {
         graph.setTitle("Activity");
         graph.getGridLabelRenderer().setNumHorizontalLabels(6);
         graph.getGridLabelRenderer().setNumVerticalLabels(6);
-        graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.rgb(0,153,51));
+        graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.parseColor("#CC5920"));
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLUE);
     }
 
