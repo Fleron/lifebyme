@@ -92,6 +92,14 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    public void onButtonClick(View V){
+
+        if (V.getId() == R.id.sign_up_button) {
+            Intent r = new Intent(LoginActivity.this, CreateUser.class);
+            startActivity(r);
+        }
+    }
+
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
     }
