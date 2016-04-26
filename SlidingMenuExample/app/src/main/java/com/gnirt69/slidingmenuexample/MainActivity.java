@@ -209,13 +209,6 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         }
     }
 
-    public void onButtonClick(View V){
-        if(V.getId() == R.id.button){
-            EditText test = ((EditText) findViewById(R.id.editText));
-            username = test.getText().toString();
-            System.out.println(username);
-        }
-    }
     public String getUser(){
         return username;
     }
