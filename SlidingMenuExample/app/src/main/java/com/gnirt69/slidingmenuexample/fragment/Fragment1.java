@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.R;
 
 public class Fragment1 extends Fragment {
@@ -24,20 +25,20 @@ public class Fragment1 extends Fragment {
     private SensorManager mSensorManager;
     private Sensor mStepCounterSensor;
     private Sensor mStepDetectorSensor;
-
+    private View rootView;
 
     public Fragment1() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment1, container, false);
-
+        rootView = inflater.inflate(R.layout.fragment1, container, false);
+        changeText(MainActivity.steps_taken);
         return rootView;
     }
     public void changeText(String result){
         //this textview should be bound in the fragment onCreate as a member variable
-        TextView text =(TextView)getView().findViewById(R.id.textViewStep);
+        TextView text =(TextView)rootView.findViewById(R.id.textViewStep);
         text.setText(result);
     }
 }

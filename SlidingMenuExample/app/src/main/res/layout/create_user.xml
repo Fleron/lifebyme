@@ -15,7 +15,7 @@
             android:layout_height="620dp"
             android:layout_gravity="top|left"
             android:layout_margin="20dp"
-            android:scrollIndicators="right"
+
             android:nestedScrollingEnabled="false">
 
             <TextView
