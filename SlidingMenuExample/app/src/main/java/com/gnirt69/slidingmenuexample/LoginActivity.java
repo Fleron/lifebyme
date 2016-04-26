@@ -98,6 +98,10 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             Intent r = new Intent(LoginActivity.this, CreateUser.class);
             startActivity(r);
         }
+        else if (V.getId() == R.id.forgot_password) {
+            Intent r = new Intent(LoginActivity.this, ForgotPassword.class);
+            startActivity(r);
+        }
     }
 
     private void populateAutoComplete() {
