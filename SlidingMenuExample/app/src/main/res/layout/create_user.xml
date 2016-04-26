@@ -29,7 +29,11 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
+            android:layout_gravity="top|left"
+            android:layout_margin="20dp"
+            android:nestedScrollingEnabled="false"
             android:layout_height="match_parent">
+
 
             <TextView
                 android:layout_width="wrap_content"

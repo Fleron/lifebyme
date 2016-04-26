@@ -12,6 +12,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -39,13 +40,13 @@ import java.util.List;
  * Created by NgocTri on 10/18/2015.
  */
 public class MainActivity extends ActionBarActivity implements SensorEventListener{
-
+    public static String steps_taken;
     receiver receiver;
     private TextView textView;
     private SensorManager mSensorManager;
     private Sensor mStepCounterSensor;
     private Sensor mStepDetectorSensor;
-
+    public static final String RECEIVE_STEPS = "receive_steps";
     private List<ItemSlideMenu> listSliding;
     private SlidingMenuAdapter adapter;
     private ListView listViewSliding;
@@ -63,11 +64,13 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         password = intent.getStringExtra("password");
+        LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
         receiver = new receiver();
-        IntentFilter intentFilter = new IntentFilter();
-        registerReceiver(receiver,intentFilter);
+        IntentFilter intentFilter = new IntentFilter(RECEIVE_STEPS);
+
         Intent intent2 = new Intent(MainActivity.this,stepCounterService.class);
         startService(intent2);
+        bManager.registerReceiver(receiver,intentFilter);
 
         //init stepCounter
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -260,8 +263,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 
     }
     @Override
-    protected void onStop() {
-        unregisterReceiver(receiver);
+    protected void onStop() throws IllegalArgumentException {
+      //  unregisterReceiver(receiver);
         super.onStop();
         mSensorManager.unregisterListener(this, mStepCounterSensor);
         mSensorManager.unregisterListener(this, mStepDetectorSensor);
@@ -270,11 +273,21 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            int int_value = intent.getIntExtra("step",0);
-            String value = int_value +"";
-            Fragment fragment = getFragmentManager().findFragmentByTag("fragment1");
-            TextView view = (TextView)fragment.getView().findViewById(R.id.textViewStep);
-            view.setText("Step Counter Detected : " + value);
+            String action = intent.getAction();
+            System.out.println("received");
+            if(action.equalsIgnoreCase(RECEIVE_STEPS)){
+                int int_value = intent.getIntExtra("step",0);
+                steps_taken = int_value +"";
+                Fragment fragment = getFragmentManager().findFragmentByTag("fragment1");
+                try {
+                    TextView view = (TextView) fragment.getView().findViewById(R.id.textViewStep);
+                    view.setText("Step Counter Detected : " + steps_taken);
+                }
+                catch(NullPointerException e){
+                    e.getLocalizedMessage();
+                }
+            }
+
         }
     }
 }
