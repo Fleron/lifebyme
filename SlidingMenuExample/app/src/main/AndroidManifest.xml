@@ -42,6 +42,12 @@
             android:label="Life By Me"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
 
+        <activity
+            android:name=".CreateUser"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+
+        </activity>
+
         <service
             android:name=".stepCounterService"
             android:enabled="true"

@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/bakgrund"
-    tools:context="com.gnirt69.slidingmenuexample.LoginActivity">
+    tools:context="com.gnirt69.slidingmenuexample.LoginActivity"
+    android:weightSum="1">
 
     <!-- Login progress -->
     <ProgressBar
@@ -21,26 +22,27 @@
         android:visibility="gone" />
 
 
-
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/imageView4"
-        android:src="@drawable/logga3"
-        android:layout_marginTop="40dp" />
-
     <ScrollView
         android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="416dp"
+        android:layout_height="643dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp">
+        android:layout_marginRight="0dp"
+        android:layout_weight="0.71">
 
         <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/imageView4"
+                android:src="@drawable/logga3"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center_horizontal" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -122,20 +124,36 @@
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
                 android:background="@drawable/mybutton"
-                android:textColor="#157065" />
+                android:textColor="#157065"
+                android:textSize="20dp" />
 
             <Button
                 android:layout_width="match_parent"
-                style="?android:textAppearanceSmall"
+
                 android:layout_height="wrap_content"
-                android:text="@string/action_sign_up"
-                android:id="@+id/sign_up_button"
+                android:text="@string/action_forgot_password"
+                android:id="@+id/forgot_password"
                 android:textStyle="bold"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:background="@drawable/mybutton"
-                android:textColor="#157065" />
+                android:textColor="#ffffff"
+                android:background="@android:color/transparent"
+                android:onClick="onButtonClick" />
+
+            <Button
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:text="@string/action_sign_up"
+                android:id="@+id/sign_up_button"
+                android:textStyle="bold"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:textColor="#fdfdfd"
+                android:background="@android:color/transparent"
+                android:onClick="onButtonClick" />
 
         </LinearLayout>
     </ScrollView>
