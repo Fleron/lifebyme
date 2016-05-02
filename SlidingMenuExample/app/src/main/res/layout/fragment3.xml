@@ -3,19 +3,22 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Statistics"
+        android:text="Calendar"
         android:textSize="30dp"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"/>
-    <com.jjoe64.graphview.GraphView
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:textColor="#ffffff"
+        android:id="@+id/textView5" />
+
+    <CalendarView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/graph"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight ="10dp"
-        android:layout_marginTop="77dp"
-        android:layout_alignParentTop="true"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/calendarView"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp" />
 </LinearLayout>

@@ -3,19 +3,224 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is fragment 1"
-        android:textSize="30dp"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"/>
 
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily activity"
+            android:textSize="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:textColor="#ffffff"
+            android:id="@+id/textView1" />
+    </LinearLayout>
+
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textViewStep"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/scrollView2" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Sleep (h)"
+                    android:id="@+id/textView14"
+                    android:textSize="25dp"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="false"
+                    android:layout_marginStart="50dp" />
+
+                <com.hrules.horizontalnumberpicker.HorizontalNumberPicker
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/numberPicker"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="0dp"
+                    android:layout_alignParentBottom="true" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Work out"
+                    android:id="@+id/textView15"
+                    android:textSize="25dp"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginLeft="50dp" />
+
+                <Switch
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/switch1"
+                    android:checked="false"
+                    android:textOff="No"
+                    android:textOn="Yes"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/textView15"
+                    android:layout_toEndOf="@+id/textView15"
+                    android:layout_marginLeft="53dp"
+                    android:layout_marginStart="53dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Mood"
+                    android:id="@+id/textView16"
+                    android:textSize="25dp"
+                    android:orientation="vertical"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="false"
+                    android:layout_marginStart="49dp" />
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/radioGroup"
+                    android:layout_marginRight="49dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="false"
+                    android:layout_marginEnd="49dp">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Good"
+
+                        android:id="@+id/radioButton"
+                        android:layout_below="@+id/textView2"
+
+                        android:layout_alignLeft="@+id/textView2"
+                        android:checked="false" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OK"
+
+                        android:id="@+id/radioButton2"
+
+                        android:layout_below="@+id/radioButton"
+                        android:layout_alignLeft="@+id/radioButton"
+                        android:layout_alignStart="@+id/radioButton"
+                        android:checked="false" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Not so good"
+
+                        android:id="@+id/radioButton3"
+                        android:layout_below="@+id/radioButton2"
+                        android:layout_alignLeft="@+id/radioButton2"
+                        android:layout_alignStart="@+id/radioButton2"
+                        android:checked="false" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp">
+
+                <Button
+                    android:id="@+id/skip_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skip day"
+                    android:textStyle="bold"
+                    android:background="@drawable/mybutton"
+                    android:textColor="#157065"
+                    android:textSize="20dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/button"
+                    android:layout_toStartOf="@+id/button"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+
+                <Button
+                    android:id="@+id/button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Submit"
+                    android:textStyle="bold"
+                    android:background="@drawable/mybutton"
+                    android:textColor="#157065"
+                    android:textSize="20dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+
+                <Button
+                    android:id="@+id/add_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add variable"
+                    android:textStyle="bold"
+                    android:background="@drawable/mybutton"
+                    android:textColor="#157065"
+                    android:textSize="15dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/button"
+                    android:layout_toEndOf="@+id/button"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

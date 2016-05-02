@@ -1,42 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"
+        android:text="This is fragment 1"
         android:textSize="30dp"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:textColor="#ffffff" />
+        android:layout_margin="20dp"/>
 
-    <Button
-        android:id="@+id/change_password"
-        style="?android:textAppearanceSmall"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Change password"
-        android:textStyle="bold"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:background="@drawable/mybutton"
-        android:textColor="#157065"
-        android:textSize="20dp" />
+        android:text="New Text"
+        android:id="@+id/textViewStep"
+        android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:id="@+id/delete_account"
-        style="?android:textAppearanceSmall"
-        android:layout_width="match_parent"
+    <com.hrules.horizontalnumberpicker.HorizontalNumberPicker
+        android:layout_width="168dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Delete account"
-        android:textStyle="bold"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:background="@drawable/mybutton"
-        android:textColor="#157065"
-        android:textSize="20dp" />
+        android:id="@+id/view"
+        android:layout_gravity="right"
+        android:layout_weight="0.10" />
+
 </LinearLayout>

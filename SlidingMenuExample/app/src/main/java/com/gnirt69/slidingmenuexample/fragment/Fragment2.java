@@ -3,183 +3,147 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Switch;
-import android.widget.TextView;
-
-import android.widget.Toast;
 
 import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
-import java.util.Arrays;
-
-public class Fragment2 extends Fragment implements OnTalkToDBFinish{
-    ViewGroup rootView;
+public class Fragment2 extends Fragment implements OnTalkToDBFinish {
+    String[] keys;
+    String[] values;
+    String user = "";
+    String pwd = "";
     talkToDBTask task;
-    String username ="";
-    String password ="";
-
-    NumberPicker np;
-    ImageButton happyB;
-    ImageButton sadB;
-    int hoursSleep;
-    int mood;
-    int work;
-    private Switch mySwitch;
-    boolean Tswich;
-    Button button;
-    RadioGroup radioGroup;
+    GraphView graph;
+    View rootView;
     public Fragment2() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(R.layout.fragment2, null);
-        username = ((MainActivity)getActivity()).getUser();
-        password = ((MainActivity)getActivity()).getPassword();
-        np = (NumberPicker) rootView.findViewById(R.id.numberPicker);
-
-        np.setMinValue(0);
-        np.setMaxValue(15);
-        np.setWrapSelectorWheel(false);
-        button = (Button) rootView.findViewById(R.id.button);
-        radioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                switch(checkedId) {
-                    case R.id.radioButton:
-                        mood = 5;
-                        // mood = good
-                        break;
-                    case R.id.radioButton2:
-                        mood =0;
-                        // mood = ok
-                        break;
-                    case R.id.radioButton3:
-                        mood = -5;
-                        // mood = not good
-                        break;
-                }
-            }
-        });
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("Timmars sömn: "+hoursSleep);
-                System.out.println("Tränat: "+Tswich);
-                System.out.println("Humör: "+mood);
-                System.out.println(Integer.toString(hoursSleep));
-
-                String[] values = {Integer.toString(hoursSleep),Integer.toString(work),Integer.toString(mood)};
-                String[] keys = {"1","2","3"};
-                System.out.println(Arrays.toString(values));
-                System.out.println(keys);
-                System.out.println(username);
-                System.out.println(password);
-                runDBtask(values,keys,3);
-            }
-        });
-
-        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                hoursSleep = newVal;
-            }
-        });
-
-
-        mySwitch = (Switch) rootView.findViewById(R.id.switch1);
-        mySwitch.setChecked(false);
-        Tswich = false;
-        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(Tswich == false){
-                    Tswich = true;
-                    work = 1;
-                }
-                else{
-                    Tswich = false;
-                    work = 0;
-                }
-            }
-        });
-        mySwitch.setChecked(false);
-        Tswich = false;
+        rootView = inflater.inflate(R.layout.fragment2, container, false);
+        getDBvalues(4);
         return rootView;
     }
-    public void runDBtask(String[]values, String[] keys,int request){
+
+    private void getDBvalues(int request){
         task = new talkToDBTask(this);
-        task.setUsername(username);
-        task.setPwd(password);
-        task.setKeys(keys);
-        task.setValues(values);
+        user = ((MainActivity)getActivity()).getUser();
+        task.setUsername(user);
+        pwd = ((MainActivity)getActivity()).getPassword();
+        task.setPwd(pwd);
         task.setRequestType(request);
         task.execute();
     }
-    void setMessage(String msg){
-        TextView txt=(TextView) rootView.findViewById(R.id.textView);
-        txt.setText(msg);
-    }
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radioButton:
-                if (checked)
-                    //Mood: good
-                    mood = 5;
-                break;
-            case R.id.radioButton2:
-                if (checked)
-                    // Mood: OK
-                    mood = 0;
-                break;
-            case R.id.radioButton3:
-                if (checked)
-                    // Mood: Bad
-                    mood = -5;
-                break;
+    private LineGraphSeries<DataPoint> receivedDataLine(int key){
+        LineGraphSeries<DataPoint> returnDataSeries = new LineGraphSeries<>();
+        int j = 0;
+        for(int i = 0; i < keys.length; i++){
+            int tempKey = Integer.parseInt(keys[i]);
+            int tempValue = Integer.parseInt(values[i]);
+            if(tempKey == key){
+                System.out.println(values[i]);
+                System.out.println("i= "+i);
+                returnDataSeries.appendData(new DataPoint(j,tempValue),false,100);
+                System.out.println("i= "+i);
+                j++;
+            }
         }
+        return returnDataSeries;
     }
-    public void onSwitch(View v){
+    private void runGraph(View rootView){
+        //Här nedanför hämtas värden från föregående aktivitet
+        //Intent i = getIntent();
+
+        //keys = i.getStringArrayExtra("keys");
+        //values = i.getStringArrayExtra("values");
 
 
-        if(Tswich == false){
-            Tswich = true;
-            work = 1;
-        }
-        else{
-            Tswich = false;
-            work = 0;
-        }
+        //Här skapar vi våran graf, lämpligt nog döpt till "graph"
+        graph = (GraphView) rootView.findViewById(R.id.graph);
+        setupGraph(graph);
+
+        //PointsGraphSeries<DataPoint> seriesPoints = receivedDataPoints(1);
+        LineGraphSeries<DataPoint> serieslineSleep = receivedDataLine(1);
+        LineGraphSeries<DataPoint> serieslineMood = receivedDataLine(3);
+
+        serieslineMood.setColor(Color.parseColor("#CC5920"));
+        serieslineSleep.setColor(Color.BLUE);
+
+
+        //Stil på grafen, alltså själva grafen och inte linjerna
+
+        serieslineSleep.setTitle("timmars sömn");
+        serieslineMood.setTitle("humör");
+
+        serieslineMood.setDrawBackground(true);
+        serieslineMood.setBackgroundColor(Color.argb(50,204,255,204));
+        serieslineSleep.setDrawBackground(true);
+        serieslineSleep.setBackgroundColor(Color.argb(70,255,255,255));
+
+
+        graph.addSeries(serieslineSleep);
+        graph.getSecondScale().addSeries(serieslineMood);
     }
+    private PointsGraphSeries<DataPoint> receivedDataPoints(int key){
+        PointsGraphSeries<DataPoint> returnDataSeries = new PointsGraphSeries<>();
+        int j = 0;
+        for(int k = 0; k < keys.length; k++){
+            int tempKey = Integer.parseInt(keys[k]);
+            int tempValue = Integer.parseInt(values[k]);
+            if(tempKey == key){
+                System.out.println(values[k]);
+                returnDataSeries.appendData(new DataPoint(j,tempValue),false,100);
+                System.out.println("k= "+k);
+                j++;
+            }
+        }
+        return returnDataSeries;
+    }
+
+    private void setupGraph(GraphView graph){
+        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
+        graph.getGridLabelRenderer().setGridColor(Color.WHITE);
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("x-axel");
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMaxX(17);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setBackgroundColor(Color.parseColor("#4DFFFFFF"));
+        graph.getSecondScale().setMinY(-5);
+        graph.getSecondScale().setMaxY(5);
+
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph.setTitle("Activity");
+        graph.getGridLabelRenderer().setNumHorizontalLabels(6);
+        graph.getGridLabelRenderer().setNumVerticalLabels(6);
+        graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.parseColor("#CC5920"));
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLUE);
+    }
+
     @Override
     public void onTaskCompleted() {
-        Toast.makeText(getActivity().getApplicationContext(), "Variables added!", Toast.LENGTH_SHORT).show();
+        keys = task.getKeys();
+        values = task.getValues();
+        runGraph(rootView);
     }
 
     @Override
     public void onTaskFailed() {
-        Toast.makeText(getActivity().getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+        System.out.println("fail");
     }
 }

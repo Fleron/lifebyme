@@ -3,33 +3,68 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/logga3"
-        android:id="@+id/imageView7"
-        android:layout_marginTop="50dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="About us"
-        android:id="@+id/textView"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal"
+        android:text="Settings"
+        android:textSize="30dp"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
         android:textColor="#ffffff" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/reminders"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &apos;Content here, content here&apos;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &apos;lorem ipsum&apos; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
-        android:id="@+id/textView4"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
-        android:textColor="#ffffff" />
+        android:layout_marginTop="40dp"
+        android:text="Reminders"
+        android:textStyle="bold"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/mybutton"
+        android:textColor="#157065"
+        android:textSize="20dp" />
 
+    <Button
+        android:id="@+id/change_passcode"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Passcode"
+        android:textStyle="bold"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/mybutton"
+        android:textColor="#157065"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/change_password"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Change password"
+        android:textStyle="bold"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/mybutton"
+        android:textColor="#157065"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/delete_account"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Delete account"
+        android:textStyle="bold"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/mybutton"
+        android:textColor="#157065"
+        android:textSize="20dp" />
 </LinearLayout>

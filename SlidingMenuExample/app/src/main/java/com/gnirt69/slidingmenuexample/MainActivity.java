@@ -20,17 +20,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gnirt69.slidingmenuexample.adapter.SlidingMenuAdapter;
+import com.gnirt69.slidingmenuexample.fragment.Fragment4;
 import com.gnirt69.slidingmenuexample.fragment.Fragment1;
 import com.gnirt69.slidingmenuexample.fragment.Fragment2;
 import com.gnirt69.slidingmenuexample.fragment.Fragment3;
-import com.gnirt69.slidingmenuexample.fragment.Fragment4;
 import com.gnirt69.slidingmenuexample.fragment.Fragment5;
+import com.gnirt69.slidingmenuexample.fragment.Fragment6;
 import com.gnirt69.slidingmenuexample.model.ItemSlideMenu;
 
 import java.util.ArrayList;
@@ -83,9 +82,10 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         listSliding = new ArrayList<>();
         //Add item for sliding list
-        listSliding.add(new ItemSlideMenu(R.drawable.home3, "Start"));
-        listSliding.add(new ItemSlideMenu(R.drawable.social2, "My profile"));
+        listSliding.add(new ItemSlideMenu(R.drawable.home3, "Home"));
         listSliding.add(new ItemSlideMenu(R.drawable.arrow2, "Statistics"));
+        listSliding.add(new ItemSlideMenu(R.drawable.calendar, "Calendar"));
+        listSliding.add(new ItemSlideMenu(R.drawable.social2, "Social"));
         listSliding.add(new ItemSlideMenu(R.drawable.settings2, "Settings"));
         listSliding.add(new ItemSlideMenu(R.drawable.aboutus2, "About"));
 
@@ -192,6 +192,10 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                 fragment = new Fragment5();
                 fragmenttag += "5";
                 break;
+            case 5:
+                fragment = new Fragment6();
+                fragmenttag += "6";
+                break;
 
             default:
                 fragment = new Fragment1();
@@ -229,7 +233,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         if (sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
 
             //System.out.println("Step Counter Detected : " + value);
-            //Fragment fragment = getFragmentManager().findFragmentByTag("fragment1");
+            //Fragment fragment = getFragmentManager().findFragmentByTag("fragment4");
             //TextView view = (TextView)fragment.getView().findViewById(R.id.textViewStep);
             //view.setText("Step Counter Detected : " + value);
         } else if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
@@ -271,7 +275,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             if(action.equalsIgnoreCase(RECEIVE_STEPS)){
                 int int_value = intent.getIntExtra("step",0);
                 steps_taken = int_value +"";
-                Fragment fragment = getFragmentManager().findFragmentByTag("fragment1");
+                Fragment fragment = getFragmentManager().findFragmentByTag("fragment3");
                 try {
                     TextView view = (TextView) fragment.getView().findViewById(R.id.textViewStep);
                     view.setText("Step Counter Detected : " + steps_taken);
