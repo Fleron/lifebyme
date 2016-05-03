@@ -29,7 +29,7 @@
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="110dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
 
@@ -52,21 +52,20 @@
                 android:ems="10"
                 android:id="@+id/add_variable"
                 android:hint="Enter variable name here"
-                android:textSize="18dp"
+                android:textSize="20dp"
                 android:textColorHint="#ffffff"
                 android:backgroundTint="@android:color/white"
                 android:layout_gravity="center_horizontal|right"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="false"
-                android:layout_marginRight="30dp"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:layout_below="@+id/textView12"
+                android:layout_toRightOf="@+id/textView12"
+                android:layout_toEndOf="@+id/textView12" />
         </RelativeLayout>
 
         <RelativeLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="168dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="30dp">
@@ -87,9 +86,9 @@
                 android:orientation="vertical"
                 android:layout_gravity="center_horizontal|right"
                 android:id="@+id/radioGroup"
-                android:layout_marginRight="76dp"
-                android:layout_marginEnd="76dp"
-                android:layout_alignParentTop="true"
+                android:layout_marginRight="73dp"
+                android:layout_marginEnd="73dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true">
                 <RadioButton
@@ -102,7 +101,7 @@
                     android:textColor="#ffffff"
                     android:layout_alignLeft="@+id/textView2"
                     android:checked="false"
-                    android:textSize="15dp" />
+                    android:textSize="20dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -115,7 +114,7 @@
                     android:layout_alignLeft="@+id/radioButton"
                     android:layout_alignStart="@+id/radioButton"
                     android:checked="false"
-                    android:textSize="15dp" />
+                    android:textSize="20dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -128,7 +127,7 @@
                     android:layout_alignLeft="@+id/radioButton2"
                     android:layout_alignStart="@+id/radioButton2"
                     android:checked="false"
-                    android:textSize="15dp" />
+                    android:textSize="20dp" />
             </RadioGroup>
 
         </RelativeLayout>

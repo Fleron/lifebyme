@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/bakgrund"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -30,7 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.27">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +40,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Group name"
                 android:id="@+id/textView12"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:layout_marginLeft="25dp"
                 android:textColor="#ffffff" />
 
@@ -46,15 +48,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:ems="10"
                 android:id="@+id/add_variable"
                 android:hint="Enter name here"
-                android:textSize="15dp"
+                android:textSize="20dp"
+                android:textColorHint="#ffffff"
+                android:backgroundTint="@android:color/white"
                 android:layout_gravity="center_horizontal|right"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="false"
-                android:layout_marginRight="30dp" />
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/textView12"
+                android:layout_toEndOf="@+id/textView12" />
         </RelativeLayout>
 
         <RelativeLayout
