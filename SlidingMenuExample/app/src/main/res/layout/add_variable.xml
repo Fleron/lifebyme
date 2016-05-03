@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/bakgrund"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add variable"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:textColor="#ffffff"
+            android:id="@+id/textView10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp">
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Name"
+                android:id="@+id/textView12"
+                android:textSize="20dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/add_variable"
+                android:hint="Enter variable name here"
+                android:textSize="15dp"
+                android:layout_gravity="center_horizontal|right"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="false"
+                android:layout_marginRight="30dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Scale"
+                android:id="@+id/textView13"
+                android:textSize="20dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="#ffffff" />
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal|right"
+                android:id="@+id/radioGroup"
+                android:layout_marginRight="76dp"
+                android:layout_marginEnd="76dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amount"
+
+                    android:id="@+id/radioButton"
+                    android:layout_below="@+id/textView2"
+
+                    android:layout_alignLeft="@+id/textView2"
+                    android:checked="false"
+                    android:textSize="15dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="YES / NO"
+
+                    android:id="@+id/radioButton2"
+
+                    android:layout_below="@+id/radioButton"
+                    android:layout_alignLeft="@+id/radioButton"
+                    android:layout_alignStart="@+id/radioButton"
+                    android:checked="false"
+                    android:textSize="15dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scale"
+
+                    android:id="@+id/radioButton3"
+                    android:layout_below="@+id/radioButton2"
+                    android:layout_alignLeft="@+id/radioButton2"
+                    android:layout_alignStart="@+id/radioButton2"
+                    android:checked="false"
+                    android:textSize="15dp" />
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="15dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:id="@+id/button3"
+                android:padding="15dp"
+                android:textSize="20dp"
+                android:textColor="#167165"
+                android:background="@drawable/mybutton"
+                android:onClick="onButtonClick"
+                android:layout_marginBottom="50sp"
+                android:layout_weight="0"
+                android:layout_gravity="bottom|center"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
