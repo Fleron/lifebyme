@@ -36,6 +36,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     private Switch mySwitch;
     boolean Tswich;
     Button button;
+    Button add_variable;
+    Button skip_day;
     RadioGroup radioGroup;
     public Fragment1() {
     }
@@ -44,10 +46,12 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment1, null);
-
+        add_variable = (Button)rootView.findViewById(R.id.add_button);
+        skip_day = (Button)rootView.findViewById(R.id.skip_button);
         username = ((MainActivity)getActivity()).getUser();
         password = ((MainActivity)getActivity()).getPassword();
         np = (HorizontalNumberPicker) rootView.findViewById(R.id.numberPicker);
+
 
         np.setMinValue(0);
         np.setMaxValue(24);
@@ -78,20 +82,40 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Timmars sömn: "+hoursSleep);
-                System.out.println("Tränat: "+Tswich);
-                System.out.println("Humör: "+mood);
+                System.out.println("Timmars sömn: " + hoursSleep);
+                System.out.println("Tränat: " + Tswich);
+                System.out.println("Humör: " + mood);
                 System.out.println(Integer.toString(hoursSleep));
 
-                String[] values = {Integer.toString(hoursSleep),Integer.toString(work),Integer.toString(mood)};
-                String[] keys = {"1","2","3"};
+                String[] values = {Integer.toString(hoursSleep), Integer.toString(work), Integer.toString(mood)};
+                String[] keys = {"1", "2", "3"};
                 System.out.println(Arrays.toString(values));
                 System.out.println(keys);
                 System.out.println(username);
                 System.out.println(password);
-                runDBtask(values,keys,3);
+                runDBtask(values, keys, 3);
             }
         });
+
+        add_variable.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).replaceFragments();
+                System.out.println("add variable");
+            }
+        });
+
+        skip_day.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity().getApplicationContext(), "Day skipped!", Toast.LENGTH_SHORT).show();
+                System.out.println("skip day");
+            }
+        });
+
+
 
 /*        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
