@@ -31,6 +31,7 @@ import com.gnirt69.slidingmenuexample.fragment.Fragment3;
 import com.gnirt69.slidingmenuexample.fragment.Fragment5;
 import com.gnirt69.slidingmenuexample.fragment.Fragment6;
 import com.gnirt69.slidingmenuexample.fragment.Fragment7;
+import com.gnirt69.slidingmenuexample.fragment.Fragment8;
 import com.gnirt69.slidingmenuexample.model.ItemSlideMenu;
 
 import java.util.ArrayList;
@@ -202,6 +203,11 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                 fragmenttag += "7";
                 break;
 
+            case 7:
+                fragment = new Fragment8();
+                fragmenttag += "8";
+                break;
+
             default:
                 fragment = new Fragment1();
                 fragmenttag += "1";
@@ -282,8 +288,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                 steps_taken = int_value +"";
                 Fragment fragment = getFragmentManager().findFragmentByTag("fragment3");
                 try {
-                    TextView view = (TextView) fragment.getView().findViewById(R.id.textViewStep);
-                    view.setText("Step Counter Detected : " + steps_taken);
+                    //TextView view = (TextView) fragment.getView().findViewById(R.id.textViewStep);
+                    //view.setText("Step Counter Detected : " + steps_taken);
                 }
                 catch(NullPointerException e){
                     e.getLocalizedMessage();
