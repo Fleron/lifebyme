@@ -284,7 +284,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String setupURLValueSend(String username, String password, String[] values, String[] keys) {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
         String url = "";
-        String program = "Add_Var.php?";
+        String program = "addval.php?";
 
         try {
             url = ipadress + program + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");

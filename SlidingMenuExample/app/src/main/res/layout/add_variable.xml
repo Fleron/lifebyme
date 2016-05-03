@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bakgrund">
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,7 +29,7 @@
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
 
@@ -38,9 +39,11 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Name"
                 android:id="@+id/textView12"
-                android:textSize="20dp"
+                android:gravity="center"
+                android:textSize="25dp"
                 android:layout_marginLeft="25dp"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:layout_marginTop="5dp" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -49,12 +52,15 @@
                 android:ems="10"
                 android:id="@+id/add_variable"
                 android:hint="Enter variable name here"
-                android:textSize="15dp"
+                android:textSize="18dp"
+                android:textColorHint="#ffffff"
+                android:backgroundTint="@android:color/white"
                 android:layout_gravity="center_horizontal|right"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="false"
-                android:layout_marginRight="30dp" />
+                android:layout_marginRight="30dp"
+                android:textColor="#ffffff" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -71,7 +77,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Scale"
                 android:id="@+id/textView13"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:layout_marginLeft="25dp"
                 android:textColor="#ffffff" />
 
@@ -90,10 +96,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Amount"
-
+                    android:buttonTint="#ffffff"
                     android:id="@+id/radioButton"
                     android:layout_below="@+id/textView2"
-
+                    android:textColor="#ffffff"
                     android:layout_alignLeft="@+id/textView2"
                     android:checked="false"
                     android:textSize="15dp" />
@@ -102,9 +108,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="YES / NO"
-
+                    android:buttonTint="#ffffff"
                     android:id="@+id/radioButton2"
-
+                    android:textColor="#ffffff"
                     android:layout_below="@+id/radioButton"
                     android:layout_alignLeft="@+id/radioButton"
                     android:layout_alignStart="@+id/radioButton"
@@ -115,7 +121,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Scale"
-
+                    android:textColor="#ffffff"
+                    android:buttonTint="#ffffff"
                     android:id="@+id/radioButton3"
                     android:layout_below="@+id/radioButton2"
                     android:layout_alignLeft="@+id/radioButton2"
