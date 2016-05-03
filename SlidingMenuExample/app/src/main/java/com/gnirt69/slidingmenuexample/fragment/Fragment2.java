@@ -5,9 +5,13 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.support.v4.content.res.TypedArrayUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
@@ -20,12 +24,29 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
+
+import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
+
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     String[] keys;
+    ArrayAdapter<String> adapter;
+    List<String> list =new ArrayList<>();
     String[] values;
     String user = "";
     String pwd = "";
     talkToDBTask task;
+    ArrayList<Double> mood;
+    ArrayList<Double> workout;
+    ArrayList<Double> sleep;
+    ListView view;
+    String[] items;
     GraphView graph;
     View rootView;
     public Fragment2() {
@@ -34,9 +55,30 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment2, container, false);
+        view = (ListView) rootView.findViewById(R.id.listView);
+        adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,list);
+        view.setAdapter(adapter);
+        mood = new ArrayList<>();
+        workout = new ArrayList<>();
+        sleep = new ArrayList<>();
         getDBvalues(4);
+
+
+
+
         return rootView;
     }
+
+    private void setList(double corr,String message) {
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+
+        String item = df.format(corr*100)+"%";
+        list.add(message+item);
+        adapter.notifyDataSetChanged();
+    }
+
 
     private void getDBvalues(int request){
         task = new talkToDBTask(this);
@@ -47,15 +89,17 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         task.setRequestType(request);
         task.execute();
     }
-    private LineGraphSeries<DataPoint> receivedDataLine(int key){
+    private LineGraphSeries<DataPoint> receivedDataLine(int key,ArrayList<Double> valueList){
         LineGraphSeries<DataPoint> returnDataSeries = new LineGraphSeries<>();
         int j = 0;
         for(int i = 0; i < keys.length; i++){
             int tempKey = Integer.parseInt(keys[i]);
-            int tempValue = Integer.parseInt(values[i]);
+            Double tempValue = Double.valueOf(values[i]);
             if(tempKey == key){
                 System.out.println(values[i]);
                 System.out.println("i= "+i);
+                System.out.println(tempValue);
+                valueList.add(tempValue);
                 returnDataSeries.appendData(new DataPoint(j,tempValue),false,100);
                 System.out.println("i= "+i);
                 j++;
@@ -76,8 +120,12 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         setupGraph(graph);
 
         //PointsGraphSeries<DataPoint> seriesPoints = receivedDataPoints(1);
-        LineGraphSeries<DataPoint> serieslineSleep = receivedDataLine(1);
-        LineGraphSeries<DataPoint> serieslineMood = receivedDataLine(3);
+        LineGraphSeries<DataPoint> serieslineSleep = receivedDataLine(1,sleep);
+        LineGraphSeries<DataPoint> serieslineworkout = receivedDataLine(2,workout);
+        LineGraphSeries<DataPoint> serieslineMood = receivedDataLine(3,mood);
+        setList(checkCorrelation(sleep,mood),"korrelation mellan sömn och humör: ");
+        setList(checkCorrelation(sleep,workout),"korrelation mellan sömn och träning: ");
+        setList(checkCorrelation(workout,mood),"korrelation mellan träning och humör: ");
 
         serieslineMood.setColor(Color.parseColor("#CC5920"));
         serieslineSleep.setColor(Color.BLUE);
@@ -97,6 +145,20 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         graph.addSeries(serieslineSleep);
         graph.getSecondScale().addSeries(serieslineMood);
     }
+
+    private double checkCorrelation(ArrayList<Double> list1, ArrayList<Double> list2) {
+        while(!(list1.size() == list2.size())){
+            if(list1.size()> list2.size()){
+                list1.remove(list1.size()-1);
+            }else list2.remove(list2.size()-1);
+        }
+        Double[] xs = list1.toArray(new Double[list1.size()]);
+        Double[] ys = list2.toArray(new Double[list2.size()]);
+        double[] x = toPrimitive(xs);
+        double[] y = toPrimitive(ys);
+        return new KendallsCorrelation().correlation(x,y);
+    }
+
     private PointsGraphSeries<DataPoint> receivedDataPoints(int key){
         PointsGraphSeries<DataPoint> returnDataSeries = new PointsGraphSeries<>();
         int j = 0;
@@ -111,6 +173,18 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
             }
         }
         return returnDataSeries;
+    }
+    public static double[] toPrimitive(Double[] array) {
+        if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final double[] result = new double[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i].doubleValue();
+        }
+        return result;
     }
 
     private void setupGraph(GraphView graph){

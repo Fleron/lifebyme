@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -21,6 +22,7 @@ import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
 import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Fragment1 extends Fragment implements OnTalkToDBFinish{
@@ -30,6 +32,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     String password ="";
 
     HorizontalNumberPicker np;
+
     int hoursSleep;
     int mood;
     int work;
@@ -93,14 +96,14 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             }
         });
 
-/*        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        /*np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 hoursSleep = newVal;
             }
-        });*/
-
+        });
+        */
 
         mySwitch = (Switch) rootView.findViewById(R.id.switch1);
         mySwitch.setChecked(false);

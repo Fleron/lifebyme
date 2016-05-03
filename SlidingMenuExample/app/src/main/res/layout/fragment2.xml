@@ -18,6 +18,14 @@
         android:id="@+id/graph"
         android:layout_marginLeft="10dp"
         android:layout_marginRight ="10dp"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="0dp"
         android:layout_alignParentTop="true"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:headerDividersEnabled="false"
+        style="@style/Base.Widget.AppCompat.ListView" />
+
 </LinearLayout>

@@ -24,6 +24,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String[] keys;
     private String URL;
     private int requestType;
+    private String variableName;
     private OnTalkToDBFinish listener;
 
     public talkToDBTask(OnTalkToDBFinish listener) {
@@ -85,26 +86,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             listener.onTaskFailed();
         }
 
-
-        /*
-        if (result.contains("LOGIN SUCCESS") && requestType == 1) {
-            dbSuccess(result, false);
-        } else if (result.contains("LOGIN SUCCESS") && requestType == 2) {
-            dbFail(result);
-        } else if (result.contains("NEW USER ADDED") && requestType == 2) {
-            dbSuccess(result, false);
-
-        } else if (result.contains("VARIABLE ADDED") && requestType == 3) {
-            dbSuccess(result, false);
-        } else if (!result.contains("LOGIN SUCCESS") && requestType == 2) {
-            dbSuccess(result, false);
-
-        } else if (result.contains("VARIABLES RETRIEVED") && requestType == 4) {
-            dbSuccess(result, true);
-        } else {
-            dbFail(result);
-        }
-        */
     }
     private void runCommandOnRequest(){
         switch (requestType) {
@@ -122,7 +103,16 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             case 4:
                 getVariables(username, pwd);
                 break;
+            case 5:
+                addVariable(username,pwd,variableName);
+                break;
         }
+    }
+
+    private void addVariable(String username, String pwd, String valueName) {
+        String program = "addvariable.php?";
+        this.URL = setupURLAddVariable(program, username,pwd,valueName);
+
     }
 
     private void login(String user, String pwd) {
@@ -150,30 +140,15 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         }
 
     }
-/*
-    private void dbFail(String result) {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("result", result);
-        setResult(Activity.RESULT_CANCELED, returnIntent);
-        finish();
-        System.out.println("onPostExecute");
-    }
 
-    private void dbSuccess(String result, boolean receive) {
-        Intent returnIntent = new Intent();
-        if (receive) {
-            returnIntent.putExtra("keys", keys);
-            returnIntent.putExtra("values", values);
-        }
-        returnIntent.putExtra("result", result);
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
-        System.out.println("onPostExecute");
-    }
-*/
+
+
     private void createUser(String user, String pwd, String email) {
         this.URL = setupURLNewUser(user, pwd, email);
         //setupConnection(new String[]{URL});
+    }
+    public void setVariableName(String variableName){
+        this.variableName = variableName;
     }
     public void setUsername(String username){
         this.username = username;
@@ -192,6 +167,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     public void setRequestType(int requestType){
         this.requestType = requestType;
+    }
+    public String getVariableName(){
+        return this.variableName;
     }
     public int getRequestType(){
         return this.requestType;
@@ -261,7 +239,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             connection.setDoOutput(true);
             connection.setDoInput(true);
 
-            if (connection == null) System.out.println("no connection");
+            if (connection == null) listener.onTaskFailed();
             InputStream is = connection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line = null;
@@ -280,6 +258,23 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
 
     private void failureHandler() {
+
+    }
+    private String setupURLAddVariable(String program, String username, String password, String valueName) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String url = "";
+
+        try {
+            url = ipadress + program + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+            url += "&" + URLEncoder.encode("pwd", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+            url += "&" + URLEncoder.encode("valuename", "UTF-8") + "=" + URLEncoder.encode(valueName, "UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(url);
+        return url;
 
     }
 
