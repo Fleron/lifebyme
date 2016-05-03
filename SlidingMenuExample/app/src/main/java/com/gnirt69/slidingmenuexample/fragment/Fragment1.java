@@ -47,7 +47,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        setRetainInstance(true);
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment1, null);
         add_variable = (Button)rootView.findViewById(R.id.add_button);
         skip_day = (Button)rootView.findViewById(R.id.skip_button);
@@ -104,7 +104,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
             @Override
             public void onClick(View view) {
-             //   ((MainActivity) getActivity()).replaceFragments();
+                ((MainActivity) getActivity()).replaceFragment(6);
                 System.out.println("add variable");
             }
         });

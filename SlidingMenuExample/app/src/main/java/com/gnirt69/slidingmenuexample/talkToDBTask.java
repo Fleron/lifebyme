@@ -22,6 +22,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String email;
     private String[] values;
     private String[] keys;
+    private int variableType;
     private String URL;
     private int requestType;
     private String variableName;
@@ -162,6 +163,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public void setValues(String[] values){
         this.values = values;
     }
+    public void setVariableType(int type){this.variableType = type;}
     public void setKeys(String[] keys){
         this.keys = keys;
     }
@@ -171,6 +173,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public String getVariableName(){
         return this.variableName;
     }
+    public int getVariableType() {return this.variableType;}
     public int getRequestType(){
         return this.requestType;
     }

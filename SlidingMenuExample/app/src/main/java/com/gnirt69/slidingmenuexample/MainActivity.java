@@ -30,6 +30,7 @@ import com.gnirt69.slidingmenuexample.fragment.Fragment2;
 import com.gnirt69.slidingmenuexample.fragment.Fragment3;
 import com.gnirt69.slidingmenuexample.fragment.Fragment5;
 import com.gnirt69.slidingmenuexample.fragment.Fragment6;
+import com.gnirt69.slidingmenuexample.fragment.Fragment7;
 import com.gnirt69.slidingmenuexample.model.ItemSlideMenu;
 
 import java.util.ArrayList;
@@ -168,7 +169,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 
     //Create method replace fragment
 
-    private void replaceFragment(int pos) {
+    public void replaceFragment(int pos) {
         Fragment fragment = null;
         String fragmenttag = "fragment";
         switch (pos) {
@@ -195,6 +196,10 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             case 5:
                 fragment = new Fragment6();
                 fragmenttag += "6";
+                break;
+            case 6:
+                fragment = new Fragment7();
+                fragmenttag += "7";
                 break;
 
             default:

@@ -55,6 +55,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment2, container, false);
+        setRetainInstance(true);
         view = (ListView) rootView.findViewById(R.id.listView);
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,list);
         view.setAdapter(adapter);

@@ -29,6 +29,7 @@ public class Fragment4 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment4, container, false);
         changeText(MainActivity.steps_taken);
+        setRetainInstance(true);
         return rootView;
     }
     public void changeText(String result){
