@@ -21,6 +21,7 @@ import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
 import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
+import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -120,15 +121,13 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
 
 
-/*        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
->>>>>>> e262376344f7839c10d7adb7e3601b6680b802cf
-
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                hoursSleep = newVal;
-            }
-        });
-        */
+         np.setListener(new HorizontalNumberPickerListener() {
+             @Override
+             public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
+                 hoursSleep = value;
+                 System.out.println(value);
+             }
+         });
 
         mySwitch = (Switch) rootView.findViewById(R.id.switch1);
         mySwitch.setChecked(false);
