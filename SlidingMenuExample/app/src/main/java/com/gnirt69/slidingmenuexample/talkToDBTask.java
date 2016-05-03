@@ -22,7 +22,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String email;
     private String[] values;
     private String[] keys;
-    private int variableType;
+    private String variableType;
     private String URL;
     private int requestType;
     private String variableName;
@@ -66,7 +66,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     output = "TRUE";
 
                 } else if (checkType(object).contains("VAR ADDED")) {
-                    //storeValues(object);
+                    storeKeys(object);
                     System.out.println("lägg in sharedpref här för nyckel!");
                     output = "TRUE";
                 }
@@ -77,6 +77,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         }
         return output;
+    }
+
+    private void storeKeys(JSONObject object) {
+        //skapa shared pref här!
     }
 
     @Override
@@ -110,14 +114,15 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 getVariables(username, pwd);
                 break;
             case 5:
-                addVariable(username,pwd,variableName);
+                addVariable(username,pwd,variableName,variableType);
                 break;
         }
     }
 
-    private void addVariable(String username, String pwd, String valueName) {
+    private void addVariable(String username, String pwd, String valueName, String variableType) {
         String program = "addvariable.php?";
-        this.URL = setupURLAddVariable(program, username,pwd,valueName);
+
+        this.URL = setupURLAddVariable(program, username,pwd,valueName,variableType);
 
     }
 
@@ -168,7 +173,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public void setValues(String[] values){
         this.values = values;
     }
-    public void setVariableType(int type){this.variableType = type;}
+    public void setVariableType(String type){this.variableType = type;}
     public void setKeys(String[] keys){
         this.keys = keys;
     }
@@ -178,7 +183,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public String getVariableName(){
         return this.variableName;
     }
-    public int getVariableType() {return this.variableType;}
+    public String getVariableType() {return this.variableType;}
     public int getRequestType(){
         return this.requestType;
     }
@@ -268,7 +273,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private void failureHandler() {
 
     }
-    private String setupURLAddVariable(String program, String username, String password, String valueName) {
+    private String setupURLAddVariable(String program, String username, String password, String valueName, String varType) {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
         String url = "";
 
@@ -276,6 +281,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             url = ipadress + program + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             url += "&" + URLEncoder.encode("pwd", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
             url += "&" + URLEncoder.encode("valuename", "UTF-8") + "=" + URLEncoder.encode(valueName, "UTF-8");
+            url += "&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode(varType, "UTF-8");
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

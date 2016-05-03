@@ -24,7 +24,7 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
     EditText text;
     talkToDBTask task;
     RadioGroup radioGroup;
-    int scale;
+    String scale;
     String username ="";
     String password ="";
     String variableName ="";
@@ -47,15 +47,15 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
 
                 switch(checkedId) {
                     case R.id.radioButton:
-                        scale = 0;
+                        scale = "amount";
                         // amount
                         break;
                     case R.id.radioButton2:
-                        scale =1;
+                        scale ="binary";
                         // binary
                         break;
                     case R.id.radioButton3:
-                        scale = 2;
+                        scale = "scale";
                         // mood
                         break;
                 }
