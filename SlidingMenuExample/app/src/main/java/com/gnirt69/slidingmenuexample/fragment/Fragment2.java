@@ -25,7 +25,9 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
 
+import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
+import org.apache.commons.math3.stat.descriptive.moment.Mean;
 
 
 import java.math.RoundingMode;
@@ -70,12 +72,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         return rootView;
     }
 
-    private void setList(double corr,String message) {
-        DecimalFormat df = new DecimalFormat("#.#");
-        df.setRoundingMode(RoundingMode.CEILING);
-
-
-        String item = df.format(corr*100)+"%";
+    private void setList(String item,String message) {
         list.add(message+item);
         adapter.notifyDataSetChanged();
     }
@@ -125,8 +122,12 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         LineGraphSeries<DataPoint> serieslineworkout = receivedDataLine(2,workout);
         LineGraphSeries<DataPoint> serieslineMood = receivedDataLine(3,mood);
         setList(checkCorrelation(sleep,mood),"korrelation mellan sömn och humör: ");
+        setList(makeString(getMean(sleep)),"Medel sömn: ");
+        setList(makeString((getMax(sleep))),"Max sömn: ");
+        setList(makeString(getMin(sleep)),"Min sömn: ");
         setList(checkCorrelation(sleep,workout),"korrelation mellan sömn och träning: ");
         setList(checkCorrelation(workout,mood),"korrelation mellan träning och humör: ");
+        setList(makeString((getMean(mood))),"Medel humör: ");
 
         serieslineMood.setColor(Color.parseColor("#CC5920"));
         serieslineSleep.setColor(Color.BLUE);
@@ -146,8 +147,13 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         graph.addSeries(serieslineSleep);
         graph.getSecondScale().addSeries(serieslineMood);
     }
-
-    private double checkCorrelation(ArrayList<Double> list1, ArrayList<Double> list2) {
+    private String makeString(double x){
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.CEILING);
+        String item = df.format(x);
+        return item;
+    }
+    private String checkCorrelation(ArrayList<Double> list1, ArrayList<Double> list2) {
         while(!(list1.size() == list2.size())){
             if(list1.size()> list2.size()){
                 list1.remove(list1.size()-1);
@@ -157,7 +163,28 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         Double[] ys = list2.toArray(new Double[list2.size()]);
         double[] x = toPrimitive(xs);
         double[] y = toPrimitive(ys);
-        return new KendallsCorrelation().correlation(x,y);
+        double corr = new KendallsCorrelation().correlation(x,y);
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+
+        String item = df.format(corr*100)+"%";
+        return item;
+    }
+    private double getMean(ArrayList<Double> x){
+        Double[] xs = x.toArray(new Double[x.size()]);
+        double [] xh = toPrimitive(xs);
+        return StatUtils.mean(xh);
+    }
+    private double getMax(ArrayList<Double> x){
+        Double[] xs = x.toArray(new Double[x.size()]);
+        double [] xh = toPrimitive(xs);
+        return StatUtils.max(xh);
+    }
+    private double getMin(ArrayList<Double> x){
+        Double[] xs = x.toArray(new Double[x.size()]);
+        double [] xh = toPrimitive(xs);
+        return StatUtils.min(xh);
     }
 
     private PointsGraphSeries<DataPoint> receivedDataPoints(int key){
