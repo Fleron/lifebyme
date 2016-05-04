@@ -3,6 +3,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,12 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
         np.setMinValue(0);
         np.setMaxValue(24);
+        np.getButtonMinusView().setTextColor(Color.argb(255,255,255,255));
+        np.getButtonMinusView().setScaleY(1.5f);
+        np.getButtonMinusView().setScaleX(2);
+
+        np.getButtonPlusView().setTextColor(Color.argb(255,255,255,255));
+        np.getTextValueView().setTextColor(Color.argb(255,255,255,255));
         //np.setWrapSelectorWheel(false);
         button = (Button) rootView.findViewById(R.id.button);
         radioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
@@ -118,6 +125,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 System.out.println("skip day");
             }
         });
+
 
 
 
