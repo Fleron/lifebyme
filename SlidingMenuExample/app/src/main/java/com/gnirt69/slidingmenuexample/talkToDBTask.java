@@ -280,7 +280,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         try {
             url = ipadress + program + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             url += "&" + URLEncoder.encode("pwd", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
-            url += "&" + URLEncoder.encode("valuename", "UTF-8") + "=" + URLEncoder.encode(valueName, "UTF-8");
+            url += "&" + URLEncoder.encode("varname", "UTF-8") + "=" + URLEncoder.encode(valueName, "UTF-8");
             url += "&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode(varType, "UTF-8");
 
         } catch (UnsupportedEncodingException e) {
