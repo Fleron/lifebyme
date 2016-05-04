@@ -121,13 +121,13 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         LineGraphSeries<DataPoint> serieslineSleep = receivedDataLine(1,sleep);
         LineGraphSeries<DataPoint> serieslineworkout = receivedDataLine(2,workout);
         LineGraphSeries<DataPoint> serieslineMood = receivedDataLine(3,mood);
-        setList(checkCorrelation(sleep,mood),"korrelation mellan sömn och humör: ");
-        setList(makeString(getMean(sleep)),"Medel sömn: ");
-        setList(makeString((getMax(sleep))),"Max sömn: ");
-        setList(makeString(getMin(sleep)),"Min sömn: ");
-        setList(checkCorrelation(sleep,workout),"korrelation mellan sömn och träning: ");
-        setList(checkCorrelation(workout,mood),"korrelation mellan träning och humör: ");
-        setList(makeString((getMean(mood))),"Medel humör: ");
+        setList(checkCorrelation(sleep,mood),"correlation between sleep and mood: ");
+        setList(makeString(getMean(sleep)),"Average sleep: ");
+        setList(makeString((getMax(sleep))),"Max sleep: ");
+        setList(makeString(getMin(sleep)),"Min sleep: ");
+        setList(checkCorrelation(sleep,workout),"correlation between sleep and workout: ");
+        setList(checkCorrelation(workout,mood),"correlation between workout and mood: ");
+        setList(makeString((getMean(mood))),"Average mood: ");
 
         serieslineMood.setColor(Color.parseColor("#CC5920"));
         serieslineSleep.setColor(Color.BLUE);
@@ -135,8 +135,8 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
 
         //Stil på grafen, alltså själva grafen och inte linjerna
 
-        serieslineSleep.setTitle("timmars sömn");
-        serieslineMood.setTitle("humör");
+        serieslineSleep.setTitle("Sleep(hours)");
+        serieslineMood.setTitle("Mood");
 
         serieslineMood.setDrawBackground(true);
         serieslineMood.setBackgroundColor(Color.argb(50,204,255,204));
