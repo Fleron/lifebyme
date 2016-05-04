@@ -37,7 +37,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         String response = "";
         String output = "";
         runCommandOnRequest();
-
+        System.out.println("do In Background");
         //for (String url : params) {
         System.out.println(requestType);
         System.out.println(URL);
@@ -45,7 +45,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         //}
         try {
             JSONObject object = new JSONObject(response.toString());
+            System.out.println(object.toString());
             if (!checkFail(object)) {
+                System.out.println("check fail funkar");
                 if (checkType(object).contains("LOGIN")) {
                     if (checkCorrectUser(object)) {
                         output = "TRUE";
@@ -57,14 +59,14 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                         output = "TRUE";
                     }
                 } else if (checkType(object).contains("VAL ADDED")) {
+                    System.out.println("gick in i val added");
                     if (checkCorrectUser(object)) {
+                        System.out.println("check correct user funkar");
                         output = "TRUE";
-
                     }
                 } else if (checkType(object).contains("RETR DATA")) {
                     storeValues(object);
                     output = "TRUE";
-
                 } else if (checkType(object).contains("VAR ADDED")) {
                     storeKeys(object);
                     System.out.println("lägg in sharedpref här för nyckel!");
@@ -91,12 +93,15 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         if(result.contains("TRUE")){
             listener.onTaskCompleted();
             System.out.println(result);
+            System.out.println("values added");
         }
         else{
             listener.onTaskFailed();
+            System.out.println("nått gick snett!");
         }
 
     }
+
     private void runCommandOnRequest(){
         switch (requestType) {
             case 1:
@@ -108,10 +113,12 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 createUser(username, pwd, email);
                 break;
             case 3:
-                sendVariables(username, pwd, values, keys);
+                sendValues(username, pwd, values, keys);
+                System.out.println(requestType +" request");
+                System.out.println("sending values");
                 break;
             case 4:
-                getVariables(username, pwd);
+                getValues(username, pwd);
                 break;
             case 5:
                 addVariable(username,pwd,variableName,variableType);
@@ -151,8 +158,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         }
 
     }
-
-
 
     private void createUser(String user, String pwd, String email) {
         this.URL = setupURLNewUser(user, pwd, email);
@@ -200,12 +205,12 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return this.keys;
     }
 
-    private void sendVariables(String user, String pwd, String[] values, String[] keys) {
+    private void sendValues(String user, String pwd, String[] values, String[] keys) {
         this.URL = setupURLValueSend(user, pwd, values, keys);
         //setupConnection(new String[]{URL});
     }
 
-    private void getVariables(String user, String pwd) {
+    private void getValues(String user, String pwd) {
         String program = "getdata.php?";
         this.URL = setupURLBasic(user, pwd, program);
         //setupConnection(new String[]{URL});
@@ -213,7 +218,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
     private String checkType(JSONObject object) {
         try {
+            System.out.println(object.getString("TYPE"));
             return object.getString("TYPE");
+
         } catch (JSONException e) {
             e.printStackTrace();
             return "ERROR";
@@ -273,6 +280,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private void failureHandler() {
 
     }
+
     private String setupURLAddVariable(String program, String username, String password, String valueName, String varType) {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
         String url = "";
@@ -287,7 +295,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         }
 
-        System.out.println(url);
+        //System.out.println(url);
         return url;
 
     }
@@ -313,7 +321,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         }
 
-        System.out.println(url);
+        //System.out.println(url);
         return url;
     }
 

@@ -273,9 +273,14 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
     @Override
     public void onTaskFailed() {
-        mPasswordView.setError(getString(R.string.error_incorrect_password));
-        mPasswordView.requestFocus();
-        showProgress(false);
+        if(username.contains("alex")){
+            mUsernameView.setError("this user does not exist");
+            mUsernameView.requestFocus();
+        }else {
+            mPasswordView.setError(getString(R.string.error_incorrect_password));
+            mPasswordView.requestFocus();
+            showProgress(false);
+        }
     }
 
 

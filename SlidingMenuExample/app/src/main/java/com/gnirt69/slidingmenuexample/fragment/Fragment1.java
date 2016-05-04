@@ -67,7 +67,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         np.getButtonPlusView().setTextColor(Color.argb(255,255,255,255));
         np.getTextValueView().setTextColor(Color.argb(255,255,255,255));
         //np.setWrapSelectorWheel(false);
-        button = (Button) rootView.findViewById(R.id.button);
+        button = (Button) rootView.findViewById(R.id.submit_button);
         radioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
