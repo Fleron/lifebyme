@@ -24,10 +24,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gnirt69.slidingmenuexample.adapter.SlidingMenuAdapter;
-import com.gnirt69.slidingmenuexample.fragment.Fragment4;
 import com.gnirt69.slidingmenuexample.fragment.Fragment1;
 import com.gnirt69.slidingmenuexample.fragment.Fragment2;
 import com.gnirt69.slidingmenuexample.fragment.Fragment3;
+import com.gnirt69.slidingmenuexample.fragment.Fragment4;
 import com.gnirt69.slidingmenuexample.fragment.Fragment5;
 import com.gnirt69.slidingmenuexample.fragment.Fragment6;
 import com.gnirt69.slidingmenuexample.fragment.Fragment7;
@@ -55,6 +55,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     String username;
+    String currentFragment;
     String password;
 
 
@@ -168,10 +169,27 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         actionBarDrawerToggle.syncState();
     }
 
+
+    // Handle "Back"-button press
+    @Override
+    public void onBackPressed () {
+        System.out.println(currentFragment);
+        if(currentFragment.equals("fragment1")) {
+            super.onBackPressed();
+        }
+        else if(currentFragment.equals("fragment8")) {
+            replaceFragment(3);
+        }
+        else {
+            replaceFragment(0);
+        }
+    }
+
     //Create method replace fragment
 
     public void replaceFragment(int pos) {
         Fragment fragment = null;
+
         String fragmenttag = "fragment";
         switch (pos) {
             case 0:
@@ -218,6 +236,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             System.out.println(fragmenttag);
+            currentFragment = fragmenttag;
             transaction.replace(R.id.main_content, fragment,fragmenttag);
             transaction.addToBackStack(null);
             transaction.commit();
@@ -277,6 +296,9 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         mSensorManager.unregisterListener(this, mStepCounterSensor);
         mSensorManager.unregisterListener(this, mStepDetectorSensor);
     }
+
+
+
     private class receiver extends BroadcastReceiver{
 
         @Override
