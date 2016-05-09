@@ -5,8 +5,6 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.support.v4.content.res.TypedArrayUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +22,12 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
-
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
-import org.apache.commons.math3.stat.descriptive.moment.Mean;
-
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Fragment2 extends Fragment implements OnTalkToDBFinish {
@@ -71,6 +65,10 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
 
         return rootView;
     }
+
+
+
+
 
     private void setList(String item,String message) {
         list.add(message+item);
