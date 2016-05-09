@@ -22,7 +22,25 @@
     <string name="step_counter">
          android.hardware.sensor.stepcounter
     </string>
+    <string name = "skip_day">Skip day</string>
+    <string name = "daily_activity">Daily Activity</string>
+    <string name = "submit">Submit</string>
+    <string name = "add_variable">Add new</string>
     <string name="step_detector">
          android.hardware.sensor.stepdetector
     </string>
+    <string-array name = "values">
+        <item>item 1</item>
+        <item>item 2</item>
+        <item>item 3</item>
+        <item>item 4</item>
+        <item>item 5</item>
+        <item>item 6</item>
+        <item>item 7</item>
+        <item>item 8</item>
+        <item>item 9</item>
+        <item>item 10</item>
+        <item>item 11</item>
+        <item>item 12</item>
+    </string-array>
 </resources>
