@@ -173,15 +173,13 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     // Handle "Back"-button press
     @Override
     public void onBackPressed () {
-        System.out.println(currentFragment);
-        if(currentFragment.equals("fragment1")) {
+        int count = getFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            System.out.println("count=0");
             super.onBackPressed();
-        }
-        else if(currentFragment.equals("fragment8")) {
-            replaceFragment(3);
-        }
-        else {
-            replaceFragment(0);
+            //additional code
+        } else {
+            getFragmentManager().popBackStack();
         }
     }
 
@@ -236,7 +234,6 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             System.out.println(fragmenttag);
-            currentFragment = fragmenttag;
             transaction.replace(R.id.main_content, fragment,fragmenttag);
             transaction.addToBackStack(null);
             transaction.commit();
