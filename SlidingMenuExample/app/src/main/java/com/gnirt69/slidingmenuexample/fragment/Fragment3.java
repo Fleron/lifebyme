@@ -7,17 +7,90 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 
+import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.R;
 
 public class Fragment3 extends Fragment {
-    public Fragment3() {
+
+    public Fragment3(){}
+
+    CalendarView calendar;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment3, container, false);
+        System.out.println("1");
+        return rootView;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment3, container, false);
-        setRetainInstance(true);
-        return rootView;
+    public void onActivityCreated(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onActivityCreated(savedInstanceState);
+        System.out.println("2");
+        calendar=(CalendarView) getActivity().findViewById(R.id.calendarView1);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month,
+                                            int dayOfMonth) {
+                System.out.println(year+"-"+month+"-"+dayOfMonth);
+                ((MainActivity) getActivity()).replaceFragment(0);
+
+
+            }
+        });
+
+        //initializes the calendarview
+        initializeCalendar(calendar);
+
+    }
+
+    public void initializeCalendar(CalendarView calendar) {
+        // TODO Auto-generated method stub
+
+
+        // sets whether to show the week number.
+        calendar.setShowWeekNumber(false);
+
+        // sets the first day of week according to Calendar.
+        // here we set Monday as the first day of the Calendar
+
+        calendar.setFirstDayOfWeek(2);
+
+
+
+        /**
+        calendarView.setOnDateChangeListener(new OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month,
+                                            int dayOfMonth) {
+                int d = dayOfMonth;
+                curDate =String.valueOf(d);
+            }
+        });
+
+
+        calendar.setOnDateChangeListener(new OnDateChangeListener() {
+
+
+            //show the selected date as a toast
+
+            public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
+
+                Toast.makeText(getActivity().getApplicationContext(), day + "/" + month + "/" + year, Toast.LENGTH_LONG).show();
+
+            }
+
+        })
+
+        ;
+         **/
+
     }
 }

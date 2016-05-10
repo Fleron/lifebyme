@@ -237,6 +237,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             transaction.replace(R.id.main_content, fragment,fragmenttag);
             transaction.addToBackStack(null);
             transaction.commit();
+            listViewSliding.setItemChecked(pos, true);
+            setTitle(listSliding.get(pos).getTitle());
         }
     }
 
