@@ -39,7 +39,7 @@ public class Fragment4 extends Fragment {
 
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).replaceFragment(5);
+                ((MainActivity) getActivity()).replaceFragment(7);
                 System.out.println("create group");
             }
         });

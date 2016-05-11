@@ -30,7 +30,7 @@ public class Fragment9 extends Fragment {
 
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).replaceFragment(0);
+                ((MainActivity) getActivity()).replaceFragment(9);
             }
         });
         return rootView;

@@ -20,6 +20,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String username;
     private String pwd;
     private String email;
+    private String groupName;
     private String[] values;
     private String[] keys;
     private String variableType;
@@ -123,6 +124,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             case 5:
                 addVariable(username,pwd,variableName,variableType);
                 break;
+            case 6:
+                createGroup(groupName, username);
+                break;
         }
     }
 
@@ -163,10 +167,16 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLNewUser(user, pwd, email);
         //setupConnection(new String[]{URL});
     }
+
+    private void createGroup(String groupName, String username) {
+        this.URL = setupURLNewGroup(groupName,username);
+        //setupConnection(new String[]{URL});
+    }
     public void setVariableName(String variableName){
         this.variableName = variableName;
     }
     public void setUsername(String username){
+        System.out.println("username username: "+username);
         this.username = username;
     }
     public void setPwd(String pwd){
@@ -174,6 +184,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     public void setEmail(String email){
         this.email = email;
+    }
+    public void setGname(String groupName){
+        this.groupName = groupName;
     }
     public void setValues(String[] values){
         this.values = values;
@@ -195,6 +208,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public String getUsername(){
         return this.username;
     }
+
     public String getPwd(){
         return this.pwd;
     }
@@ -353,6 +367,22 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             data += "&" + URLEncoder.encode("pwd", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
             data += "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
 
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
+    private String setupURLNewGroup(String groupName, String username) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "NewGroup.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("gname", "UTF-8") + "=" + URLEncoder.encode(groupName, "UTF-8");
+            data += "&" + URLEncoder.encode("uname", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             failureHandler();
