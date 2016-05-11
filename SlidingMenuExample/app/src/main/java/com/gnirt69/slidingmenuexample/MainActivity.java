@@ -55,7 +55,6 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     String username;
-    String currentFragment;
     String password;
 
 
@@ -238,7 +237,9 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             transaction.addToBackStack(null);
             transaction.commit();
             listViewSliding.setItemChecked(pos, true);
-            setTitle(listSliding.get(pos).getTitle());
+            if(pos < 6) {
+                setTitle(listSliding.get(pos).getTitle());
+            }
         }
     }
 
