@@ -23,6 +23,7 @@ public class Fragment4 extends Fragment {
     private Sensor mStepDetectorSensor;
     private View rootView;
     Button button;
+    Button select_group;
 
     public Fragment4() {
     }
@@ -38,13 +39,26 @@ public class Fragment4 extends Fragment {
 
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).replaceFragment(7);
+                ((MainActivity) getActivity()).replaceFragment(5);
                 System.out.println("create group");
             }
         });
 
+        select_group = (Button) rootView.findViewById(R.id.reminders);
+
+        select_group.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).replaceFragment(8);
+                System.out.println("selected group");
+            }
+        });
+
+
         return rootView;
     }
+
     public void changeText(String result){
         //this textview should be bound in the fragment onCreate as a member variable
         //TextView text =(TextView)rootView.findViewById(R.id.textViewStep);

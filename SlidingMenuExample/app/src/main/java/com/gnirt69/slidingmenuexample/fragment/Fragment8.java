@@ -14,6 +14,7 @@ import com.gnirt69.slidingmenuexample.R;
 
 public class Fragment8 extends Fragment {
     Button button;
+
     public Fragment8() {
     }
 
@@ -29,6 +30,8 @@ public class Fragment8 extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Group created!", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
 
         return rootView;
