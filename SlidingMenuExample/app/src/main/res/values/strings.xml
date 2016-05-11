@@ -22,6 +22,14 @@
     <string name="step_counter">
          android.hardware.sensor.stepcounter
     </string>
+
+    <!-- Stings related to create user -->
+    <string name="terms">I have read and accept the <u>terms and conditions</u>.</string>
+
+    <string name="about_us">Copyright © 2016 LifeByME Group \n\nLifeByME started out as a project to track patterns and habits in the day-to-day life of ordinary people. This resulted in the LifeByMe app where tracking is made easy and correlations accurate.
+Please note that correlation is not the same thing as causation, i e having two parameters that follow similar patterns does not necessarily mean that these two parameters affect each other. The LifeByMe app will only show mathematical correlation and does not take into account whether parameters are otherwise related or not.
+LifeByME will not sell any personal information to third parties. </string>
+
     <string name = "skip_day">Skip day</string>
     <string name = "daily_activity">Daily Activity</string>
     <string name = "submit">Submit</string>

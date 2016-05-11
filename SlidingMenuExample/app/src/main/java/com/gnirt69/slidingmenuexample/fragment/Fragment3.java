@@ -23,7 +23,6 @@ public class Fragment3 extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment3, container, false);
-        System.out.println("1");
         return rootView;
     }
 
@@ -31,7 +30,6 @@ public class Fragment3 extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
-        System.out.println("2");
         calendar=(CalendarView) getActivity().findViewById(R.id.calendarView1);
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
@@ -56,11 +54,12 @@ public class Fragment3 extends Fragment {
 
         // sets whether to show the week number.
         calendar.setShowWeekNumber(false);
-
+        //calendar.setFocusedMonthDateColor(Color.argb(255,255,255,255));
         // sets the first day of week according to Calendar.
         // here we set Monday as the first day of the Calendar
 
         calendar.setFirstDayOfWeek(2);
+
 
 
 
