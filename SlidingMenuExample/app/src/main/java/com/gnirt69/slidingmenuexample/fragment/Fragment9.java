@@ -24,7 +24,9 @@ public class Fragment9 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.selected_group, container, false);
+
         add_member = (Button)rootView.findViewById(R.id.add_member);
+
         setRetainInstance(true);
         add_member.setOnClickListener(new View.OnClickListener() {
 

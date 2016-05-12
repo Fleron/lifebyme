@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create group"
+            android:text="Search member"
             android:textSize="30sp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"
@@ -32,13 +32,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_weight="0.27">
+            android:layout_weight="0.15">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Group name"
+                android:text="Username"
                 android:id="@+id/textView12"
                 android:textSize="25dp"
                 android:layout_marginLeft="25dp"
@@ -48,17 +48,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:id="@+id/add_group"
+                android:id="@+id/search_user"
                 android:hint="Enter name here"
                 android:textSize="20dp"
-                android:textColorHint="#ffffff"
                 android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
                 android:backgroundTint="@android:color/white"
                 android:layout_gravity="center_horizontal|right"
-                android:layout_centerVertical="true"
+                android:maxLength="15"
+                android:layout_below="@+id/textView12"
                 android:layout_toRightOf="@+id/textView12"
                 android:layout_toEndOf="@+id/textView12"
-                android:maxLength="15" />
+                android:layout_marginTop="20dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add user"
+                android:id="@+id/button3"
+                android:padding="15dp"
+                android:textSize="15dp"
+                android:textColor="#167165"
+                android:background="@drawable/mybutton"
+                android:onClick="onButtonClick"
+                android:layout_weight="0"
+                android:layout_gravity="right"
+                android:layout_below="@+id/search_user"
+                android:layout_alignLeft="@+id/search_user"
+                android:layout_alignStart="@+id/search_user"
+                android:layout_marginTop="30dp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/imageView5"
+                android:layout_weight="0.3"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/search"
+                android:layout_below="@+id/textView12"
+                android:layout_toLeftOf="@+id/search_user"
+                android:layout_toStartOf="@+id/search_user"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="15dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -68,21 +100,14 @@
             android:layout_weight="1"
             android:layout_marginTop="15dp">
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create"
-                android:id="@+id/button3"
-                android:padding="15dp"
-                android:textSize="20sp"
-                android:textColor="#167165"
-                android:background="@drawable/mybutton"
-                android:onClick="onButtonClick"
-                android:layout_marginBottom="50sp"
-                android:layout_weight="0"
-                android:layout_gravity="bottom|center"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+                android:text="New Text"
+                android:id="@+id/textView20"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="68dp" />
         </RelativeLayout>
 
     </LinearLayout>
