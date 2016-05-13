@@ -24,7 +24,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="title"
+                    android:text="Group members"
                     android:textSize="30sp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"
@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Variables"
+                    android:text="Members"
                     android:textColor="#ffffff"
                     android:textSize="20dp"
                     android:layout_marginLeft="20dp"
@@ -71,8 +71,8 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Members"
-                    android:id="@+id/members"
+                    android:text="Add member"
+                    android:id="@+id/add_member"
                     android:padding="15dp"
                     android:textSize="20dp"
                     android:textColor="#167165"

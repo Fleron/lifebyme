@@ -55,7 +55,6 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
 
 
 
-
         return rootView;
     }
 
@@ -66,6 +65,17 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
             btn.setText(gnames[i]);
             btn.setBackgroundResource(R.drawable.mybutton);
             btn.setTextSize(20);
+            btn.setId(i);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity) getActivity()).setGname(gnames[v.getId()]);
+                    ((MainActivity) getActivity()).setGID(gids[v.getId()]);
+                    ((MainActivity) getActivity()).replaceFragment(8);
+                    System.out.println(gnames[v.getId()]);
+                    System.out.println(gids[v.getId()]);
+                }
+            });
             btn.setTextColor(Color.parseColor("#157065"));
             btn.setTypeface(null, Typeface.BOLD);
             params = (LinearLayout.LayoutParams) ll.getLayoutParams();
@@ -77,6 +87,8 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
 
 
     }
+
+
 
 
     public void getUsername(){

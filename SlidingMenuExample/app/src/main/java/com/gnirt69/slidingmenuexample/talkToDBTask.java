@@ -21,10 +21,12 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String pwd;
     private String email;
     private String groupName;
+    private String GID;
     private String[] values;
     private String[] keys;
     private String[] gnames;
     private String[] gids;
+    private String[] gMembers;
     private String variableType;
     private String URL;
     private int requestType;
@@ -78,6 +80,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 }
                 else if (checkType(object).contains("GROUPDATA")) {
                     storeGroups(object);
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("GROUPMEMBERS")) {
+                    storeMembers(object);
                     output = "TRUE";
                 }
             }
@@ -140,6 +146,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             case 8:
                 getGroups(username);
                 break;
+            case 9:
+                setGroupMembers(GID);
+                break;
         }
     }
 
@@ -168,6 +177,22 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             for (int i = 0; i < jsonGroupNames.length(); i++) {
                 gnames[i] = jsonGroupNames.getString(i);
                 gids[i] = jsonGroupIds.getString(i);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void storeMembers(JSONObject object) {
+        try {
+            JSONArray jsonGroupNames = object.getJSONArray("GROUPMEMBERS");
+            System.out.println(jsonGroupNames.getString(0));
+            gMembers = new String[jsonGroupNames.length()];
+
+            for (int i = 0; i < jsonGroupNames.length(); i++) {
+                gMembers[i] = jsonGroupNames.getString(i);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -207,6 +232,11 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLGetGroups(username);
         //setupConnection(new String[]{URL});
     }
+
+    private void setGroupMembers(String GID) {
+        this.URL = setupURLGetGroupMembers(GID);
+        //setupConnection(new String[]{URL});
+    }
     private void addUserToGroup(String groupName, String username) {
         this.URL = setupURLAddUserToGroup(groupName,username);
         //setupConnection(new String[]{URL});
@@ -237,6 +267,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public void setRequestType(int requestType){
         this.requestType = requestType;
     }
+    public void setGroupID(String GID){
+        this.GID = GID;
+    }
     public String getVariableName(){
         return this.variableName;
     }
@@ -262,6 +295,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     public String[] getGroupIDs(){
         return this.gids;
+    }
+
+    public String[] getGroupMembers(){
+        return this.gMembers;
     }
 
     private void sendValues(String user, String pwd, String[] values, String[] keys) {
@@ -466,4 +503,22 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
+
+    private String setupURLGetGroupMembers(String GID) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "showgroupmembers.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
 }
+
+
+
