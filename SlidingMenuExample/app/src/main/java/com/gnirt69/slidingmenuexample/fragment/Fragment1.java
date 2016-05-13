@@ -2,11 +2,8 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  * Created by Martin on 4/22/2016.
  */
 
-import android.app.ActionBar;
 import android.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +20,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
@@ -32,7 +28,6 @@ import com.gnirt69.slidingmenuexample.talkToDBTask;
 import com.wefika.horizontalpicker.HorizontalPicker;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Fragment1 extends Fragment implements OnTalkToDBFinish{

@@ -7,14 +7,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.support.v7.app.AlertDialog;
+
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.gnirt69.slidingmenuexample.LoginActivity;
-import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 
 /**
  * Created by Martin on 2016-04-07.
@@ -26,6 +26,8 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
     String confirm_password;
     int requestType;
     private AccountManager mAccountManager;
+    CheckBox checkBox;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
         setContentView(R.layout.create_user);
         mAccountManager = AccountManager.get(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        checkBox = (CheckBox) findViewById(R.id.checkBox);
     }
 /*    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -64,10 +67,13 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
             hideSoftKeyboard(this);
 
             if (password.length()>4){
-                if(passwordValid()){
-                    runDBtaskAddUser(1,false);
-                   // addNewAccount(AccountGeneral.ACCOUNT_TYPE, AccountGeneral.AUTHTOKEN_TYPE_FULL_ACCESS);
-
+                if(passwordValid()) {
+                    if (checkBox.isChecked()) {
+                        runDBtaskAddUser(1, false);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "You have to accept the terms and conditions..", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else{
                     clearFields();
@@ -80,7 +86,15 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
 
             }
         }
-    }
+        if(V.getId() == R.id.textView5){
+                new AlertDialog.Builder(CreateUser.this)
+                        .setTitle("Disclaimer")
+                        .setMessage("When using the LifeByMe app please note that correlation is not the same thing as causation, i e having two parameters that follow similar patterns does not necessarily mean that these two parameters affect each other. The LifeByMe app will only show mathematical correlation and does not take into account whether parameters are otherwise related or not.")
+                        .setCancelable(true)
+                        .create().show();
+            }
+        }
+
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
