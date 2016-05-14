@@ -61,6 +61,7 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
     public void onTaskCompleted() {
         groupMembers = task.getGroupMembers();
         System.out.println(Arrays.toString(groupMembers));
+        System.out.println("grupp medlemmar");
     }
 
     @Override
