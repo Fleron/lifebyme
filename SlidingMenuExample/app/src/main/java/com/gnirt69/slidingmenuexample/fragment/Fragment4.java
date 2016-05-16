@@ -86,9 +86,6 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
 
             ll.addView(btn,params);
         }
-
-
-
     }
 
 

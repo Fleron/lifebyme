@@ -367,6 +367,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         variableNames = task.getVariablesNames();
         variableTypes = task.getVariablesTypes();
         populateTable();
+
         Toast.makeText(getActivity().getApplicationContext(), "Variables added!", Toast.LENGTH_SHORT).show();
     }
 

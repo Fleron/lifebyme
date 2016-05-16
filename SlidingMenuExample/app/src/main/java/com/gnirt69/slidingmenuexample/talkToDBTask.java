@@ -21,6 +21,7 @@ import java.net.URLEncoder;
 public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String username;
     private final String PREF_FILE = "com.gnirt69.slidingmenuexample.PREFERENCE_FILE";
+    private String toUser;
     private String pwd;
     private String email;
     private String groupName;
@@ -92,11 +93,16 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     storeVariables(object);
                     output = "TRUE";
                 }
-                else if (checkType(object).contains("GROUPMEMBERS")) {
+                else if (checkType(object).contains("MEMBERS")) {
                     storeMembers(object);
                     output = "TRUE";
                 }
+                else if (checkType(object).contains("REQUESTSENT")) {
+                    System.out.println("ReQuEsTSeNd");
+                    output = "TRUE";
+                }
             }
+
 
             System.out.println(output);
         } catch (JSONException e) {
@@ -154,6 +160,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         System.out.println(requestType);
 
         if(result.contains("TRUE")){
+
             listener.onTaskCompleted(requestType);
             System.out.println("result: "+result);
             System.out.println("values added");
@@ -165,6 +172,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
     }
     private void runCommandOnRequest(){
+        System.out.println("request:");
+        System.out.println(username);
+        System.out.println(toUser);
+        System.out.println(GID);
         switch (requestType) {
             case 1:
                 login(username, pwd);
@@ -199,6 +210,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 break;
             case 10:
                 getUserVariables(username,pwd);
+                break;
+            case 11:
+                sendRequest(username,toUser,GID);
+                break;
         }
     }
     private void getUserVariables(String username,String pwd) {
@@ -284,6 +299,11 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLGetGroupMembers(GID);
         //setupConnection(new String[]{URL});
     }
+    private void sendRequest(String fromUser, String toUser,String GID) {
+        this.URL = setupURLsendRequest(fromUser, toUser, GID);
+        //setupConnection(new String[]{URL});
+    }
+
     private void addUserToGroup(String groupName, String username) {
         this.URL = setupURLAddUserToGroup(groupName,username);
         //setupConnection(new String[]{URL});
@@ -292,8 +312,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.variableName = variableName;
     }
     public void setUsername(String username){
-        System.out.println("username username: "+username);
         this.username = username;
+    }
+    public void setToUser(String toUser){
+        this.toUser = toUser;
     }
     public void setPwd(String pwd){
         this.pwd = pwd;
@@ -392,7 +414,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         try {
             java.net.URL mainURL = new URL(url);
             connection = (HttpURLConnection) mainURL.openConnection();
-
             connection.setUseCaches(false);
             connection.setDoOutput(true);
             connection.setDoInput(true);
@@ -551,6 +572,24 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
+
+    private String setupURLsendRequest(String fromUser, String toUser,String GID) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "usersearch.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("fuser", "UTF-8") + "=" + URLEncoder.encode(fromUser, "UTF-8");
+            data += "&" + URLEncoder.encode("tuser", "UTF-8") + "=" + URLEncoder.encode(toUser, "UTF-8");
+            data += "&" + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
 }
 
 

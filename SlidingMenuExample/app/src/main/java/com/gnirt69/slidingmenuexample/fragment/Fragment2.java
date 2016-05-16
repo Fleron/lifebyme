@@ -91,13 +91,15 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     private LineGraphSeries<DataPoint> receivedDataLine(int key,ArrayList<Double> valueList){
         LineGraphSeries<DataPoint> returnDataSeries = new LineGraphSeries<>();
         int j = 0;
-        for(int i = 0; i < keys.length; i++){
-            int tempKey = Integer.parseInt(keys[i]);
-            Double tempValue = Double.valueOf(values[i]);
-            if(tempKey == key){
-                valueList.add(tempValue);
-                returnDataSeries.appendData(new DataPoint(j,tempValue),false,100);
-                j++;
+        if(keys != null) {
+            for (int i = 0; i < keys.length; i++) {
+                int tempKey = Integer.parseInt(keys[i]);
+                Double tempValue = Double.valueOf(values[i]);
+                if (tempKey == key) {
+                    valueList.add(tempValue);
+                    returnDataSeries.appendData(new DataPoint(j, tempValue), false, 100);
+                    j++;
+                }
             }
         }
         return returnDataSeries;
