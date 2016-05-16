@@ -158,7 +158,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             showProgress(true);
 
             //start login task.
-            talkToDBTask task = new talkToDBTask(this);
+            talkToDBTask task = new talkToDBTask(this,this);
             task.setUsername(username);
             task.setPwd(password);
             task.setRequestType(1);
@@ -258,7 +258,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     }
 
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         mAuthTask = null;
         showProgress(false);
         Intent r = new Intent(LoginActivity.this, MainActivity.class);

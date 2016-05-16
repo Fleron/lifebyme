@@ -26,7 +26,7 @@ public class Fragment10 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.search_user, container, false);
+        View rootView = inflater.inflate(R.layout.add_member, container, false);
         search_user = (Button)rootView.findViewById(R.id.button3);
         user_to_add = (EditText) rootView.findViewById(R.id.search_user);
 

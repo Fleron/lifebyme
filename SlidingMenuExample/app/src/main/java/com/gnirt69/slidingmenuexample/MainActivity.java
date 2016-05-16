@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.gnirt69.slidingmenuexample.adapter.SlidingMenuAdapter;
 import com.gnirt69.slidingmenuexample.fragment.Fragment1;
 import com.gnirt69.slidingmenuexample.fragment.Fragment10;
+import com.gnirt69.slidingmenuexample.fragment.Fragment11;
 import com.gnirt69.slidingmenuexample.fragment.Fragment2;
 import com.gnirt69.slidingmenuexample.fragment.Fragment3;
 import com.gnirt69.slidingmenuexample.fragment.Fragment4;
@@ -55,7 +56,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private ListView listViewSliding;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-
+    String gname;
+    String gid;
     String username;
     String password;
 
@@ -234,6 +236,10 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                 fragment = new Fragment10();
                 fragmenttag += "10";
                 break;
+            case 10:
+                fragment = new Fragment11();
+                fragmenttag += "10";
+                break;
 
             default:
                 fragment = new Fragment1();
@@ -260,6 +266,20 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     }
     public String getPassword(){
         return password;
+    }
+
+    public String getGname(){
+        return gname;
+    }
+    public String getGID(){
+        return gid;
+    }
+
+    public void setGname(String gname){
+        this.gname = gname;
+    }
+    public void setGID(String gid){
+        this.gid = gid;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -46,7 +47,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     String [] variableNames;
     String [] variableTypes;
     String [] variableIDS;
-
+    Context context;
     int hoursSleep;
     int mood;
     int work;
@@ -63,6 +64,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
         rootView = (ViewGroup) inflater.inflate(R.layout.add_values, container,false);
+        context = rootView.getContext();
         add_variable = (Button)rootView.findViewById(R.id.add_button2);
         skip_day = (Button)rootView.findViewById(R.id.skip_button2);
         username = ((MainActivity)getActivity()).getUser();
@@ -176,7 +178,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         return rootView;
     }
     public void runDBtask(String[]values, String[] keys,int request){
-        task = new talkToDBTask(this);
+        task = new talkToDBTask(this,context);
         task.setUsername(username);
         task.setPwd(password);
         if(values != null && keys != null){
@@ -190,100 +192,98 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
         table = (TableLayout)rootView.findViewById(R.id.table_layout);
 
-
-        for(int i = 0; i<variableNames.length; i ++){
-            TableRow row = new TableRow(getActivity());
-            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT);
-            row.setLayoutParams(params);
-            TextView text = new TextView(getActivity());
-            text.setWidth(400);
-            text.setPadding(20,5,5,5);
-            text.setGravity(Gravity.CENTER);
-            text.setText(variableNames[i]);
-            System.out.println("hej");
-            if (i == 1){
-                radioGroup = new RadioGroup(getActivity());
-                radioGroup.setOrientation(LinearLayout.HORIZONTAL);
-                RadioButton btn1 = new RadioButton(getActivity());
-                btn1.setId(R.id.btn1);
-                RadioButton btn2 = new RadioButton(getActivity());
-                btn2.setId(R.id.btn2);
-                RadioButton btn3 = new RadioButton(getActivity());
-                btn3.setId(R.id.btn3);
-                radioGroup.addView(btn1);
-                radioGroup.addView(btn2);
-                radioGroup.addView(btn3);
-                radioGroup.setGravity(Gravity.CENTER);
-                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-                {
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        switch(checkedId) {
-                            case R.id.btn1:
-                                mood = 5;
-                                System.out.println(mood);
-                                // mood = good
-                                break;
-                            case R.id.btn2:
-                                mood =0;
-                                System.out.println(mood);
-                                // mood = ok
-                                break;
-                            case R.id.btn3:
-                                mood = -5;
-                                System.out.println(mood);
-                                // mood = not good
-                                break;
+        if(variableNames != null) {
+            for (int i = 0; i < variableNames.length; i++) {
+                TableRow row = new TableRow(getActivity());
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+                row.setLayoutParams(params);
+                TextView text = new TextView(getActivity());
+                text.setWidth(400);
+                text.setPadding(20, 5, 5, 5);
+                text.setGravity(Gravity.CENTER);
+                text.setText(variableNames[i]);
+                System.out.println("hej");
+                if (i == 1) {
+                    radioGroup = new RadioGroup(getActivity());
+                    radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+                    RadioButton btn1 = new RadioButton(getActivity());
+                    btn1.setId(R.id.btn1);
+                    RadioButton btn2 = new RadioButton(getActivity());
+                    btn2.setId(R.id.btn2);
+                    RadioButton btn3 = new RadioButton(getActivity());
+                    btn3.setId(R.id.btn3);
+                    radioGroup.addView(btn1);
+                    radioGroup.addView(btn2);
+                    radioGroup.addView(btn3);
+                    radioGroup.setGravity(Gravity.CENTER);
+                    radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            switch (checkedId) {
+                                case R.id.btn1:
+                                    mood = 5;
+                                    System.out.println(mood);
+                                    // mood = good
+                                    break;
+                                case R.id.btn2:
+                                    mood = 0;
+                                    System.out.println(mood);
+                                    // mood = ok
+                                    break;
+                                case R.id.btn3:
+                                    mood = -5;
+                                    System.out.println(mood);
+                                    // mood = not good
+                                    break;
+                            }
                         }
-                    }
-                });
-                row.addView(text);
-                //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
-                row.addView(radioGroup);
-                table.addView(row,i);
+                    });
+                    row.addView(text);
+                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
+                    row.addView(radioGroup);
+                    table.addView(row, i);
 
-            }else if(i==2){
-                mySwitch = new Switch(getActivity());
-                mySwitch.setChecked(false);
-                Tswich = false;
-                mySwitch.setPadding(0,0,250,0);
-                mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if(Tswich == false){
-                            Tswich = true;
-                            work = 1;
+                } else if (i == 2) {
+                    mySwitch = new Switch(getActivity());
+                    mySwitch.setChecked(false);
+                    Tswich = false;
+                    mySwitch.setPadding(0, 0, 250, 0);
+                    mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (Tswich == false) {
+                                Tswich = true;
+                                work = 1;
+                            } else {
+                                Tswich = false;
+                                work = 0;
+                            }
                         }
-                        else{
-                            Tswich = false;
-                            work = 0;
+                    });
+                    row.addView(text);
+                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
+                    row.addView(mySwitch);
+                    table.addView(row, i);
+                    //mySwitch.setChecked(false);
+                    //Tswich = false;
+                } else if (i == 3) {
+
+                    np = new NumberPicker(getActivity());
+                    np.setMaxValue(24);
+                    np.setMinValue(0);
+                    np.setX(2.0f);
+                    np.setValue(8);
+                    np.setClickable(false);
+                    np.setScaleX(0.8f);
+                    np.setScaleY(0.8f);
+                    np.setMinimumWidth(3);
+
+                    np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                        @Override
+                        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                            hoursSleep = newVal;
+                            System.out.println(hoursSleep);
                         }
-                    }
-                });
-                row.addView(text);
-                //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
-                row.addView(mySwitch);
-                table.addView(row,i);
-                //mySwitch.setChecked(false);
-                //Tswich = false;
-            }else if(i==3){
-
-                np = new NumberPicker(getActivity());
-                np.setMaxValue(24);
-                np.setMinValue(0);
-                np.setX(2.0f);
-                np.setValue(8);
-                np.setClickable(false);
-                np.setScaleX(0.8f);
-                np.setScaleY(0.8f);
-                np.setMinimumWidth(3);
-
-                np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                    @Override
-                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                        hoursSleep = newVal;
-                        System.out.println(hoursSleep);
-                    }
-                });
+                    });
 
                 /*
                 np2.getButtonMinusView().setTextColor(Color.argb(255,255,255,255));
@@ -307,19 +307,19 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                         System.out.println(value);
                     }
                 });*/
-                row.addView(text);
-                //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
-                row.addView(np);
-                table.addView(row,i);
-            }
-            else {
-                Button btn = new Button(getActivity());
-                btn.setText("waddup");
-                row.addView(text);
-                //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
-                row.addView(btn);
+                    row.addView(text);
+                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
+                    row.addView(np);
+                    table.addView(row, i);
+                } else {
+                    Button btn = new Button(getActivity());
+                    btn.setText("waddup");
+                    row.addView(text);
+                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
+                    row.addView(btn);
 
-                table.addView(row, i);
+                    table.addView(row, i);
+                }
             }
         }
     }
@@ -362,7 +362,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         }
     }
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         variableIDS = task.getVariablesID();
         variableNames = task.getVariablesNames();
         variableTypes = task.getVariablesTypes();

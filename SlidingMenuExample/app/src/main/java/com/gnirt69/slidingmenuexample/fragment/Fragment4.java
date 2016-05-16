@@ -3,6 +3,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
     talkToDBTask task;
     private String[] gnames;
     private String[] gids;
+    Context context;
     LinearLayout.LayoutParams params;
 
 
@@ -36,6 +38,7 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment4, container, false);
+        context = rootView.getContext();
         //changeText(MainActivity.steps_taken);
         setRetainInstance(true);
 
@@ -55,7 +58,6 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
 
 
 
-
         return rootView;
     }
 
@@ -66,6 +68,17 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
             btn.setText(gnames[i]);
             btn.setBackgroundResource(R.drawable.mybutton);
             btn.setTextSize(20);
+            btn.setId(i);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity) getActivity()).setGname(gnames[v.getId()]);
+                    ((MainActivity) getActivity()).setGID(gids[v.getId()]);
+                    ((MainActivity) getActivity()).replaceFragment(8);
+                    System.out.println(gnames[v.getId()]);
+                    System.out.println(gids[v.getId()]);
+                }
+            });
             btn.setTextColor(Color.parseColor("#157065"));
             btn.setTypeface(null, Typeface.BOLD);
             params = (LinearLayout.LayoutParams) ll.getLayoutParams();
@@ -79,13 +92,15 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
     }
 
 
+
+
     public void getUsername(){
         username = ((MainActivity)getActivity()).getUser();
     }
 
     private void runDBtaskGetGroups(int request){
 
-        task = new talkToDBTask(this);
+        task = new talkToDBTask(this,context);
         requestType = request;
         task.setUsername(username);
         task.setRequestType(requestType);
@@ -93,7 +108,7 @@ public class Fragment4 extends Fragment implements OnTalkToDBFinish {
     }
 
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         gids = task.getGroupIDs();
         gnames = task.getGroupNames();
         generateGroupButton();

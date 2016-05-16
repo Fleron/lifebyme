@@ -3,6 +3,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     ArrayList<Double> workout;
     ArrayList<Double> sleep;
     ListView view;
+    Context context;
     String[] items;
     GraphView graph;
     View rootView;
@@ -51,6 +53,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment2, container, false);
+        context = rootView.getContext();
         setRetainInstance(true);
         view = (ListView) rootView.findViewById(R.id.listView);
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,list);
@@ -77,7 +80,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
 
 
     private void getDBvalues(int request){
-        task = new talkToDBTask(this);
+        task = new talkToDBTask(this,context);
         user = ((MainActivity)getActivity()).getUser();
         task.setUsername(user);
         pwd = ((MainActivity)getActivity()).getPassword();
@@ -232,7 +235,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     }
 
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         keys = task.getKeys();
         values = task.getValues();
 

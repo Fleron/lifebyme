@@ -1,5 +1,7 @@
 package com.gnirt69.slidingmenuexample;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import org.json.JSONArray;
@@ -18,13 +20,16 @@ import java.net.URLEncoder;
 
 public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String username;
+    private final String PREF_FILE = "com.gnirt69.slidingmenuexample.PREFERENCE_FILE";
     private String pwd;
     private String email;
     private String groupName;
+    private String GID;
     private String[] values;
     private String[] keys;
     private String[] gnames;
     private String[] gids;
+    private String[] gMembers;
     private String variableType;
     private String[] variablesType;
     private String[] variablesNames;
@@ -33,9 +38,11 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private int requestType;
     private String variableName;
     private OnTalkToDBFinish listener;
+    private Context context;
 
-    public talkToDBTask(OnTalkToDBFinish listener) {
+    public talkToDBTask(OnTalkToDBFinish listener,Context context) {
         this.listener = listener;
+        this.context = context;
     }
     @Override
     protected String doInBackground(String... params) {
@@ -74,7 +81,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     storeValues(object);
                     output = "TRUE";
                 } else if (checkType(object).contains("VAR ADDED")) {
-                    storeKeys(object);
+                    storeKeysLocal(object);
                     System.out.println("lägg in sharedpref här för nyckel!");
                     output = "TRUE";
                 }
@@ -83,6 +90,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     output = "TRUE";
                 } else if(checkType(object).contains("VARIABLES")){
                     storeVariables(object);
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("GROUPMEMBERS")) {
+                    storeMembers(object);
                     output = "TRUE";
                 }
             }
@@ -114,8 +125,28 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         }
     }
-    private void storeKeys(JSONObject object) {
-        //skapa shared pref här!
+    private void storeKeysLocal(JSONObject object) {
+       /* SharedPreferences shrdPref = context.getSharedPreferences(PREF_FILE,context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = shrdPref.edit();
+
+        try {
+            JSONArray jsonVID = object.getJSONArray("VariableID");
+            JSONArray jsonVName = object.getJSONArray("VariableName");
+
+            variablesID = new String[jsonVID.length()];
+            variablesNames = new String[jsonVName.length()];
+            for (int i = 0; i < jsonVID.length(); i++) {
+                variablesID[i] = jsonVID.getString(i);
+                variablesNames[i] = jsonVName.getString(i);
+                editor.putString()
+
+
+            }
+            editor.putString()
+        }catch (JSONException e) {
+        e.printStackTrace();
+        }
+        */
     }
     @Override
     protected void onPostExecute(String result) {
@@ -123,7 +154,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         System.out.println(requestType);
 
         if(result.contains("TRUE")){
-            listener.onTaskCompleted();
+            listener.onTaskCompleted(requestType);
             System.out.println("result: "+result);
             System.out.println("values added");
         }
@@ -163,6 +194,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             case 8:
                 getGroups(username);
                 break;
+            case 9:
+                setGroupMembers(GID);
+                break;
             case 10:
                 getUserVariables(username,pwd);
         }
@@ -201,6 +235,21 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         }
 
     }
+    private void storeMembers(JSONObject object) {
+        try {
+            JSONArray jsonGroupNames = object.getJSONArray("GROUPMEMBERS");
+            System.out.println(jsonGroupNames.getString(0));
+            gMembers = new String[jsonGroupNames.length()];
+
+            for (int i = 0; i < jsonGroupNames.length(); i++) {
+                gMembers[i] = jsonGroupNames.getString(i);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
     private void storeValues(JSONObject object) {
         try {
             JSONArray jsonKeys = object.getJSONArray("KEYS");
@@ -229,6 +278,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     private void getGroups(String username) {
         this.URL = setupURLGetGroups(username);
+        //setupConnection(new String[]{URL});
+    }
+    private void setGroupMembers(String GID) {
+        this.URL = setupURLGetGroupMembers(GID);
         //setupConnection(new String[]{URL});
     }
     private void addUserToGroup(String groupName, String username) {
@@ -264,6 +317,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public String[] getVariablesNames(){return this.variablesNames;}
     public String[] getVariablesTypes(){return this.variablesType;}
     public String[] getVariablesID(){return this.variablesID;}
+    public void setGroupID(String GID){
+        this.GID = GID;
+    }
     public String getVariableName(){
         return this.variableName;
     }
@@ -288,6 +344,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     public String[] getGroupIDs(){
         return this.gids;
+    }
+    public String[] getGroupMembers(){
+        return this.gMembers;
     }
     private void sendValues(String user, String pwd, String[] values, String[] keys) {
         this.URL = setupURLValueSend(user, pwd, values, keys);
@@ -478,4 +537,21 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
+    private String setupURLGetGroupMembers(String GID) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "showgroupmembers.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
 }
+
+
+
