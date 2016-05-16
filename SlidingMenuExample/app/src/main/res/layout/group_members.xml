@@ -58,15 +58,54 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/variable_layout">
+                    android:id="@+id/members_layout">
 
                 </LinearLayout>
             </LinearLayout>
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="127dp"
-                android:layout_marginTop="20dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Add member"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/textView20"
+                    android:layout_marginBottom="10dp" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="0.15"
+                android:layout_marginBottom="50dp">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:id="@+id/search_user"
+                    android:hint="Enter username"
+                    android:textSize="20dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:backgroundTint="@android:color/white"
+                    android:layout_gravity="center_horizontal|right"
+                    android:maxLength="15"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginStart="27dp" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -74,13 +113,16 @@
                     android:text="Add member"
                     android:id="@+id/add_member"
                     android:padding="15dp"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textColor="#167165"
                     android:background="@drawable/mybutton"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="50dp" />
+                    android:onClick="onButtonClick"
+                    android:layout_weight="0"
+                    android:layout_gravity="right"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
             </RelativeLayout>
 
         </LinearLayout>

@@ -346,7 +346,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         }
     }
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         Toast.makeText(getActivity().getApplicationContext(), "Variables added!", Toast.LENGTH_SHORT).show();
     }
 

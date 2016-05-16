@@ -13,13 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.R;
 
 public class Fragment10 extends Fragment {
     Button search_user;
     EditText user_to_add;
     int requestType;
-    String user;
+    String receiverUser;
+    String senderUser;
+    String groupID;
 
     public Fragment10() {
     }
@@ -35,20 +38,30 @@ public class Fragment10 extends Fragment {
 
             @Override
             public void onClick(View view) {
-                user = user_to_add.getText().toString();
+                receiverUser = user_to_add.getText().toString();
+                groupID = ((MainActivity)getActivity()).getGID();
+                getUsername();
+                
                 //runDBtaskAddUserToGroup();
-                System.out.println(user);
+                System.out.println("S = "+senderUser);
+                System.out.println("R = "+receiverUser);
+                System.out.println("Group ID = "+groupID);
             }
         });
         return rootView;
 
     }
 
-/*    private void runDBtaskAddUserToGroup(int request){
+    public void getUsername(){
+        senderUser = ((MainActivity)getActivity()).getUser();
+    }
+
+/*    private void runDBtaskSendUserRequest(int request){
 
         talkToDBTask task = new talkToDBTask(this);
         requestType = request;
         task.setUsername(user);
+        task.set
         task.setRequestType(requestType);
         task.execute();
     }

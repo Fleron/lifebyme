@@ -232,7 +232,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     }
 
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         keys = task.getKeys();
         values = task.getValues();
 
