@@ -3,6 +3,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +25,8 @@ import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
+import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
+import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
 
 import java.util.Arrays;
 
@@ -38,7 +41,11 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             "17","18","19","20","21","22","23","24"
     };
     NumberPicker np;
+    HorizontalNumberPicker np2;
     TableLayout table;
+    String [] variableNames;
+    String [] variableTypes;
+    String [] variableIDS;
 
     int hoursSleep;
     int mood;
@@ -55,14 +62,19 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
-        rootView = (ViewGroup) inflater.inflate(R.layout.add_values, null);
+        rootView = (ViewGroup) inflater.inflate(R.layout.add_values, container,false);
         add_variable = (Button)rootView.findViewById(R.id.add_button2);
         skip_day = (Button)rootView.findViewById(R.id.skip_button2);
         username = ((MainActivity)getActivity()).getUser();
         password = ((MainActivity)getActivity()).getPassword();
-        populateTable();
+        //View view2 =(View)inflater.inflate(R.layout.horizontal_number_picker,rootView,true);
+        //np2 = (HorizontalNumberPicker) view2.findViewById(R.id.numberPicker);
+        runDBtask(null,null,10);
 
-        //rootView2 =(ViewGroup)inflater.inflate(R.layout.fragment1,null);
+
+
+
+
         /*np = (HorizontalNumberPicker) rootView2.findViewById(R.id.numberPicker);
 
         np.setMinValue(0);
@@ -167,14 +179,19 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         task = new talkToDBTask(this);
         task.setUsername(username);
         task.setPwd(password);
-        task.setKeys(keys);
-        task.setValues(values);
+        if(values != null && keys != null){
+            task.setKeys(keys);
+            task.setValues(values);
+        }
         task.setRequestType(request);
         task.execute();
     }
     void populateTable(){
+
         table = (TableLayout)rootView.findViewById(R.id.table_layout);
-        for(int i = 0; i<8; i ++){
+
+
+        for(int i = 0; i<variableNames.length; i ++){
             TableRow row = new TableRow(getActivity());
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(params);
@@ -182,7 +199,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             text.setWidth(400);
             text.setPadding(20,5,5,5);
             text.setGravity(Gravity.CENTER);
-            text.setText("test");
+            text.setText(variableNames[i]);
             System.out.println("hej");
             if (i == 1){
                 radioGroup = new RadioGroup(getActivity());
@@ -268,18 +285,17 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     }
                 });
 
+                /*
+                np2.getButtonMinusView().setTextColor(Color.argb(255,255,255,255));
+                np2.getButtonMinusView().setScaleY(1.5f);
+                np2.getButtonMinusView().setScaleX(2);
+                np2.getButtonPlusView().setTextColor(Color.argb(255,255,255,255));
+                np2.getTextValueView().setTextColor(Color.argb(255,255,255,255));
 
-                /*np.getButtonMinusView().setTextColor(Color.argb(255,255,255,255));
-                np.getButtonMinusView().setScaleY(1.5f);
-                np.getButtonMinusView().setScaleX(2);
-                np.getButtonPlusView().setTextColor(Color.argb(255,255,255,255));
-                np.getTextValueView().setTextColor(Color.argb(255,255,255,255));
-                *//*
-                np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                np2.setListener(new HorizontalNumberPickerListener() {
                     @Override
-                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                        hoursSleep = newVal;
-                        System.out.println(newVal);
+                    public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
+                        System.out.println(value);
                     }
                 });
                 */
@@ -347,6 +363,10 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     }
     @Override
     public void onTaskCompleted() {
+        variableIDS = task.getVariablesID();
+        variableNames = task.getVariablesNames();
+        variableTypes = task.getVariablesTypes();
+        populateTable();
         Toast.makeText(getActivity().getApplicationContext(), "Variables added!", Toast.LENGTH_SHORT).show();
     }
 
