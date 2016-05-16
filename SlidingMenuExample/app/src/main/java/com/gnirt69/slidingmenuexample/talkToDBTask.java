@@ -26,6 +26,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String email;
     private String groupName;
     private String GID;
+    private JSONObject dataObject;
     private String[] values;
     private String[] keys;
     private String[] gnames;
@@ -267,6 +268,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     private void storeValues(JSONObject object) {
         try {
+            this.dataObject = object.getJSONObject("DICT");
+            /*
             JSONArray jsonKeys = object.getJSONArray("KEYS");
             JSONArray jsonValues = object.getJSONArray("VALUES");
             System.out.println(jsonKeys.getString(0));
@@ -278,6 +281,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 values[i] = jsonValues.getString(i);
             }
             System.out.println(values[0]);
+            */
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -303,7 +307,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLsendRequest(fromUser, toUser, GID);
         //setupConnection(new String[]{URL});
     }
-
     private void addUserToGroup(String groupName, String username) {
         this.URL = setupURLAddUserToGroup(groupName,username);
         //setupConnection(new String[]{URL});
@@ -336,6 +339,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public void setRequestType(int requestType){
         this.requestType = requestType;
     }
+    public JSONObject getDataObject(){return this.dataObject;}
     public String[] getVariablesNames(){return this.variablesNames;}
     public String[] getVariablesTypes(){return this.variablesType;}
     public String[] getVariablesID(){return this.variablesID;}
