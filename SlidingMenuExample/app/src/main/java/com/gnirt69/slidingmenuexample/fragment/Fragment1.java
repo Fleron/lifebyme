@@ -232,7 +232,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     //row.addView(rl2, params);
                     View view = inflater.inflate(R.layout.radiogroup,null);
                     radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
-                    
+
                     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         public void onCheckedChanged(RadioGroup group, int checkedId) {
                             switch (checkedId) {
@@ -255,8 +255,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                         }
                     });
                     //lp.setMargins(50, 5, 150, 5);
-                    lp.addRule(RelativeLayout.RIGHT_OF,i);
-                    radioGroup.setLayoutParams(lp);
+                    //lp.addRule(RelativeLayout.RIGHT_OF,i);
+                    //radioGroup.setLayoutParams(lp);
                     rl.addView(radioGroup);
 
                     //row.addView(text);
@@ -284,8 +284,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                         }
                     });
                     //lp.setMargins(150, 100, 150, 5);
-                    lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                    mySwitch.setLayoutParams(lp);
+                    //lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                   // mySwitch.setLayoutParams(lp);
                     rl.addView(mySwitch);
                     //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
                     table.addView(row, i);
@@ -300,7 +300,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     np.setMinValue(0);
                     np.setValue(8);
                     np.setClickable(false);
-
+                    
                     np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
 
