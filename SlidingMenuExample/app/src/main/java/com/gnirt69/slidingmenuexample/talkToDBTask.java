@@ -28,6 +28,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String userRequest;
     private String requestAnswer;
     private String requestCallback;
+    private JSONObject dataObject;
     private String[] values;
     private String[] keys;
     private String[] gnames;
@@ -315,6 +316,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     private void storeValues(JSONObject object) {
         try {
+            this.dataObject = object.getJSONObject("DICT");
+            /*
             JSONArray jsonKeys = object.getJSONArray("KEYS");
             JSONArray jsonValues = object.getJSONArray("VALUES");
             System.out.println(jsonKeys.getString(0));
@@ -326,6 +329,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 values[i] = jsonValues.getString(i);
             }
             System.out.println(values[0]);
+            */
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -392,7 +396,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public void setRequestAnswer(String requestAnswer){
         this.requestAnswer = requestAnswer;
     }
-
+    public JSONObject getDataObject(){return this.dataObject;}
     public String[] getVariablesNames(){return this.variablesNames;}
     public String[] getVariablesTypes(){return this.variablesType;}
     public String[] getVariablesID(){return this.variablesID;}

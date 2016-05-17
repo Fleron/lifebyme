@@ -1,9 +1,14 @@
 package com.gnirt69.slidingmenuexample;
 
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.support.v7.app.AlertDialog;
+
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -20,12 +25,15 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
     String password;
     String confirm_password;
     int requestType;
+    private AccountManager mAccountManager;
     CheckBox checkBox;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_user);
+        mAccountManager = AccountManager.get(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
     }
@@ -122,6 +130,25 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
         task.setRequestType(requestType);
         task.execute();
     }
+/*
+    private void addNewAccount(String accountType, String authTokenType) {
+        final AccountManagerFuture<Bundle> future = mAccountManager.addAccount(accountType, authTokenType, null, null, this, new AccountManagerCallback<Bundle>() {
+            @Override
+            public void run(AccountManagerFuture<Bundle> future) {
+                try {
+                    Bundle bnd = future.getResult();
+                    showMessage("Account was created");
+                    Log.d("udinic", "AddNewAccount Bundle is " + bnd);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showMessage(e.getMessage());
+                }
+            }
+        }, null);
+    }
+*/
+
 
     private void onUserAlreadyExists(){
         EditText editTextPassword = ((EditText) findViewById(R.id.password));

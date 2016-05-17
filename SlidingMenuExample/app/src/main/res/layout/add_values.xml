@@ -32,7 +32,7 @@
             android:layout_height="200dp"
             android:baselineAligned="false"
             android:id="@+id/table_layout"
-            android:stretchColumns="1,2"
+            android:stretchColumns="1"
             >
 
             <TableRow
@@ -40,14 +40,6 @@
                 android:layout_height="match_parent">
 
             </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></TableRow>
         </TableLayout>
     </ScrollView>
 
