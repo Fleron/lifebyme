@@ -3,6 +3,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
     String gname;
     String username;
     int requestType;
+    Context context;
 
     public Fragment8() {
     }
@@ -30,6 +32,7 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.create_group, container, false);
+        context = rootView.getContext();
         setRetainInstance(true);
         username = ((MainActivity)getActivity()).getUser();
         groupName = (EditText) rootView.findViewById(R.id.add_group);
@@ -53,7 +56,7 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
 
     private void runDBtaskCreateGroup(int request){
 
-        talkToDBTask task = new talkToDBTask(this);
+        talkToDBTask task = new talkToDBTask(this,context);
         requestType = request;
         task.setGname(gname);
         task.setUsername(username);
@@ -66,7 +69,7 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
         //Send user to Social, add Toast.
     }
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         groupWasAdded();
     }
 

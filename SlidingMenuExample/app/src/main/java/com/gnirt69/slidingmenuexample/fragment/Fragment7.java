@@ -1,6 +1,7 @@
 package com.gnirt69.slidingmenuexample.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,14 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
     String username ="";
     String password ="";
     String variableName ="";
+    Context context;
     public Fragment7() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.add_variable, container, false);
+        context = rootView.getContext();
         setRetainInstance(true);
         button = (Button) rootView.findViewById(R.id.button3);
         text = (EditText) rootView.findViewById(R.id.add_variable);
@@ -71,7 +74,7 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
         return rootView;
     }
     public void runDBtask(int request){
-        task = new talkToDBTask(this);
+        task = new talkToDBTask(this,context);
         task.setUsername(username);
         task.setPwd(password);
         task.setVariableName(variableName);
@@ -81,7 +84,7 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
     }
 
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         Toast.makeText(getActivity().getApplicationContext(), "Variable added!", Toast.LENGTH_SHORT).show();
     }
 

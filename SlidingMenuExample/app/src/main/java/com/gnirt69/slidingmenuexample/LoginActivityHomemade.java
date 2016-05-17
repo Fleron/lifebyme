@@ -38,7 +38,7 @@ public class LoginActivityHomemade extends ActionBarActivity implements OnTalkTo
         }
     }
     private void runDBtask(){
-        talkToDBTask task = new talkToDBTask(this);
+        talkToDBTask task = new talkToDBTask(this,this);
         task.setUsername(username);
         task.setPwd(password);
         task.setRequestType(1);
@@ -58,7 +58,7 @@ public class LoginActivityHomemade extends ActionBarActivity implements OnTalkTo
     }
 
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         Intent r = new Intent(LoginActivityHomemade.this, MainActivity.class);
         r.putExtra("username", username);
         r.putExtra("password", password);

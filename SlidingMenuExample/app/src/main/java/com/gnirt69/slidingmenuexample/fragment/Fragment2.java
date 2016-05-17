@@ -3,6 +3,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,16 +25,23 @@ import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     String[] keys;
     ArrayAdapter<String> adapter;
     List<String> list =new ArrayList<>();
+    private static int x_max = 30;
     String[] values;
     String user = "";
     String pwd = "";
@@ -42,6 +50,8 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     ArrayList<Double> workout;
     ArrayList<Double> sleep;
     ListView view;
+    JSONObject dataObject;
+    Context context;
     String[] items;
     GraphView graph;
     View rootView;
@@ -51,6 +61,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment2, container, false);
+        context = rootView.getContext();
         setRetainInstance(true);
         view = (ListView) rootView.findViewById(R.id.listView);
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,list);
@@ -65,19 +76,12 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
 
         return rootView;
     }
-
-
-
-
-
     private void setList(String item,String message) {
         list.add(message+item);
         adapter.notifyDataSetChanged();
     }
-
-
     private void getDBvalues(int request){
-        task = new talkToDBTask(this);
+        task = new talkToDBTask(this,context);
         user = ((MainActivity)getActivity()).getUser();
         task.setUsername(user);
         pwd = ((MainActivity)getActivity()).getPassword();
@@ -85,16 +89,29 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         task.setRequestType(request);
         task.execute();
     }
+    private LineGraphSeries<DataPoint> createDataLine(ArrayList<Double> valueList){
+        LineGraphSeries<DataPoint> returnDataSeries = new LineGraphSeries<>();
+        if(values != null) {
+            for (int i = 0; i < values.length; i++) {
+                Double tempValue = Double.valueOf(values[i]);
+                valueList.add(tempValue);
+                returnDataSeries.appendData(new DataPoint(i, tempValue), false, 100);
+            }
+        }
+        return returnDataSeries;
+    }
     private LineGraphSeries<DataPoint> receivedDataLine(int key,ArrayList<Double> valueList){
         LineGraphSeries<DataPoint> returnDataSeries = new LineGraphSeries<>();
         int j = 0;
-        for(int i = 0; i < keys.length; i++){
-            int tempKey = Integer.parseInt(keys[i]);
-            Double tempValue = Double.valueOf(values[i]);
-            if(tempKey == key){
-                valueList.add(tempValue);
-                returnDataSeries.appendData(new DataPoint(j,tempValue),false,100);
-                j++;
+        if(keys != null) {
+            for (int i = 0; i < keys.length; i++) {
+                int tempKey = Integer.parseInt(keys[i]);
+                Double tempValue = Double.valueOf(values[i]);
+                if (tempKey == key) {
+                    valueList.add(tempValue);
+                    returnDataSeries.appendData(new DataPoint(j, tempValue), false, 100);
+                    j++;
+                }
             }
         }
         return returnDataSeries;
@@ -109,8 +126,9 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
 
         //Här skapar vi våran graf, lämpligt nog döpt till "graph"
         graph = (GraphView) rootView.findViewById(R.id.graph);
-        setupGraph(graph);
-
+        setupSingleGraph(graph);
+        setupDataToGraph();
+        /*
         //PointsGraphSeries<DataPoint> seriesPoints = receivedDataPoints(1);
         LineGraphSeries<DataPoint> serieslineSleep = receivedDataLine(1,sleep);
         LineGraphSeries<DataPoint> serieslineworkout = receivedDataLine(2,workout);
@@ -140,6 +158,48 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
 
         graph.addSeries(serieslineSleep);
         graph.getSecondScale().addSeries(serieslineMood);
+        */
+    }
+    private void valuesForSingleGraph(String key){
+        try {
+            JSONArray jsonValues = dataObject.getJSONArray(key);
+            values = new String[jsonValues.length()];
+            for(int i = 0; i < jsonValues.length(); i++){
+                values[i] = jsonValues.getString(i);
+            }
+            System.out.println(Arrays.toString(values));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    private void setupDataToGraph(){
+        if(dataObject != null){
+            Iterator<String> keys = dataObject.keys();
+            String key = keys.next();
+
+            valuesForSingleGraph(key);
+
+            ArrayList<Double> temp= new ArrayList<>();
+            LineGraphSeries<DataPoint> serieslineTemp =createDataLine(temp);
+            setList(makeString(getMean(temp)),"Average "+key+": ");
+            setList(makeString((getMax(temp))),"Max "+key+": ");
+            setList(makeString(getMin(temp)),"Min "+key+": ");
+            serieslineTemp.setColor(Color.BLUE);
+            serieslineTemp.setTitle(key);
+            serieslineTemp.setDrawBackground(true);
+            serieslineTemp.setBackgroundColor(Color.argb(50,204,255,204));
+            graph.addSeries(serieslineTemp);
+
+        }
+    }
+    private void setupSomethingToGraph() {
+        if(dataObject != null){
+            Iterator<String> keys = dataObject.keys();
+            while(keys.hasNext()){
+                String key = keys.next();
+                //paintSingleGraph(key);
+            }
+        }
     }
     private String makeString(double x){
         DecimalFormat df = new DecimalFormat("#.#");
@@ -148,6 +208,8 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         return item;
     }
     private String checkCorrelation(ArrayList<Double> list1, ArrayList<Double> list2) {
+        double corr = 0;
+        if (list1 != null && list2 != null){
         while(!(list1.size() == list2.size())){
             if(list1.size()> list2.size()){
                 list1.remove(list1.size()-1);
@@ -157,12 +219,14 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         Double[] ys = list2.toArray(new Double[list2.size()]);
         double[] x = toPrimitive(xs);
         double[] y = toPrimitive(ys);
-        double corr = new KendallsCorrelation().correlation(x,y);
+        corr = new KendallsCorrelation().correlation(x,y);
+        }
         DecimalFormat df = new DecimalFormat("#.#");
         df.setRoundingMode(RoundingMode.CEILING);
 
 
         String item = df.format(corr*100)+"%";
+
         return item;
     }
     private double getMean(ArrayList<Double> x){
@@ -180,7 +244,6 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         double [] xh = toPrimitive(xs);
         return StatUtils.min(xh);
     }
-
     private PointsGraphSeries<DataPoint> receivedDataPoints(int key){
         PointsGraphSeries<DataPoint> returnDataSeries = new PointsGraphSeries<>();
         int j = 0;
@@ -208,7 +271,27 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         }
         return result;
     }
+    private void setupSingleGraph(GraphView graph){
+        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
+        graph.getGridLabelRenderer().setGridColor(Color.WHITE);
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("x-axel");
 
+        graph.getViewport().setXAxisBoundsManual(true);
+
+        graph.getViewport().setMaxX(x_max);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setBackgroundColor(Color.parseColor("#4DFFFFFF"));
+
+
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph.setTitle("Activity");
+        graph.getGridLabelRenderer().setNumHorizontalLabels(6);
+        graph.getGridLabelRenderer().setNumVerticalLabels(6);
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLUE);
+    }
     private void setupGraph(GraphView graph){
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
         graph.getGridLabelRenderer().setGridColor(Color.WHITE);
@@ -230,15 +313,14 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.parseColor("#CC5920"));
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLUE);
     }
-
     @Override
-    public void onTaskCompleted() {
-        keys = task.getKeys();
+    public void onTaskCompleted(int request) {
+        /*keys = task.getKeys();
         values = task.getValues();
-
+        */
+        this.dataObject = task.getDataObject();
         runGraph(rootView);
     }
-
     @Override
     public void onTaskFailed() {
         System.out.println("fail");

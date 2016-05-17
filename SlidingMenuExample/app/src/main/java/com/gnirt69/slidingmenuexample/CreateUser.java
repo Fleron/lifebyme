@@ -123,7 +123,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
 
     }*/
     public void checkUserExists(int request){
-        talkToDBTask task = new talkToDBTask(this);
+        talkToDBTask task = new talkToDBTask(this,this);
         task.setUsername(username);
         task.setPwd(password);
         requestType = request;
@@ -166,7 +166,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
         return false;
     }
     private void runDBtaskAddUser(int request,boolean addEmail){
-        talkToDBTask task = new talkToDBTask(this);
+        talkToDBTask task = new talkToDBTask(this,this);
         requestType = request;
         task.setUsername(username);
         task.setPwd(password);
@@ -183,7 +183,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
         startActivity(r);
     }
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         if(requestType == 1){
             onUserAlreadyExists();
 

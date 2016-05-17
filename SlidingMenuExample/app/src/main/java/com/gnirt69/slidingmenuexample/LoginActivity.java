@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -43,6 +44,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
 
+    private static final String LOGIN_CREDENTIALS = "login_form_user";
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
@@ -59,6 +61,8 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private String username;
     private String password;
+    private SharedPreferences prefSettings;
+    private SharedPreferences.Editor prefEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.email);
+        checkAllreadyUser();
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -93,6 +98,21 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private void checkAllreadyUser() {
+        prefSettings = getSharedPreferences(LOGIN_CREDENTIALS,MODE_PRIVATE);
+        username = prefSettings.getString("user","@error_code");
+        password = prefSettings.getString("pwd","@error_code");
+
+
+
+        //start login task.
+        talkToDBTask task = new talkToDBTask(this,this);
+        task.setUsername(username);
+        task.setPwd(password);
+        task.setRequestType(1);
+        task.execute();
     }
 
     public void onButtonClick(View V){
@@ -161,7 +181,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             showProgress(true);
 
             //start login task.
-            talkToDBTask task = new talkToDBTask(this);
+            talkToDBTask task = new talkToDBTask(this,this);
             task.setUsername(username);
             task.setPwd(password);
             task.setRequestType(1);
@@ -261,12 +281,18 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     }
 
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
         mAuthTask = null;
         showProgress(false);
         Intent r = new Intent(LoginActivity.this, MainActivity.class);
         r.putExtra("username", username);
         r.putExtra("password", password);
+        prefSettings = getSharedPreferences(LOGIN_CREDENTIALS,MODE_PRIVATE);
+        prefEditor = prefSettings.edit();
+        prefEditor.putString("user",username);
+        prefEditor.putString("pwd", password);
+        Boolean saved = prefEditor.commit();
+        if(saved) System.out.println("HURRA! FÖR FAN");
         System.out.println(username);
         System.out.println(password);
         System.out.println("from login");
@@ -279,7 +305,11 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         if(username.contains("alex")){
             mUsernameView.setError("this user does not exist");
             mUsernameView.requestFocus();
-        }else {
+        }else if(username.length()< 2){
+            mUsernameView.setError("Enter username");
+            mUsernameView.requestFocus();
+        }
+        else {
             mPasswordView.setError(getString(R.string.error_incorrect_password));
             mPasswordView.requestFocus();
         }

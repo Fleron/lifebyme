@@ -36,7 +36,7 @@ public class ForgotPassword extends ActionBarActivity implements OnTalkToDBFinis
     }
 
     @Override
-    public void onTaskCompleted() {
+    public void onTaskCompleted(int request) {
 
     }
 
