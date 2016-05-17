@@ -4,9 +4,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +25,7 @@ import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
-
 import com.wefika.horizontalpicker.HorizontalPicker;
-
-
-import com.hrules.horizontalnumberpicker.HorizontalNumberPicker;
-import com.hrules.horizontalnumberpicker.HorizontalNumberPickerListener;
-
 
 import java.util.Arrays;
 
@@ -220,7 +212,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 TextView text = new TextView(getActivity());
 
                 text.setText(variableNames[i]);
-                text.setGravity(Gravity.CENTER_VERTICAL);
+                //text.setGravity(Gravity.CENTER_VERTICAL);
                 text.setId(i);
                 lp.setMargins(5, 5,5,5);
                 lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -230,6 +222,24 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 if (variableTypes[i].contains("TEST2")) {
                     //RelativeLayout rl2 = new RelativeLayout(getActivity());
                     //row.addView(rl2, params);
+                    //View view = inflater.inflate(R.layout.radiogroup,null);
+                    //radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
+
+                    /*
+
+                    radioGroup = new RadioGroup(getActivity());
+                    radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+                    RadioButton btn1 = new RadioButton(getActivity());
+                    btn1.setId(R.id.btn1);
+                    RadioButton btn2 = new RadioButton(getActivity());
+                    btn2.setId(R.id.btn2);
+                    RadioButton btn3 = new RadioButton(getActivity());
+                    btn3.setId(R.id.btn3);
+                    radioGroup.addView(btn1);
+                    radioGroup.addView(btn2);
+                    radioGroup.addView(btn3);
+                    //radioGroup.setGravity(Gravity.CENTER);
+                    */
                     View view = inflater.inflate(R.layout.radiogroup,null);
                     radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
 

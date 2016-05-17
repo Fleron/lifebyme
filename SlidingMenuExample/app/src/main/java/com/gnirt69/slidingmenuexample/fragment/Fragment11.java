@@ -6,16 +6,14 @@ package com.gnirt69.slidingmenuexample.fragment;
  */
 
 import android.app.Fragment;
-
 import android.content.Context;
-
 import android.graphics.Color;
 import android.graphics.Typeface;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,17 +24,14 @@ import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
 
-import java.util.Arrays;
-
 public class Fragment11 extends Fragment implements OnTalkToDBFinish {
     Button add_member;
     talkToDBTask task;
     int requestType;
     String groupID;
     String [] groupMembers;
-
+    String  requestStatus;
     Context context;
-
     String toUser;
     String fromUser;
     EditText user_to_add;
@@ -64,10 +59,18 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
             @Override
             public void onClick(View view) {
                 toUser = user_to_add.getText().toString();
-                System.out.println("F: "+fromUser);
-                System.out.println("T: "+toUser);
-                System.out.println("Group ID: "+groupID);
-                runDBtaskSendRequest(11);
+                if(!toUser.equals(fromUser)){
+                    runDBtaskSendRequest(11);
+                    final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                }
+                else{
+                    Toast.makeText(getActivity().getApplicationContext(), "You are already in this group...", Toast.LENGTH_SHORT).show();
+                    final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    user_to_add.setText("");/**/
+                }/**/
+
             }
         });
 
@@ -77,7 +80,6 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
     public void getUsername(){
         fromUser = ((MainActivity)getActivity()).getUser();
     }
-
 
     private void runDBtaskSendRequest(int request){
 
@@ -89,6 +91,7 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
         task.setRequestType(requestType);
         task.execute();
     }
+
     private void runDBtaskGetGroupMembers(int request){
         task = new talkToDBTask(this,context);
         requestType = request;
@@ -98,8 +101,6 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
     }
 
     void generateTable(){
-        System.out.println("members:");
-        System.out.println(Arrays.toString(groupMembers));
         LinearLayout ll = (LinearLayout) rootView.findViewById(R.id.members_layout);
         for (int i = 0; i < groupMembers.length; i++) {
             Button btn = new Button(getActivity());
@@ -123,12 +124,38 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
         }
     }
 
-
-
     @Override
     public void onTaskCompleted(int request) {
-        groupMembers = task.getGroupMembers();
-        generateTable();
+
+        if (request == 9){
+            System.out.println(request);
+            groupMembers = task.getGroupMembers();
+            generateTable();
+        }
+        else if(request == 11){
+            requestStatus = task.getRequestStatus();
+            switch (requestStatus) {
+                case "REQUESTSENT":
+                    user_to_add.setText("");
+                    Toast.makeText(getActivity().getApplicationContext(), "A request has been sent to "+toUser+".", Toast.LENGTH_SHORT).show();
+                    break;
+                case "REQUESTEXIST":
+                    user_to_add.setText("");
+                    Toast.makeText(getActivity().getApplicationContext(), "A request has already been sent to "+toUser+".", Toast.LENGTH_SHORT).show();
+                    break;
+                case "NOTFOUND":
+                    user_to_add.setText("");
+                    /**/Toast.makeText(getActivity().getApplicationContext(), "Username "+toUser+" does not exist.", Toast.LENGTH_SHORT).show();
+                    break;
+                case "MEMBEREXIST":
+                    user_to_add.setText("");
+                    Toast.makeText(getActivity().getApplicationContext(), toUser+" is already in this group.", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
+
+        }
+
     }
 
     @Override
