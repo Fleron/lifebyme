@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Switch xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="60dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/switch1"
+    android:checked="false"
+    android:textOff="No"
+    android:textOn="Yes"
+    android:layout_alignParentBottom="true"
+    android:layout_marginLeft="53dp"
+    android:layout_marginStart="53dp"
+    />

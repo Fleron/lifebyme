@@ -204,8 +204,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 RelativeLayout rl = new RelativeLayout(getActivity());
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-                //row.setBackgroundResource(R.drawable.tableborder);
-                //rl.setBackgroundResource(R.drawable.tableborder);
+                row.setBackgroundResource(R.drawable.tableborder);
+                rl.setBackgroundResource(R.drawable.tableborder);
                 //row.setLayoutParams(params);
                 //row.setBackgroundColor(Color.BLACK);
                 row.addView(rl, params);
@@ -240,6 +240,9 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     radioGroup.addView(btn3);
                     //radioGroup.setGravity(Gravity.CENTER);
                     */
+                    View view = inflater.inflate(R.layout.radiogroup,null);
+                    radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
+
                     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         public void onCheckedChanged(RadioGroup group, int checkedId) {
                             switch (checkedId) {
@@ -273,8 +276,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 } else if (variableTypes[i].contains("binary")) {
                     //RelativeLayout rl2 = new RelativeLayout(getActivity());
                     //row.addView(rl2, params);
-                    //View view = inflater.inflate(R.layout.switch_button,null);
-                    //mySwitch = (Switch) view.findViewById(R.id.switch1);
+                    View view = inflater.inflate(R.layout.switch_button,null);
+                    mySwitch = (Switch) view.findViewById(R.id.switch1);
 
                     Tswich = false;
                     //mySwitch.setPadding(0,0,250,0);
@@ -300,8 +303,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 } else if (variableTypes[i].contains("TEST3") || variableTypes[i].contains("TEST")) {
                     //RelativeLayout rl2 = new RelativeLayout(getActivity());
                     //row.addView(rl2, params);
-                    //View view = inflater.inflate(R.layout.numberpicker_frag1,null);
-                    //np = (NumberPicker) view.findViewById(R.id.numberPicker2);
+                    View view = inflater.inflate(R.layout.numberpicker_frag1,null);
+                    np = (NumberPicker) view.findViewById(R.id.numberPicker2);
 
                     np.setMaxValue(24);
                     np.setMinValue(0);
@@ -322,32 +325,11 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     //lp.addRule(RelativeLayout.RIGHT_OF,i);
                     //np.setLayoutParams(lp);
                     rl.addView(np);
-                    ;
+
                     //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
                     table.addView(row, i);
 
-                /*
-                np2.getButtonMinusView().setTextColor(Color.argb(255,255,255,255));
-                np2.getButtonMinusView().setScaleY(1.5f);
-                np2.getButtonMinusView().setScaleX(2);
-                np2.getButtonPlusView().setTextColor(Color.argb(255,255,255,255));
-                np2.getTextValueView().setTextColor(Color.argb(255,255,255,255));
 
-                np2.setListener(new HorizontalNumberPickerListener() {
-                    @Override
-                    public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
-                        System.out.println(value);
-                    }
-                });
-                */
-                /*
-                np.setListener(new HorizontalNumberPickerListener() {
-                    @Override
-                    public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
-                        hoursSleep = value;
-                        System.out.println(value);
-                    }
-                });*/
                 } else if (i == 3 && np2 != null) {
                     np2.setValues(cs);
 
