@@ -228,7 +228,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     /*
 
                     radioGroup = new RadioGroup(getActivity());
-                    radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+                    radioGroup.setOrientation(LinearLayout.HORIrZONTAL);
                     RadioButton btn1 = new RadioButton(getActivity());
                     btn1.setId(R.id.btn1);
                     RadioButton btn2 = new RadioButton(getActivity());

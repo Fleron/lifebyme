@@ -26,6 +26,7 @@ import com.gnirt69.slidingmenuexample.talkToDBTask;
 
 public class Fragment11 extends Fragment implements OnTalkToDBFinish {
     Button add_member;
+    Button leave_group;
     talkToDBTask task;
     int requestType;
     String groupID;
@@ -53,8 +54,11 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
         user_to_add = (EditText) rootView.findViewById(R.id.search_user);
         getUsername();
         runDBtaskGetGroupMembers(9);
+        leave_group = (Button)rootView.findViewById(R.id.leave_group);
         add_member = (Button)rootView.findViewById(R.id.add_member);
         add_member.setOnClickListener(new View.OnClickListener() {
+
+
 
             @Override
             public void onClick(View view) {
@@ -69,8 +73,14 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
                     final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                     user_to_add.setText("");/**/
-                }/**/
+                }
+            }
+        });
 
+        leave_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("leave group");
             }
         });
 
