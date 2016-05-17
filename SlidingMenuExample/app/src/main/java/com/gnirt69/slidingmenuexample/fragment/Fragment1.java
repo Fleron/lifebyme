@@ -232,22 +232,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     //row.addView(rl2, params);
                     View view = inflater.inflate(R.layout.radiogroup,null);
                     radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
-
-                    /*
-
-                    radioGroup = new RadioGroup(getActivity());
-                    radioGroup.setOrientation(LinearLayout.HORIZONTAL);
-                    RadioButton btn1 = new RadioButton(getActivity());
-                    btn1.setId(R.id.btn1);
-                    RadioButton btn2 = new RadioButton(getActivity());
-                    btn2.setId(R.id.btn2);
-                    RadioButton btn3 = new RadioButton(getActivity());
-                    btn3.setId(R.id.btn3);
-                    radioGroup.addView(btn1);
-                    radioGroup.addView(btn2);
-                    radioGroup.addView(btn3);
-                    //radioGroup.setGravity(Gravity.CENTER);
-                    */
+                    
                     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         public void onCheckedChanged(RadioGroup group, int checkedId) {
                             switch (checkedId) {
@@ -330,32 +315,11 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     //lp.addRule(RelativeLayout.RIGHT_OF,i);
                     //np.setLayoutParams(lp);
                     rl.addView(np);
-                    ;
+
                     //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
                     table.addView(row, i);
 
-                /*
-                np2.getButtonMinusView().setTextColor(Color.argb(255,255,255,255));
-                np2.getButtonMinusView().setScaleY(1.5f);
-                np2.getButtonMinusView().setScaleX(2);
-                np2.getButtonPlusView().setTextColor(Color.argb(255,255,255,255));
-                np2.getTextValueView().setTextColor(Color.argb(255,255,255,255));
 
-                np2.setListener(new HorizontalNumberPickerListener() {
-                    @Override
-                    public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
-                        System.out.println(value);
-                    }
-                });
-                */
-                /*
-                np.setListener(new HorizontalNumberPickerListener() {
-                    @Override
-                    public void onHorizontalNumberPickerChanged(HorizontalNumberPicker horizontalNumberPicker, int value) {
-                        hoursSleep = value;
-                        System.out.println(value);
-                    }
-                });*/
                 } else if (i == 3 && np2 != null) {
                     np2.setValues(cs);
 
