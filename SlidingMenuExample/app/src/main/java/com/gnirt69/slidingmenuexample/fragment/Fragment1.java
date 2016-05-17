@@ -43,7 +43,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     //HorizontalNumberPicker np2;
     TableLayout table;
     HorizontalPicker np2;
-
+    LayoutInflater inflater;
     String [] variableNames;
     String [] variableTypes;
     String [] variableIDS;
@@ -64,7 +64,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
-
+        this.inflater = inflater;
         rootView = (ViewGroup) inflater.inflate(R.layout.add_values, container,false);
         LinearLayout view = (LinearLayout)LayoutInflater.from(getActivity()).inflate(R.layout.test,null);
         np2 = (HorizontalPicker) view.findViewById(R.id.numberPicker);
@@ -203,21 +203,30 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 TableRow row = new TableRow(getActivity());
                 RelativeLayout rl = new RelativeLayout(getActivity());
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                //row.setBackgroundResource(R.drawable.tableborder);
+                //rl.setBackgroundResource(R.drawable.tableborder);
                 //row.setLayoutParams(params);
                 //row.setBackgroundColor(Color.BLACK);
                 row.addView(rl, params);
                 TextView text = new TextView(getActivity());
 
                 text.setText(variableNames[i]);
-                lp.setMargins(5, 5, 5, 5);
-                lp.addRule(RelativeLayout.ALIGN_LEFT);
+                //text.setGravity(Gravity.CENTER_VERTICAL);
+                text.setId(i);
+                lp.setMargins(5, 5,5,5);
+                lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 text.setLayoutParams(lp);
                 rl.addView(text);
-                System.out.println("hej");
-                if (i == 1) {
-                    RelativeLayout rl2 = new RelativeLayout(getActivity());
-                    row.addView(rl2, params);
+
+                if (variableTypes[i].contains("TEST2")) {
+                    //RelativeLayout rl2 = new RelativeLayout(getActivity());
+                    //row.addView(rl2, params);
+                    //View view = inflater.inflate(R.layout.radiogroup,null);
+                    //radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
+
+                    /*
+
                     radioGroup = new RadioGroup(getActivity());
                     radioGroup.setOrientation(LinearLayout.HORIZONTAL);
                     RadioButton btn1 = new RadioButton(getActivity());
@@ -230,20 +239,21 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     radioGroup.addView(btn2);
                     radioGroup.addView(btn3);
                     //radioGroup.setGravity(Gravity.CENTER);
+                    */
                     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         public void onCheckedChanged(RadioGroup group, int checkedId) {
                             switch (checkedId) {
-                                case R.id.btn1:
+                                case R.id.radioButton:
                                     mood = 5;
                                     System.out.println(mood);
                                     // mood = good
                                     break;
-                                case R.id.btn2:
+                                case R.id.radioButton2:
                                     mood = 0;
                                     System.out.println(mood);
                                     // mood = ok
                                     break;
-                                case R.id.btn3:
+                                case R.id.radioButton3:
                                     mood = -5;
                                     System.out.println(mood);
                                     // mood = not good
@@ -251,20 +261,21 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                             }
                         }
                     });
-                    lp.setMargins(200, 5, 200, 5);
-                    lp.addRule(RelativeLayout.ALIGN_RIGHT);
+                    //lp.setMargins(50, 5, 150, 5);
+                    lp.addRule(RelativeLayout.RIGHT_OF,i);
                     radioGroup.setLayoutParams(lp);
-                    rl2.addView(radioGroup);
+                    rl.addView(radioGroup);
 
                     //row.addView(text);
                     //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
                     table.addView(row, i);
 
-                } else if (i == 2) {
-                    RelativeLayout rl2 = new RelativeLayout(getActivity());
-                    row.addView(rl2, params);
-                    mySwitch = new Switch(getActivity());
-                    mySwitch.setChecked(false);
+                } else if (variableTypes[i].contains("binary")) {
+                    //RelativeLayout rl2 = new RelativeLayout(getActivity());
+                    //row.addView(rl2, params);
+                    //View view = inflater.inflate(R.layout.switch_button,null);
+                    //mySwitch = (Switch) view.findViewById(R.id.switch1);
+
                     Tswich = false;
                     //mySwitch.setPadding(0,0,250,0);
                     mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -279,93 +290,24 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                             }
                         }
                     });
-                    lp.setMargins(200, 5, 200, 5);
-                    lp.addRule(RelativeLayout.ALIGN_RIGHT);
+                    //lp.setMargins(150, 100, 150, 5);
+                    lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                     mySwitch.setLayoutParams(lp);
-                    rl2.addView(mySwitch);
+                    rl.addView(mySwitch);
                     //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
                     table.addView(row, i);
 
-/*=======
-        if(variableNames != null) {
-            for (int i = 0; i < variableNames.length; i++) {
-                TableRow row = new TableRow(getActivity());
-                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-                row.setLayoutParams(params);
-                TextView text = new TextView(getActivity());
-                text.setWidth(400);
-                text.setPadding(20, 5, 5, 5);
-                text.setGravity(Gravity.CENTER);
-                text.setText(variableNames[i]);
-                System.out.println("hej");
-                if (i == 1) {
-                    radioGroup = new RadioGroup(getActivity());
-                    radioGroup.setOrientation(LinearLayout.HORIZONTAL);
-                    RadioButton btn1 = new RadioButton(getActivity());
-                    btn1.setId(R.id.btn1);
-                    RadioButton btn2 = new RadioButton(getActivity());
-                    btn2.setId(R.id.btn2);
-                    RadioButton btn3 = new RadioButton(getActivity());
-                    btn3.setId(R.id.btn3);
-                    radioGroup.addView(btn1);
-                    radioGroup.addView(btn2);
-                    radioGroup.addView(btn3);
-                    radioGroup.setGravity(Gravity.CENTER);
-                    radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            switch (checkedId) {
-                                case R.id.btn1:
-                                    mood = 5;
-                                    System.out.println(mood);
-                                    // mood = good
-                                    break;
-                                case R.id.btn2:
-                                    mood = 0;
-                                    System.out.println(mood);
-                                    // mood = ok
-                                    break;
-                                case R.id.btn3:
-                                    mood = -5;
-                                    System.out.println(mood);
-                                    // mood = not good
-                                    break;
-                            }
-                        }
-                    });
-                    row.addView(text);
-                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
-                    row.addView(radioGroup);
-                    table.addView(row, i);
+                } else if (variableTypes[i].contains("TEST3") || variableTypes[i].contains("TEST")) {
+                    //RelativeLayout rl2 = new RelativeLayout(getActivity());
+                    //row.addView(rl2, params);
+                    //View view = inflater.inflate(R.layout.numberpicker_frag1,null);
+                    //np = (NumberPicker) view.findViewById(R.id.numberPicker2);
 
-                } else if (i == 2) {
-                    mySwitch = new Switch(getActivity());
-                    mySwitch.setChecked(false);
-                    Tswich = false;
-                    mySwitch.setPadding(0, 0, 250, 0);
-                    mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (Tswich == false) {
-                                Tswich = true;
-                                work = 1;
-                            } else {
-                                Tswich = false;
-                                work = 0;
-                            }
->>>>>>> 67f33b6de46c9d45af22a74f37bdc97cd46d72ab
-*/
-
-
-                } else if (i == 3) {
-                    RelativeLayout rl2 = new RelativeLayout(getActivity());
-                    row.addView(rl2, params);
-                    np = new NumberPicker(getActivity());
                     np.setMaxValue(24);
                     np.setMinValue(0);
                     np.setValue(8);
                     np.setClickable(false);
-                    np.setScaleX(0.8f);
-                    np.setScaleY(0.8f);
+
                     np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
 
@@ -376,10 +318,10 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                             System.out.println(hoursSleep);
                         }
                     });
-                    lp.setMargins(200, 5, 200, 5);
-                    lp.addRule(RelativeLayout.ALIGN_RIGHT);
-                    np.setLayoutParams(lp);
-                    rl2.addView(np);
+                    //lp.setMargins(200, 5, 200, 5);
+                    //lp.addRule(RelativeLayout.RIGHT_OF,i);
+                    //np.setLayoutParams(lp);
+                    rl.addView(np);
                     ;
                     //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
                     table.addView(row, i);
@@ -406,7 +348,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                         System.out.println(value);
                     }
                 });*/
-                } else if (i == 4 && np2 != null) {
+                } else if (i == 3 && np2 != null) {
                     np2.setValues(cs);
 
                     np2.setOnItemSelectedListener(new HorizontalPicker.OnItemSelected() {
@@ -421,13 +363,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     row.addView(np2);
                     table.addView(row, i);
                 } else {
-                    Button btn = new Button(getActivity());
-                    btn.setText("placeholder");
-                    row.addView(text);
-                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
-                    row.addView(btn);
 
-                    table.addView(row, i);
 
                 }
             }
