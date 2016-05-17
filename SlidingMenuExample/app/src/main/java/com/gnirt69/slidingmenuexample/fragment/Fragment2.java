@@ -92,12 +92,8 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
             int tempKey = Integer.parseInt(keys[i]);
             Double tempValue = Double.valueOf(values[i]);
             if(tempKey == key){
-                System.out.println(values[i]);
-                System.out.println("i= "+i);
-                System.out.println(tempValue);
                 valueList.add(tempValue);
                 returnDataSeries.appendData(new DataPoint(j,tempValue),false,100);
-                System.out.println("i= "+i);
                 j++;
             }
         }
@@ -192,9 +188,9 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
             int tempKey = Integer.parseInt(keys[k]);
             int tempValue = Integer.parseInt(values[k]);
             if(tempKey == key){
-                System.out.println(values[k]);
+
                 returnDataSeries.appendData(new DataPoint(j,tempValue),false,100);
-                System.out.println("k= "+k);
+
                 j++;
             }
         }
@@ -239,6 +235,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     public void onTaskCompleted() {
         keys = task.getKeys();
         values = task.getValues();
+
         runGraph(rootView);
     }
 

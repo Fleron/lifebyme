@@ -20,8 +20,11 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String username;
     private String pwd;
     private String email;
+    private String groupName;
     private String[] values;
     private String[] keys;
+    private String[] gnames;
+    private String[] gids;
     private String variableType;
     private String URL;
     private int requestType;
@@ -45,6 +48,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         //}
         try {
             JSONObject object = new JSONObject(response.toString());
+            System.out.println(object.toString());
             System.out.println(object.toString());
             if (!checkFail(object)) {
                 System.out.println("check fail funkar");
@@ -72,6 +76,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     System.out.println("lägg in sharedpref här för nyckel!");
                     output = "TRUE";
                 }
+                else if (checkType(object).contains("GROUPDATA")) {
+                    storeGroups(object);
+                    output = "TRUE";
+                }
             }
 
             System.out.println(output);
@@ -92,7 +100,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         if(result.contains("TRUE")){
             listener.onTaskCompleted();
-            System.out.println(result);
+            System.out.println("result: "+result);
             System.out.println("values added");
         }
         else{
@@ -123,6 +131,15 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             case 5:
                 addVariable(username,pwd,variableName,variableType);
                 break;
+            case 6:
+                createGroup(groupName, username);
+                break;
+            case 7:
+                addUserToGroup(groupName, username);
+                break;
+            case 8:
+                getGroups(username);
+                break;
         }
     }
 
@@ -138,6 +155,24 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLBasic(user, pwd, program);
         System.out.println(URL);
         //setupConnection(new String[]{URL});
+    }
+
+    private void storeGroups(JSONObject object) {
+        try {
+            JSONArray jsonGroupNames = object.getJSONArray("GROUPNAME");
+            JSONArray jsonGroupIds = object.getJSONArray("GROUPID");
+            System.out.println(jsonGroupNames.getString(0));
+            gnames = new String[jsonGroupNames.length()];
+            gids = new String[jsonGroupIds.length()];
+
+            for (int i = 0; i < jsonGroupNames.length(); i++) {
+                gnames[i] = jsonGroupNames.getString(i);
+                gids[i] = jsonGroupIds.getString(i);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void storeValues(JSONObject object) {
@@ -163,10 +198,24 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLNewUser(user, pwd, email);
         //setupConnection(new String[]{URL});
     }
+
+    private void createGroup(String groupName, String username) {
+        this.URL = setupURLNewGroup(groupName,username);
+        //setupConnection(new String[]{URL});
+    }
+    private void getGroups(String username) {
+        this.URL = setupURLGetGroups(username);
+        //setupConnection(new String[]{URL});
+    }
+    private void addUserToGroup(String groupName, String username) {
+        this.URL = setupURLAddUserToGroup(groupName,username);
+        //setupConnection(new String[]{URL});
+    }
     public void setVariableName(String variableName){
         this.variableName = variableName;
     }
     public void setUsername(String username){
+        System.out.println("username username: "+username);
         this.username = username;
     }
     public void setPwd(String pwd){
@@ -174,6 +223,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     public void setEmail(String email){
         this.email = email;
+    }
+    public void setGname(String groupName){
+        this.groupName = groupName;
     }
     public void setValues(String[] values){
         this.values = values;
@@ -195,6 +247,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public String getUsername(){
         return this.username;
     }
+
     public String getPwd(){
         return this.pwd;
     }
@@ -203,6 +256,12 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     public String[] getKeys(){
         return this.keys;
+    }
+    public String[] getGroupNames(){
+        return this.gnames;
+    }
+    public String[] getGroupIDs(){
+        return this.gids;
     }
 
     private void sendValues(String user, String pwd, String[] values, String[] keys) {
@@ -353,6 +412,53 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             data += "&" + URLEncoder.encode("pwd", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
             data += "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
 
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
+    private String setupURLNewGroup(String groupName, String username) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "NewGroup.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("gname", "UTF-8") + "=" + URLEncoder.encode(groupName, "UTF-8");
+            data += "&" + URLEncoder.encode("uname", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
+    private String setupURLAddUserToGroup(String groupName, String username) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "NewGroup.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("gname", "UTF-8") + "=" + URLEncoder.encode(groupName, "UTF-8");
+            data += "&" + URLEncoder.encode("uname", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
+    private String setupURLGetGroups(String username) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "grouplist.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("uname", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             failureHandler();

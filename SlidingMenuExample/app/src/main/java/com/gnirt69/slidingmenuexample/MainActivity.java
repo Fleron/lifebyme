@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.gnirt69.slidingmenuexample.adapter.SlidingMenuAdapter;
 import com.gnirt69.slidingmenuexample.fragment.Fragment1;
+import com.gnirt69.slidingmenuexample.fragment.Fragment10;
 import com.gnirt69.slidingmenuexample.fragment.Fragment2;
 import com.gnirt69.slidingmenuexample.fragment.Fragment3;
 import com.gnirt69.slidingmenuexample.fragment.Fragment4;
@@ -32,6 +33,7 @@ import com.gnirt69.slidingmenuexample.fragment.Fragment5;
 import com.gnirt69.slidingmenuexample.fragment.Fragment6;
 import com.gnirt69.slidingmenuexample.fragment.Fragment7;
 import com.gnirt69.slidingmenuexample.fragment.Fragment8;
+import com.gnirt69.slidingmenuexample.fragment.Fragment9;
 import com.gnirt69.slidingmenuexample.model.ItemSlideMenu;
 
 import java.util.ArrayList;
@@ -221,6 +223,16 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             case 7:
                 fragment = new Fragment8();
                 fragmenttag += "8";
+                break;
+
+            case 8:
+                fragment = new Fragment9();
+                fragmenttag += "9";
+                break;
+
+            case 9:
+                fragment = new Fragment10();
+                fragmenttag += "10";
                 break;
 
             default:

@@ -3,26 +3,32 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.gnirt69.slidingmenuexample.MainActivity;
+import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
+import com.gnirt69.slidingmenuexample.talkToDBTask;
 
-public class Fragment4 extends Fragment {
+public class Fragment4 extends Fragment implements OnTalkToDBFinish {
 
-    private TextView textView;
-    private SensorManager mSensorManager;
-    private Sensor mStepCounterSensor;
-    private Sensor mStepDetectorSensor;
     private View rootView;
     Button button;
+    Button select_group;
+    String username;
+    int requestType;
+    talkToDBTask task;
+    private String[] gnames;
+    private String[] gids;
+    LinearLayout.LayoutParams params;
+
 
     public Fragment4() {
     }
@@ -33,7 +39,11 @@ public class Fragment4 extends Fragment {
         //changeText(MainActivity.steps_taken);
         setRetainInstance(true);
 
+        getUsername();
+        runDBtaskGetGroups(8);
+
         button = (Button) rootView.findViewById(R.id.button3);
+
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -43,11 +53,54 @@ public class Fragment4 extends Fragment {
             }
         });
 
+
+
+
         return rootView;
     }
-    public void changeText(String result){
-        //this textview should be bound in the fragment onCreate as a member variable
-        //TextView text =(TextView)rootView.findViewById(R.id.textViewStep);
-        //text.setText(result);
+
+    void generateGroupButton(){
+        LinearLayout ll = (LinearLayout) rootView.findViewById(R.id.groups_layout);
+        for (int i = 0; i < gnames.length; i++) {
+            Button btn = new Button(getActivity());
+            btn.setText(gnames[i]);
+            btn.setBackgroundResource(R.drawable.mybutton);
+            btn.setTextSize(20);
+            btn.setTextColor(Color.parseColor("#157065"));
+            btn.setTypeface(null, Typeface.BOLD);
+            params = (LinearLayout.LayoutParams) ll.getLayoutParams();
+            params.setMargins(0,5,0,0);
+
+            ll.addView(btn,params);
+        }
+
+
+
+    }
+
+
+    public void getUsername(){
+        username = ((MainActivity)getActivity()).getUser();
+    }
+
+    private void runDBtaskGetGroups(int request){
+
+        task = new talkToDBTask(this);
+        requestType = request;
+        task.setUsername(username);
+        task.setRequestType(requestType);
+        task.execute();
+    }
+
+    @Override
+    public void onTaskCompleted() {
+        gids = task.getGroupIDs();
+        gnames = task.getGroupNames();
+        generateGroupButton();
+    }
+
+    @Override
+    public void onTaskFailed() {
+        System.out.println("error error error");
     }
 }
