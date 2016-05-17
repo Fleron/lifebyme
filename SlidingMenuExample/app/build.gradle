@@ -28,5 +28,5 @@ dependencies {
     compile 'com.jjoe64:graphview:4.0.1'
     compile 'com.wefika:horizontal-picker:1.1.1'
     compile 'com.hrules:horizontalnumberpicker:1.1.1'
-    compile 'com.jakewharton:butterknife:8.0.0'
+
 }
