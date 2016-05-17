@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
     <NumberPicker xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="62dp"
         android:layout_height="102dp"
         android:id="@+id/numberPicker2"
         android:orientation="horizontal"
+        android:layout_marginRight="102dp"
+        android:layout_marginEnd="102dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true" />
