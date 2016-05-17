@@ -1,7 +1,6 @@
 package com.gnirt69.slidingmenuexample;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import org.json.JSONArray;
@@ -26,10 +25,16 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String email;
     private String groupName;
     private String GID;
+    private String userRequest;
+    private String requestAnswer;
+    private String requestCallback;
     private String[] values;
     private String[] keys;
     private String[] gnames;
     private String[] gids;
+    private String[] gnames_request;
+    private String[] gids_request;
+    private String[] request_sender;
     private String[] gMembers;
     private String variableType;
     private String[] variablesType;
@@ -59,7 +64,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         try {
             JSONObject object = new JSONObject(response.toString());
             System.out.println(object.toString());
-            System.out.println(object.toString());
             if (!checkFail(object)) {
                 System.out.println("check fail funkar");
                 if (checkType(object).contains("LOGIN")) {
@@ -87,7 +91,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     output = "TRUE";
                 }
                 else if (checkType(object).contains("GROUPDATA")) {
-                    storeGroups(object);
+                    storeGroupsAndRequests(object);
                     output = "TRUE";
                 } else if(checkType(object).contains("VARIABLES")){
                     storeVariables(object);
@@ -98,7 +102,35 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     output = "TRUE";
                 }
                 else if (checkType(object).contains("REQUESTSENT")) {
-                    System.out.println("ReQuEsTSeNd");
+                    setRequestStatus("REQUESTSENT");
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("REQUESTEXIST")) {
+                    setRequestStatus("REQUESTEXIST");
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("NOTFOUND")) {
+                    setRequestStatus("NOTFOUND");
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("MEMBEREXIST")) {
+                    setRequestStatus("MEMBEREXIST");
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("ACCEPTREQUEST_SUCCESS")) {
+                    setRequestCallback("ACCEPTREQUEST_SUCCESS");
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("REJECTREQUEST_SUCCESS")) {
+                    setRequestCallback("REJECTREQUEST_SUCCESS");
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("ACCEPTREQUEST_FAIL")) {
+                    setRequestCallback("ACCEPTREQUEST_FAIL");
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("REJECTREQUEST_FAIL")) {
+                    setRequestCallback("REJECTREQUEST_FAIL");
                     output = "TRUE";
                 }
             }
@@ -174,7 +206,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private void runCommandOnRequest(){
         System.out.println("request:");
         System.out.println(username);
-        System.out.println(toUser);
+        System.out.println(requestAnswer);
         System.out.println(GID);
         switch (requestType) {
             case 1:
@@ -203,7 +235,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 addUserToGroup(groupName, username);
                 break;
             case 8:
-                getGroups(username);
+                getGroupsAndRequests(username);
                 break;
             case 9:
                 setGroupMembers(GID);
@@ -213,6 +245,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 break;
             case 11:
                 sendRequest(username,toUser,GID);
+                break;
+            case 12:
+                answerRequest(username,GID, requestAnswer);
                 break;
         }
     }
@@ -233,17 +268,30 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         System.out.println(URL);
         //setupConnection(new String[]{URL});
     }
-    private void storeGroups(JSONObject object) {
+    private void storeGroupsAndRequests(JSONObject object) {
         try {
             JSONArray jsonGroupNames = object.getJSONArray("GROUPNAME");
             JSONArray jsonGroupIds = object.getJSONArray("GROUPID");
+            JSONArray jsonGroupNamesRequests = object.getJSONArray("GROUPNAMEREQUESTS");
+            JSONArray jsonGroupIDRequests = object.getJSONArray("GROUPIDREQUESTS");
+            JSONArray jsonRequestSender = object.getJSONArray("REQUESTSENDER");
             System.out.println(jsonGroupNames.getString(0));
             gnames = new String[jsonGroupNames.length()];
             gids = new String[jsonGroupIds.length()];
+            gnames_request = new String[jsonGroupNamesRequests.length()];
+            gids_request = new String[jsonGroupIDRequests.length()];
+            request_sender = new String[jsonRequestSender.length()];
+
 
             for (int i = 0; i < jsonGroupNames.length(); i++) {
                 gnames[i] = jsonGroupNames.getString(i);
                 gids[i] = jsonGroupIds.getString(i);
+            }
+
+            for (int i = 0; i < jsonGroupIDRequests.length(); i++){
+                gnames_request[i] = jsonGroupNamesRequests.getString(i);
+                gids_request[i] = jsonGroupIDRequests.getString(i);
+                request_sender[i] = jsonRequestSender.getString(i);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -291,8 +339,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLNewGroup(groupName,username);
         //setupConnection(new String[]{URL});
     }
-    private void getGroups(String username) {
-        this.URL = setupURLGetGroups(username);
+    private void getGroupsAndRequests(String username) {
+        this.URL = setupURLGetGroupsAndRequests(username);
         //setupConnection(new String[]{URL});
     }
     private void setGroupMembers(String GID) {
@@ -303,7 +351,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLsendRequest(fromUser, toUser, GID);
         //setupConnection(new String[]{URL});
     }
-
     private void addUserToGroup(String groupName, String username) {
         this.URL = setupURLAddUserToGroup(groupName,username);
         //setupConnection(new String[]{URL});
@@ -319,6 +366,12 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     public void setPwd(String pwd){
         this.pwd = pwd;
+    }
+    public void setRequestStatus(String status){
+        this.userRequest = status;
+    }
+    public void setRequestCallback(String status){
+        this.requestCallback = status;
     }
     public void setEmail(String email){
         this.email = email;
@@ -336,6 +389,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public void setRequestType(int requestType){
         this.requestType = requestType;
     }
+    public void setRequestAnswer(String requestAnswer){
+        this.requestAnswer = requestAnswer;
+    }
+
     public String[] getVariablesNames(){return this.variablesNames;}
     public String[] getVariablesTypes(){return this.variablesType;}
     public String[] getVariablesID(){return this.variablesID;}
@@ -352,11 +409,26 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public String getUsername(){
         return this.username;
     }
+    public String getRequestStatus(){
+        return this.userRequest;
+    }
+    public String [] getGroupNamesRequest(){
+        return this.gnames_request;
+    }
+    public String [] getGroupIDsRequest(){
+        return this.gids_request;
+    }
+    public String [] getRequestSender(){
+        return this.request_sender;
+    }
     public String getPwd(){
         return this.pwd;
     }
     public String[] getValues(){
         return this.values;
+    }
+    public String getRequestCallback(){
+        return this.requestCallback;
     }
     public String[] getKeys(){
         return this.keys;
@@ -372,6 +444,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     private void sendValues(String user, String pwd, String[] values, String[] keys) {
         this.URL = setupURLValueSend(user, pwd, values, keys);
+        //setupConnection(new String[]{URL});
+    }
+    private void answerRequest(String user, String GID, String requestAnswer) {
+        this.URL = setupURLAnswerRequest(user, GID, requestAnswer);
         //setupConnection(new String[]{URL});
     }
     private void getValues(String user, String pwd) {
@@ -544,7 +620,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
-    private String setupURLGetGroups(String username) {
+    private String setupURLGetGroupsAndRequests(String username) {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
         String program = "grouplist.php?";
         String data = null;
@@ -572,7 +648,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
-
     private String setupURLsendRequest(String fromUser, String toUser,String GID) {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
         String program = "usersearch.php?";
@@ -589,6 +664,23 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
+    private String setupURLAnswerRequest(String user, String GID, String requestAnswer) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "requestanswer.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("user", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+            data += "&" + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
+            data += "&" + URLEncoder.encode("requestanswer", "UTF-8") + "=" + URLEncoder.encode(requestAnswer, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
 
 }
 
