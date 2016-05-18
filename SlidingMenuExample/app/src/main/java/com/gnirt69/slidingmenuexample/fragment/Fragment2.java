@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -67,6 +68,17 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         view = (ListView) rootView.findViewById(R.id.listView);
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,list);
         view.setAdapter(adapter);
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object obj = parent.getItemAtPosition(position);
+                String objString = obj.toString();
+                int end = objString.indexOf(":");
+                String k = objString.substring(0,end);
+                graph.removeAllSeries();
+                setupDataToGraph(k);
+            }
+        });
         mood = new ArrayList<>();
         workout = new ArrayList<>();
         sleep = new ArrayList<>();
@@ -123,7 +135,24 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         //Här skapar vi våran graf, lämpligt nog döpt till "graph"
         graph = (GraphView) rootView.findViewById(R.id.graph);
         setupSingleGraph(graph);
-        setupDataToGraph();
+        Iterator<String> keys = dataObject.keys();
+        String key = keys.next();
+        setupDataToGraph(key);
+
+    }
+    private String[] getValuesFromObject(String key){
+        try {
+            JSONArray jsonValues = dataObject.getJSONArray(key);
+            String [] returnString = new String[jsonValues.length()];
+            for(int i = 0; i < jsonValues.length(); i++){
+                returnString[i] = jsonValues.getString(i);
+            }
+
+            return returnString;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
     private void valuesForSingleGraph(String key){
@@ -133,29 +162,59 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
             for(int i = 0; i < jsonValues.length(); i++){
                 values[i] = jsonValues.getString(i);
             }
-            System.out.println(Arrays.toString(values));
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-    private void setupDataToGraph(){
+    private ArrayList<Double> makeArrayListFromStringList(String[] array){
+        ArrayList<Double> valueList = new ArrayList<>();
+        if(array != null) {
+            for (int i = 0; i < array.length; i++) {
+                Double tempValue = Double.valueOf(array[i]);
+                valueList.add(tempValue);
+            }
+        }
+        return valueList;
+    }
+    private void setupDataToGraph(String key){
         if(dataObject != null){
-            Iterator<String> keys = dataObject.keys();
-            String key = keys.next();
 
             valuesForSingleGraph(key);
 
             ArrayList<Double> temp= new ArrayList<>();
             LineGraphSeries<DataPoint> serieslineTemp =createDataLine(temp);
-                setList(makeString(getMean(temp)), "Average " + key + ": ");
-                setList(makeString((getMax(temp))), "Max " + key + ": ");
-                setList(makeString(getMin(temp)), "Min " + key + ": ");
-                serieslineTemp.setColor(Color.BLUE);
-                serieslineTemp.setTitle(key);
-                serieslineTemp.setDrawBackground(true);
-                serieslineTemp.setBackgroundColor(Color.argb(50, 204, 255, 204));
-                graph.addSeries(serieslineTemp);
+            adapter.clear();
+            adapter.notifyDataSetChanged();
+            getCorrelationList(values);
+            setList(makeString(getMean(temp)), key + " Average: ");
+            setList(makeString((getMax(temp))),key + " Max: ");
+            setList(makeString(getMin(temp)),key + " Min: ");
+            serieslineTemp.setColor(Color.BLUE);
+            serieslineTemp.setTitle(key);
+            serieslineTemp.setDrawBackground(true);
+            serieslineTemp.setBackgroundColor(Color.argb(50, 204, 255, 204));
+            graph.addSeries(serieslineTemp);
 
+        }
+    }
+    private void getCorrelationList(String[] check){
+        if(dataObject != null) {
+            Iterator<String> keys = dataObject.keys();
+            ArrayList<Double> checkArray = makeArrayListFromStringList(check);
+            System.out.println("check arr: "+Arrays.toString(check));
+            while(keys.hasNext()) {
+                String key = keys.next();
+                String[] valueTemp = getValuesFromObject(key);
+                System.out.println("valueTemp: "+Arrays.toString(valueTemp));
+                if(!(Arrays.equals(valueTemp,check))){
+                    System.out.println(valueTemp.equals(check));
+                    ArrayList<Double> valueTempDouble = makeArrayListFromStringList(valueTemp);
+                    String corr = checkCorrelation(checkArray,valueTempDouble);
+                    setList(corr,key+ ": ");
+
+                }
+
+            }
         }
     }
     private void setupSomethingToGraph() {
@@ -196,23 +255,21 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         return item;
     }
     private double getMean(ArrayList<Double> x){
-        if(x.size()>0) {
+        if(x.size() > 0) {
             Double[] xs = x.toArray(new Double[x.size()]);
             double[] xh = toPrimitive(xs);
             return StatUtils.mean(xh);
-        }
-        return 0;
+        }return 0;
     }
     private double getMax(ArrayList<Double> x){
-        if(x.size()>0) {
+        if(x.size() > 0) {
             Double[] xs = x.toArray(new Double[x.size()]);
             double[] xh = toPrimitive(xs);
             return StatUtils.max(xh);
-        }
-        return 0;
+        }return 0;
     }
     private double getMin(ArrayList<Double> x){
-        if(x.size()>0) {
+        if(x.size() > 0) {
             Double[] xs = x.toArray(new Double[x.size()]);
             double[] xh = toPrimitive(xs);
             return StatUtils.min(xh);

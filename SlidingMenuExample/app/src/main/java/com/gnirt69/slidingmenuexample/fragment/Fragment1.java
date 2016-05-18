@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -26,7 +27,6 @@ import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
-import com.wefika.horizontalpicker.HorizontalPicker;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,14 +38,16 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     talkToDBTask task;
     String username ="";
     String password ="";
-    CharSequence[] cs = new CharSequence[]{
-            "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16",
-            "17","18","19","20","21","22","23","24"
+    String[] cs = new String[]{
+            "24","23","22","21","20","19","18","17","16","15","14","13","12","11","10","9","8",
+            "7","6","5","4","3","2","1","0"
+    };
+    String[] nums =new String[] {
+            "3","2","1","0","-1","-2","-3"
     };
     NumberPicker np;
 
     TableLayout table;
-    HorizontalPicker np2;
     LayoutInflater inflater;
     String [] variableNames;
     String [] variableTypes;
@@ -59,6 +61,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     String work;
     String j;
     private Switch mySwitch;
+    private CheckBox mCheckBox;
     boolean Tswich;
     Button button;
     Button add_variable;
@@ -72,8 +75,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         setRetainInstance(true);
         this.inflater = inflater;
         rootView = (ViewGroup) inflater.inflate(R.layout.add_values, container,false);
-        LinearLayout view = (LinearLayout)LayoutInflater.from(getActivity()).inflate(R.layout.test,null);
-        np2 = (HorizontalPicker) view.findViewById(R.id.numberPicker);
+        //LinearLayout view = (LinearLayout)LayoutInflater.from(getActivity()).inflate(R.layout.test,null);
+
 
         context = rootView.getContext();
 
@@ -168,8 +171,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 
                 rl.addView(text);
-
-                if (variableTypes[i].contains("scale")) {
+                //används inte
+                if (variableTypes[i].contains("shit")) {
                     View view = inflater.inflate(R.layout.radiogroup,rl,false);
                     radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
                     valueMap.put(j,"0");
@@ -181,19 +184,19 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                                 case R.id.radioButton:
                                     mood =""+ 5;
                                     valueMap.put(k,mood);
-                                    System.out.println(mood);
+                                    System.out.println("nyckel: "+k);
                                     // mood = good
                                     break;
                                 case R.id.radioButton2:
                                     mood =""+ 0;
                                     valueMap.put(k,mood);
-                                    System.out.println(mood);
+                                    System.out.println("nyckel: "+k);
                                     // mood = ok
                                     break;
                                 case R.id.radioButton3:
                                     mood =""+ -5;
                                     valueMap.put(k,mood);
-                                    System.out.println(mood);
+                                    System.out.println("nyckel: "+k);
                                     // mood = not good
                                     break;
                             }
@@ -206,11 +209,27 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
                 } else if (variableTypes[i].contains("binary")) {
 
-                    View view = inflater.inflate(R.layout.switch_button,rl,false);
-                    mySwitch = (Switch) view.findViewById(R.id.switch1);
+                    //View view = inflater.inflate(R.layout.switch_button,rl,false);
+                    View view = inflater.inflate(R.layout.checkbox,rl,false);
+                    mCheckBox = (CheckBox)view.findViewById(R.id.checkbox_frag1);
+                    //mySwitch = (Switch) view.findViewById(R.id.switch1);
 
                     Tswich = false;
                     valueMap.put(j,"0");
+                    mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        String k = j;
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if(isChecked){
+                                valueMap.put(k,""+1);
+                                System.out.println("nyckel: "+k);
+                            }else{
+                                valueMap.put(k,""+0);
+                                System.out.println("nyckel: "+k);
+                            }
+                        }
+                    });
+                    /*
                     mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         String k = j;
                         @Override
@@ -226,31 +245,42 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                             }
                         }
                     });
-
-                    rl.addView(mySwitch);
+                    */
+                    rl.addView(mCheckBox);
 
                     table.addView(row, i);
 
-                } else if (variableTypes[i].contains("amount")) {
+                } else if (variableTypes[i].contains("amount")|| variableTypes[i].contains("scale")) {
 
                     View view = inflater.inflate(R.layout.numberpicker_frag1,rl,false);
                     np = (NumberPicker) view.findViewById(R.id.numberPicker2);
+                    if(variableTypes[i].contains("amount")){
+                        np.setDisplayedValues(cs);
+                        np.setMaxValue(cs.length-1);
+                        np.setMinValue(0);
+                        np.setValue(8);
+                        valueMap.put(j,"8");
+                    }else{
+                        np.setDisplayedValues(nums);
+                        np.setMinValue(0);
+                        np.setMaxValue(nums.length-1);
+                        np.setValue(nums.length/2);
 
-                    np.setMaxValue(24);
-                    np.setMinValue(0);
-                    np.setValue(8);
+                        valueMap.put(j,"0");
+                    }
+                    np.setWrapSelectorWheel(false);
                     np.setClickable(false);
                     
                     np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
-                    valueMap.put(j,"8");
                     np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                         String k = j;
                         @Override
                         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                            hoursSleep = ""+newVal;
+                            String[] list = picker.getDisplayedValues();
+                            hoursSleep = list[newVal];
                             valueMap.put(k,hoursSleep);
-                            System.out.println(hoursSleep);
+                            System.out.println("nyckel: "+k);
                         }
                     });
 
@@ -258,20 +288,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     table.addView(row, i);
 
 
-                } else if (i == 3 && np2 != null) {
-                    np2.setValues(cs);
 
-                    np2.setOnItemSelectedListener(new HorizontalPicker.OnItemSelected() {
-                        @Override
-                        public void onItemSelected(int index) {
-                            hoursSleep = ""+index + 1;
-                            System.out.println(hoursSleep);
-                        }
-                    });
-                    row.addView(text);
-
-                    row.addView(np2);
-                    table.addView(row, i);
                 } else {
 
 
