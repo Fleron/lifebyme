@@ -182,10 +182,11 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     void populateTable() {
 
         table = (TableLayout) rootView.findViewById(R.id.table_layout);
-        values = new String[variableIDS.length];
-        keys = new String[variableIDS.length];
+
         valueMap = new HashMap<>();
         if (variableNames != null) {
+            values = new String[variableIDS.length];
+            keys = new String[variableIDS.length];
             for (int i = 0; i < variableNames.length; i++) {
                 j = variableIDS[i];
                 System.out.println(j);
@@ -212,9 +213,10 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
                     View view = inflater.inflate(R.layout.radiogroup,rl,false);
                     radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
-
+                    valueMap.put(j,"0");
                     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         String k = j;
+
                         public void onCheckedChanged(RadioGroup group, int checkedId) {
                             switch (checkedId) {
                                 case R.id.radioButton:
@@ -249,7 +251,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     mySwitch = (Switch) view.findViewById(R.id.switch1);
 
                     Tswich = false;
-
+                    valueMap.put(j,"0");
                     mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         String k = j;
                         @Override
@@ -282,7 +284,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     
                     np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
-
+                    valueMap.put(j,"8");
                     np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                         String k = j;
                         @Override
