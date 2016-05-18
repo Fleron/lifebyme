@@ -167,7 +167,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
                 rl.addView(text);
 
-                if (variableTypes[i].contains("TEST2")) {
+                if (variableTypes[i].contains("scale")) {
                     View view = inflater.inflate(R.layout.radiogroup,rl,false);
                     radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
                     valueMap.put(j,"0");
@@ -229,7 +229,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
                      table.addView(row, i);
 
-                } else if (variableTypes[i].contains("TEST3") || variableTypes[i].contains("TEST")) {
+                } else if (variableTypes[i].contains("amount")) {
 
                     View view = inflater.inflate(R.layout.numberpicker_frag1,rl,false);
                     np = (NumberPicker) view.findViewById(R.id.numberPicker2);
