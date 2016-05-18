@@ -5,7 +5,6 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -229,7 +227,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
                     rl.addView(mySwitch);
 
-                    table.addView(row, i);
+                     table.addView(row, i);
 
                 } else if (variableTypes[i].contains("TEST3") || variableTypes[i].contains("TEST")) {
 
