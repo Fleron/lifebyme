@@ -33,6 +33,7 @@ public class Fragment9 extends Fragment {
         groupID = ((MainActivity)getActivity()).getGID();
         title = (TextView) rootView.findViewById(R.id.groupName);
         title.setText(groupName);
+        title.setAllCaps(true);
 
         members = (Button)rootView.findViewById(R.id.members);
         members.setOnClickListener(new View.OnClickListener() {

@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gnirt69.slidingmenuexample.MainActivity;
@@ -35,8 +36,10 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
     Context context;
     String toUser;
     String fromUser;
+    String groupName;
     EditText user_to_add;
     View rootView;
+    TextView title;
     LinearLayout.LayoutParams params;
 
 
@@ -50,7 +53,12 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
         context = rootView.getContext();
         setRetainInstance(true);
 
+        groupName = ((MainActivity) getActivity()).getGname();
         groupID = ((MainActivity) getActivity()).getGID();
+        title = (TextView) rootView.findViewById(R.id.groupName);
+        title.setText(groupName);
+        title.setAllCaps(true);
+
         user_to_add = (EditText) rootView.findViewById(R.id.search_user);
         getUsername();
         runDBtaskGetGroupMembers(9);
@@ -81,6 +89,7 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
             @Override
             public void onClick(View view) {
                 System.out.println("leave group");
+                runDBtaskLeaveGroup(13);
             }
         });
 
@@ -109,6 +118,16 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
         task.setRequestType(requestType);
         task.execute();
     }
+
+    private void runDBtaskLeaveGroup(int request){
+        task = new talkToDBTask(this,context);
+        requestType = request;
+        task.setGroupID(groupID);
+        task.setUsername(fromUser);
+        task.setRequestType(requestType);
+        task.execute();
+    }
+
 
     void generateTable(){
         LinearLayout ll = (LinearLayout) rootView.findViewById(R.id.members_layout);
@@ -162,8 +181,9 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
                     Toast.makeText(getActivity().getApplicationContext(), toUser+" is already in this group.", Toast.LENGTH_SHORT).show();
                     break;
             }
-
-
+        }
+        else if(request == 13) {
+            ((MainActivity) getActivity()).replaceFragment(3);
         }
 
     }
