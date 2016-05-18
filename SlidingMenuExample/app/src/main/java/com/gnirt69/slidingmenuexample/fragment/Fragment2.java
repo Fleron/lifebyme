@@ -39,6 +39,7 @@ import org.json.JSONObject;
 
 public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     String[] keys;
+    private static final int MAX_DATA_POINTS = 100000;
     ArrayAdapter<String> adapter;
     List<String> list =new ArrayList<>();
     private static int x_max = 30;
@@ -95,7 +96,8 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
             for (int i = 0; i < values.length; i++) {
                 Double tempValue = Double.valueOf(values[i]);
                 valueList.add(tempValue);
-                returnDataSeries.appendData(new DataPoint(i, tempValue), false, 100);
+                returnDataSeries.appendData(new DataPoint(i, tempValue),false,MAX_DATA_POINTS);
+
             }
         }
         return returnDataSeries;
