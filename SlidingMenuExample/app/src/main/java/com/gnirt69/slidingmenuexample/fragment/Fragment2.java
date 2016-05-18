@@ -197,9 +197,12 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         return item;
     }
     private double getMean(ArrayList<Double> x){
-        Double[] xs = x.toArray(new Double[x.size()]);
-        double [] xh = toPrimitive(xs);
-        return StatUtils.mean(xh);
+        if (x.size() > 0) {
+            Double[] xs = x.toArray(new Double[x.size()]);
+            double[] xh = toPrimitive(xs);
+            return StatUtils.mean(xh);
+        }
+        return 0;
     }
     private double getMax(ArrayList<Double> x){
         Double[] xs = x.toArray(new Double[x.size()]);
