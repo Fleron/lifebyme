@@ -68,6 +68,7 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
             public void onClick(View view) {
                 variableName = text.getText().toString();
                 runDBtask(5);
+                ((MainActivity) getActivity()).replaceFragment(0);
             }
         });
 

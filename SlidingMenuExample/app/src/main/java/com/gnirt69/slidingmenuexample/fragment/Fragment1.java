@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
@@ -59,7 +60,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     private Switch mySwitch;
     boolean Tswich;
     Button button;
-    Button add_variable;
+    ImageButton add_variable;
     Button skip_day;
     RadioGroup radioGroup;
     public Fragment1() {
@@ -75,8 +76,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
         context = rootView.getContext();
 
-        add_variable = (Button)rootView.findViewById(R.id.add_button2);
-        skip_day = (Button)rootView.findViewById(R.id.skip_button2);
+        add_variable = (ImageButton)rootView.findViewById(R.id.add_button2);
+        //skip_day = (Button)rootView.findViewById(R.id.skip_button2);
         username = ((MainActivity)getActivity()).getUser();
         password = ((MainActivity)getActivity()).getPassword();
 
@@ -115,14 +116,14 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             }
         });
 
-        skip_day.setOnClickListener(new View.OnClickListener() {
+/*        skip_day.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity().getApplicationContext(), "Day skipped!", Toast.LENGTH_SHORT).show();
                 System.out.println("skip day");
             }
-        });
+        });*/
 
         return rootView;
     }
