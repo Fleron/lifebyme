@@ -119,48 +119,12 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         return returnDataSeries;
     }
     private void runGraph(View rootView){
-        //Här nedanför hämtas värden från föregående aktivitet
-        //Intent i = getIntent();
-
-        //keys = i.getStringArrayExtra("keys");
-        //values = i.getStringArrayExtra("values");
-
 
         //Här skapar vi våran graf, lämpligt nog döpt till "graph"
         graph = (GraphView) rootView.findViewById(R.id.graph);
         setupSingleGraph(graph);
         setupDataToGraph();
-        /*
-        //PointsGraphSeries<DataPoint> seriesPoints = receivedDataPoints(1);
-        LineGraphSeries<DataPoint> serieslineSleep = receivedDataLine(1,sleep);
-        LineGraphSeries<DataPoint> serieslineworkout = receivedDataLine(2,workout);
-        LineGraphSeries<DataPoint> serieslineMood = receivedDataLine(3,mood);
-        setList(checkCorrelation(sleep,mood),"correlation between sleep and mood: ");
-        setList(makeString(getMean(sleep)),"Average sleep: ");
-        setList(makeString((getMax(sleep))),"Max sleep: ");
-        setList(makeString(getMin(sleep)),"Min sleep: ");
-        setList(checkCorrelation(sleep,workout),"correlation between sleep and workout: ");
-        setList(checkCorrelation(workout,mood),"correlation between workout and mood: ");
-        setList(makeString((getMean(mood))),"Average mood: ");
 
-        serieslineMood.setColor(Color.parseColor("#CC5920"));
-        serieslineSleep.setColor(Color.BLUE);
-
-
-        //Stil på grafen, alltså själva grafen och inte linjerna
-
-        serieslineSleep.setTitle("Sleep(hours)");
-        serieslineMood.setTitle("Mood");
-
-        serieslineMood.setDrawBackground(true);
-        serieslineMood.setBackgroundColor(Color.argb(50,204,255,204));
-        serieslineSleep.setDrawBackground(true);
-        serieslineSleep.setBackgroundColor(Color.argb(70,255,255,255));
-
-
-        graph.addSeries(serieslineSleep);
-        graph.getSecondScale().addSeries(serieslineMood);
-        */
     }
     private void valuesForSingleGraph(String key){
         try {
@@ -183,15 +147,16 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
 
             ArrayList<Double> temp= new ArrayList<>();
             LineGraphSeries<DataPoint> serieslineTemp =createDataLine(temp);
-            setList(makeString(getMean(temp)),"Average "+key+": ");
-            setList(makeString((getMax(temp))),"Max "+key+": ");
-            setList(makeString(getMin(temp)),"Min "+key+": ");
-            serieslineTemp.setColor(Color.BLUE);
-            serieslineTemp.setTitle(key);
-            serieslineTemp.setDrawBackground(true);
-            serieslineTemp.setBackgroundColor(Color.argb(50,204,255,204));
-            graph.addSeries(serieslineTemp);
-
+            if(temp!= null) {
+                setList(makeString(getMean(temp)), "Average " + key + ": ");
+                setList(makeString((getMax(temp))), "Max " + key + ": ");
+                setList(makeString(getMin(temp)), "Min " + key + ": ");
+                serieslineTemp.setColor(Color.BLUE);
+                serieslineTemp.setTitle(key);
+                serieslineTemp.setDrawBackground(true);
+                serieslineTemp.setBackgroundColor(Color.argb(50, 204, 255, 204));
+                graph.addSeries(serieslineTemp);
+            }
         }
     }
     private void setupSomethingToGraph() {
