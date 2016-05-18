@@ -147,7 +147,6 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
 
             ArrayList<Double> temp= new ArrayList<>();
             LineGraphSeries<DataPoint> serieslineTemp =createDataLine(temp);
-            if(temp!= null) {
                 setList(makeString(getMean(temp)), "Average " + key + ": ");
                 setList(makeString((getMax(temp))), "Max " + key + ": ");
                 setList(makeString(getMin(temp)), "Min " + key + ": ");
@@ -156,7 +155,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
                 serieslineTemp.setDrawBackground(true);
                 serieslineTemp.setBackgroundColor(Color.argb(50, 204, 255, 204));
                 graph.addSeries(serieslineTemp);
-            }
+
         }
     }
     private void setupSomethingToGraph() {
@@ -197,19 +196,27 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
         return item;
     }
     private double getMean(ArrayList<Double> x){
-        Double[] xs = x.toArray(new Double[x.size()]);
-        double [] xh = toPrimitive(xs);
-        return StatUtils.mean(xh);
+        if(x.size()>0) {
+            Double[] xs = x.toArray(new Double[x.size()]);
+            double[] xh = toPrimitive(xs);
+            return StatUtils.mean(xh);
+        }
+        return 0;
     }
     private double getMax(ArrayList<Double> x){
-        Double[] xs = x.toArray(new Double[x.size()]);
-        double [] xh = toPrimitive(xs);
-        return StatUtils.max(xh);
+        if(x.size()>0) {
+            Double[] xs = x.toArray(new Double[x.size()]);
+            double[] xh = toPrimitive(xs);
+            return StatUtils.max(xh);
+        }
+        return 0;
     }
     private double getMin(ArrayList<Double> x){
-        Double[] xs = x.toArray(new Double[x.size()]);
-        double [] xh = toPrimitive(xs);
-        return StatUtils.min(xh);
+        if(x.size()>0) {
+            Double[] xs = x.toArray(new Double[x.size()]);
+            double[] xh = toPrimitive(xs);
+            return StatUtils.min(xh);
+        }return 0;
     }
     private PointsGraphSeries<DataPoint> receivedDataPoints(int key){
         PointsGraphSeries<DataPoint> returnDataSeries = new PointsGraphSeries<>();
