@@ -26,6 +26,7 @@ import com.jjoe64.graphview.series.PointsGraphSeries;
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.RoundingMode;
@@ -34,8 +35,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class Fragment2 extends Fragment implements OnTalkToDBFinish {
     String[] keys;
@@ -183,6 +182,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish {
 
             ArrayList<Double> temp= new ArrayList<>();
             LineGraphSeries<DataPoint> serieslineTemp =createDataLine(temp);
+            
             setList(makeString(getMean(temp)),"Average "+key+": ");
             setList(makeString((getMax(temp))),"Max "+key+": ");
             setList(makeString(getMin(temp)),"Min "+key+": ");
