@@ -73,7 +73,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.email);
-        checkAllreadyUser();
+        //checkAllreadyUser();
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);

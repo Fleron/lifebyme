@@ -16,7 +16,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Arrays;
 
 public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String username;
@@ -29,6 +28,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String userRequest;
     private String requestAnswer;
     private String requestCallback;
+    private String sendStatus;
     private JSONObject dataObject;
     private String[] values;
     private String[] keys;
@@ -135,6 +135,17 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     setRequestCallback("REJECTREQUEST_FAIL");
                     output = "TRUE";
                 }
+                else if (checkType(object).contains("REMOVEUSER")) {
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("SENDEMAIL_SUCCESS")) {
+                    sendStatus = "SENDEMAIL_SUCCESS";
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("EMAIL_NOT_FOUND")) {
+                    sendStatus = "EMAIL_NOT_FOUND";
+                    output = "TRUE";
+                }
             }
 
 
@@ -149,7 +160,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             JSONArray jsonVID = object.getJSONArray("VariableID");
             JSONArray jsonVName = object.getJSONArray("VariableName");
             JSONArray jsonVType = object.getJSONArray("VariableType");
-            System.out.println(jsonVID.getString(0));
             variablesID = new String[jsonVID.length()];
             variablesNames = new String[jsonVName.length()];
             variablesType = new String[jsonVType.length()];
@@ -206,10 +216,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
     }
     private void runCommandOnRequest(){
-        System.out.println("request:");
-        System.out.println(username);
-        System.out.println(requestAnswer);
-        System.out.println(GID);
         switch (requestType) {
             case 1:
                 login(username, pwd);
@@ -251,6 +257,12 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             case 12:
                 answerRequest(username,GID, requestAnswer);
                 break;
+            case 13:
+                leaveGroup(username,GID);
+                break;
+            case 14:
+                sendEmail(email);
+                break;
         }
     }
     private void getUserVariables(String username,String pwd) {
@@ -277,7 +289,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             JSONArray jsonGroupNamesRequests = object.getJSONArray("GROUPNAMEREQUESTS");
             JSONArray jsonGroupIDRequests = object.getJSONArray("GROUPIDREQUESTS");
             JSONArray jsonRequestSender = object.getJSONArray("REQUESTSENDER");
-            System.out.println(jsonGroupNames.getString(0));
             gnames = new String[jsonGroupNames.length()];
             gids = new String[jsonGroupIds.length()];
             gnames_request = new String[jsonGroupNamesRequests.length()];
@@ -414,6 +425,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public String getUsername(){
         return this.username;
     }
+    public String getSendStatus(){
+        return this.sendStatus;
+    }
     public String getRequestStatus(){
         return this.userRequest;
     }
@@ -455,6 +469,15 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLAnswerRequest(user, GID, requestAnswer);
         //setupConnection(new String[]{URL});
     }
+    private void leaveGroup(String user, String GID) {
+        this.URL = setupURLLeaveGroup(user, GID);
+        //setupConnection(new String[]{URL});
+    }
+    private void sendEmail(String email) {
+        this.URL = setupURLSendEmail(email);
+        //setupConnection(new String[]{URL});
+    }
+
     private void getValues(String user, String pwd) {
         String program = "getdata.php?";
         this.URL = setupURLBasic(user, pwd, program);
@@ -686,6 +709,37 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
+    private String setupURLLeaveGroup(String user, String GID) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "removeuser.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("uname", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+            data += "&" + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+    private String setupURLSendEmail(String email) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "sendnewpassword.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
+
 
 
 }
