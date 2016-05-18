@@ -23,7 +23,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
 
         <RelativeLayout
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_weight="0.27">
+            android:layout_weight="0.05">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,18 +55,11 @@
                 android:textColor="#ffffff"
                 android:backgroundTint="@android:color/white"
                 android:layout_gravity="center_horizontal|right"
-                android:layout_centerVertical="true"
+                android:maxLength="15"
+                android:layout_marginTop="25dp"
+                android:layout_below="@+id/textView12"
                 android:layout_toRightOf="@+id/textView12"
-                android:layout_toEndOf="@+id/textView12"
-                android:maxLength="15" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="15dp">
+                android:layout_toEndOf="@+id/textView12" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -78,11 +71,13 @@
                 android:textColor="#167165"
                 android:background="@drawable/mybutton"
                 android:onClick="onButtonClick"
-                android:layout_marginBottom="50sp"
                 android:layout_weight="0"
                 android:layout_gravity="bottom|center"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_marginTop="25dp"
+                android:layout_below="@+id/add_group"
+                android:layout_alignLeft="@+id/add_group"
+                android:layout_alignStart="@+id/add_group"
+                android:layout_marginBottom="20dp" />
         </RelativeLayout>
 
     </LinearLayout>

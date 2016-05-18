@@ -83,7 +83,7 @@
             <RelativeLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="0.15"
@@ -122,6 +122,21 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Leave this group"
+                    android:id="@+id/leave_group"
+                    android:padding="15dp"
+                    android:textSize="15dp"
+                    android:textColor="#167165"
+                    android:background="@drawable/mybutton"
+                    android:onClick="onButtonClick"
+                    android:layout_weight="0"
+                    android:layout_gravity="right"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
 
             </RelativeLayout>
 

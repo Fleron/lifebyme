@@ -43,7 +43,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             "17","18","19","20","21","22","23","24"
     };
     NumberPicker np;
-    //HorizontalNumberPicker np2;
+
     TableLayout table;
     HorizontalPicker np2;
     LayoutInflater inflater;
@@ -81,51 +81,11 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         skip_day = (Button)rootView.findViewById(R.id.skip_button2);
         username = ((MainActivity)getActivity()).getUser();
         password = ((MainActivity)getActivity()).getPassword();
-        //View view2 =(View)inflater.inflate(R.layout.horizontal_number_picker,rootView,true);
-        //np2 = (HorizontalNumberPicker) view2.findViewById(R.id.numberPicker);
+
         runDBtask(null,null,10);
 
-
-
-
-
-        /*np = (HorizontalNumberPicker) rootView2.findViewById(R.id.numberPicker);
-
-        np.setMinValue(0);
-        np.setMaxValue(24);
-        np.getButtonMinusView().setTextColor(Color.argb(255,255,255,255));
-        np.getButtonMinusView().setScaleY(1.5f);
-        np.getButtonMinusView().setScaleX(2);
-
-
-        np.getButtonPlusView().setTextColor(Color.argb(255,255,255,255));
-        np.getTextValueView().setTextColor(Color.argb(255,255,255,255));
-        //np.setWrapSelectorWheel(false);*/
         button = (Button) rootView.findViewById(R.id.submit_button2);
-        /*
-        radioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                switch(checkedId) {
-                    case R.id.radioButton:
-                        mood = 5;
-                        // mood = good
-                        break;
-                    case R.id.radioButton2:
-                        mood =0;
-                        // mood = ok
-                        break;
-                    case R.id.radioButton3:
-                        mood = -5;
-                        // mood = not good
-                        break;
-                }
-            }
-        });
-        */
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,7 +170,6 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 rl.addView(text);
 
                 if (variableTypes[i].contains("TEST2")) {
-
                     View view = inflater.inflate(R.layout.radiogroup,rl,false);
                     radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
                     valueMap.put(j,"0");
@@ -310,7 +269,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                         }
                     });
                     row.addView(text);
-                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
+
                     row.addView(np2);
                     table.addView(row, i);
                 } else {
@@ -320,44 +279,6 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             }
         }
     }
-    void setMessage(String msg){
-        TextView txt=(TextView) rootView.findViewById(R.id.textView);
-        txt.setText(msg);
-    }
-   /* public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radioButton:
-                if (checked)
-                    //Mood: good
-                    mood = 5;
-                break;
-            case R.id.radioButton2:
-                if (checked)
-                    // Mood: OK
-                    mood = 0;
-                break;
-            case R.id.radioButton3:
-                if (checked)
-                    // Mood: Bad
-                    mood = -5;
-                break;
-        }
-    }
-    public void onSwitch(View v){
-
-        if(Tswich == false){
-            Tswich = true;
-            work = 1;
-        }
-        else{
-            Tswich = false;
-            work = 0;
-        }
-    }*/
     @Override
     public void onTaskCompleted(int request) {
         variableIDS = task.getVariablesID();
