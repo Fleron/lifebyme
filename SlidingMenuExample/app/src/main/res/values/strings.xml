@@ -31,6 +31,8 @@ Please note that correlation is not the same thing as causation, i e having two 
 LifeByME will not sell any personal information to third parties. </string>
 
     <string name = "skip_day">Skip day</string>
+    <string name = "yes">Yes</string>
+    <string name = "no">No</string>
     <string name = "daily_activity">Daily Activity</string>
     <string name = "submit">Submit</string>
     <string name = "add_variable">Add new</string>

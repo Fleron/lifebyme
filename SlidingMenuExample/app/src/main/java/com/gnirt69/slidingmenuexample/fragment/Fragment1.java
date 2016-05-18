@@ -5,6 +5,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import com.gnirt69.slidingmenuexample.talkToDBTask;
 import com.wefika.horizontalpicker.HorizontalPicker;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     ViewGroup rootView;
@@ -40,7 +43,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             "17","18","19","20","21","22","23","24"
     };
     NumberPicker np;
-    //HorizontalNumberPicker np2;
+
     TableLayout table;
     HorizontalPicker np2;
     LayoutInflater inflater;
@@ -48,10 +51,13 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     String [] variableTypes;
     String [] variableIDS;
     Context context;
-
-    int hoursSleep;
-    int mood;
-    int work;
+    String[] values;
+    Map<String,String> valueMap;
+    String[] keys;
+    String hoursSleep;
+    String mood;
+    String work;
+    String j;
     private Switch mySwitch;
     boolean Tswich;
     Button button;
@@ -75,63 +81,27 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         skip_day = (Button)rootView.findViewById(R.id.skip_button2);
         username = ((MainActivity)getActivity()).getUser();
         password = ((MainActivity)getActivity()).getPassword();
-        //View view2 =(View)inflater.inflate(R.layout.horizontal_number_picker,rootView,true);
-        //np2 = (HorizontalNumberPicker) view2.findViewById(R.id.numberPicker);
+
         runDBtask(null,null,10);
 
-
-
-
-
-        /*np = (HorizontalNumberPicker) rootView2.findViewById(R.id.numberPicker);
-
-        np.setMinValue(0);
-        np.setMaxValue(24);
-        np.getButtonMinusView().setTextColor(Color.argb(255,255,255,255));
-        np.getButtonMinusView().setScaleY(1.5f);
-        np.getButtonMinusView().setScaleX(2);
-
-
-        np.getButtonPlusView().setTextColor(Color.argb(255,255,255,255));
-        np.getTextValueView().setTextColor(Color.argb(255,255,255,255));
-        //np.setWrapSelectorWheel(false);*/
         button = (Button) rootView.findViewById(R.id.submit_button2);
-        /*
-        radioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                switch(checkedId) {
-                    case R.id.radioButton:
-                        mood = 5;
-                        // mood = good
-                        break;
-                    case R.id.radioButton2:
-                        mood =0;
-                        // mood = ok
-                        break;
-                    case R.id.radioButton3:
-                        mood = -5;
-                        // mood = not good
-                        break;
-                }
-            }
-        });
-        */
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("Timmars sömn: " + hoursSleep);
                 System.out.println("Tränat: " + Tswich);
                 System.out.println("Humör: " + mood);
-                System.out.println(Integer.toString(hoursSleep));
 
-                String[] values = {Integer.toString(hoursSleep), Integer.toString(work), Integer.toString(mood)};
-                String[] keys = {"1", "2", "3"};
+                int i = 0;
+                for(String key : valueMap.keySet()){
+                    values[i] = valueMap.get(key);
+                    keys[i] = key;
+                    i++;
+                }
+                System.out.println(Arrays.asList(valueMap));
                 System.out.println(Arrays.toString(values));
-                System.out.println(keys);
+                System.out.println(Arrays.toString(keys));
                 System.out.println(username);
                 System.out.println(password);
                 runDBtask(values, keys, 3);
@@ -156,31 +126,6 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             }
         });
 
-
-
-/*
-
-
-        mySwitch = (Switch) rootView.findViewById(R.id.switch1);
-        mySwitch.setChecked(false);
-        Tswich = false;
-        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(Tswich == false){
-                    Tswich = true;
-                    work = 1;
-                }
-                else{
-                    Tswich = false;
-                    work = 0;
-                }
-            }
-        });
-        mySwitch.setChecked(false);
-        Tswich = false;
-        */
         return rootView;
     }
     public void runDBtask(String[]values, String[] keys,int request){
@@ -198,112 +143,97 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
         table = (TableLayout) rootView.findViewById(R.id.table_layout);
 
+        valueMap = new HashMap<>();
         if (variableNames != null) {
+            values = new String[variableIDS.length];
+            keys = new String[variableIDS.length];
             for (int i = 0; i < variableNames.length; i++) {
+                j = variableIDS[i];
+                System.out.println(j);
                 TableRow row = new TableRow(getActivity());
                 RelativeLayout rl = new RelativeLayout(getActivity());
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
                 row.setBackgroundResource(R.drawable.tableborder);
-                rl.setBackgroundResource(R.drawable.tableborder);
-                //row.setLayoutParams(params);
-                //row.setBackgroundColor(Color.BLACK);
+
                 row.addView(rl, params);
-                TextView text = new TextView(getActivity());
+
+                View view2 = inflater.inflate(R.layout.text_frag1,rl,false);
+                TextView text = (TextView)view2.findViewById(R.id.textView_frag1);
 
                 text.setText(variableNames[i]);
-                //text.setGravity(Gravity.CENTER_VERTICAL);
+
                 text.setId(i);
                 lp.setMargins(5, 5,5,5);
                 lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                text.setLayoutParams(lp);
+
                 rl.addView(text);
 
                 if (variableTypes[i].contains("TEST2")) {
-                    //RelativeLayout rl2 = new RelativeLayout(getActivity());
-                    //row.addView(rl2, params);
-                    //View view = inflater.inflate(R.layout.radiogroup,null);
-                    //radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
-
-                    /*
-
-                    radioGroup = new RadioGroup(getActivity());
-                    radioGroup.setOrientation(LinearLayout.HORIrZONTAL);
-                    RadioButton btn1 = new RadioButton(getActivity());
-                    btn1.setId(R.id.btn1);
-                    RadioButton btn2 = new RadioButton(getActivity());
-                    btn2.setId(R.id.btn2);
-                    RadioButton btn3 = new RadioButton(getActivity());
-                    btn3.setId(R.id.btn3);
-                    radioGroup.addView(btn1);
-                    radioGroup.addView(btn2);
-                    radioGroup.addView(btn3);
-                    //radioGroup.setGravity(Gravity.CENTER);
-                    */
-                    View view = inflater.inflate(R.layout.radiogroup,null);
+                    View view = inflater.inflate(R.layout.radiogroup,rl,false);
                     radioGroup = (RadioGroup)view.findViewById(R.id.radioGroup);
-
+                    valueMap.put(j,"0");
                     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        String k = j;
+
                         public void onCheckedChanged(RadioGroup group, int checkedId) {
                             switch (checkedId) {
                                 case R.id.radioButton:
-                                    mood = 5;
+                                    mood =""+ 5;
+                                    valueMap.put(k,mood);
                                     System.out.println(mood);
                                     // mood = good
                                     break;
                                 case R.id.radioButton2:
-                                    mood = 0;
+                                    mood =""+ 0;
+                                    valueMap.put(k,mood);
                                     System.out.println(mood);
                                     // mood = ok
                                     break;
                                 case R.id.radioButton3:
-                                    mood = -5;
+                                    mood =""+ -5;
+                                    valueMap.put(k,mood);
                                     System.out.println(mood);
                                     // mood = not good
                                     break;
                             }
                         }
                     });
-                    //lp.setMargins(50, 5, 150, 5);
-                    //lp.addRule(RelativeLayout.RIGHT_OF,i);
-                    //radioGroup.setLayoutParams(lp);
+
                     rl.addView(radioGroup);
 
-                    //row.addView(text);
-                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
                     table.addView(row, i);
 
                 } else if (variableTypes[i].contains("binary")) {
-                    //RelativeLayout rl2 = new RelativeLayout(getActivity());
-                    //row.addView(rl2, params);
-                    View view = inflater.inflate(R.layout.switch_button,null);
+
+                    View view = inflater.inflate(R.layout.switch_button,rl,false);
                     mySwitch = (Switch) view.findViewById(R.id.switch1);
 
                     Tswich = false;
-                    //mySwitch.setPadding(0,0,250,0);
+                    valueMap.put(j,"0");
                     mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        String k = j;
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (Tswich == false) {
                                 Tswich = true;
-                                work = 1;
+                                work =""+ 1;
+                                valueMap.put(k,work);
                             } else {
                                 Tswich = false;
-                                work = 0;
+                                work =""+ 0;
+                                valueMap.put(k,work);
                             }
                         }
                     });
-                    //lp.setMargins(150, 100, 150, 5);
-                    //lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                   // mySwitch.setLayoutParams(lp);
+
                     rl.addView(mySwitch);
-                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
+
                     table.addView(row, i);
 
                 } else if (variableTypes[i].contains("TEST3") || variableTypes[i].contains("TEST")) {
-                    //RelativeLayout rl2 = new RelativeLayout(getActivity());
-                    //row.addView(rl2, params);
-                    View view = inflater.inflate(R.layout.numberpicker_frag1,null);
+
+                    View view = inflater.inflate(R.layout.numberpicker_frag1,rl,false);
                     np = (NumberPicker) view.findViewById(R.id.numberPicker2);
 
                     np.setMaxValue(24);
@@ -313,20 +243,18 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     
                     np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
-
+                    valueMap.put(j,"8");
                     np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                        String k = j;
                         @Override
                         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                            hoursSleep = newVal;
+                            hoursSleep = ""+newVal;
+                            valueMap.put(k,hoursSleep);
                             System.out.println(hoursSleep);
                         }
                     });
-                    //lp.setMargins(200, 5, 200, 5);
-                    //lp.addRule(RelativeLayout.RIGHT_OF,i);
-                    //np.setLayoutParams(lp);
-                    rl.addView(np);
 
-                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
+                    rl.addView(np);
                     table.addView(row, i);
 
 
@@ -336,12 +264,12 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     np2.setOnItemSelectedListener(new HorizontalPicker.OnItemSelected() {
                         @Override
                         public void onItemSelected(int index) {
-                            hoursSleep = index + 1;
+                            hoursSleep = ""+index + 1;
                             System.out.println(hoursSleep);
                         }
                     });
                     row.addView(text);
-                    //row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT));
+
                     row.addView(np2);
                     table.addView(row, i);
                 } else {
@@ -349,44 +277,6 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
                 }
             }
-        }
-    }
-    void setMessage(String msg){
-        TextView txt=(TextView) rootView.findViewById(R.id.textView);
-        txt.setText(msg);
-    }
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radioButton:
-                if (checked)
-                    //Mood: good
-                    mood = 5;
-                break;
-            case R.id.radioButton2:
-                if (checked)
-                    // Mood: OK
-                    mood = 0;
-                break;
-            case R.id.radioButton3:
-                if (checked)
-                    // Mood: Bad
-                    mood = -5;
-                break;
-        }
-    }
-    public void onSwitch(View v){
-
-        if(Tswich == false){
-            Tswich = true;
-            work = 1;
-        }
-        else{
-            Tswich = false;
-            work = 0;
         }
     }
     @Override

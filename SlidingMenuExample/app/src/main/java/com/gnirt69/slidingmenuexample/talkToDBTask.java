@@ -16,6 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
 
 public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String username;
@@ -540,6 +541,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
         String url = "";
         String program = "addval.php?";
+
 
         try {
             url = ipadress + program + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
