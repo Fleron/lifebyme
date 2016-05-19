@@ -56,12 +56,12 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/delete_account"
+        android:id="@+id/log_out"
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="Delete account"
+        android:text="Log out"
         android:textStyle="bold"
         android:layout_marginRight="0dp"
         android:layout_marginLeft="0dp"
