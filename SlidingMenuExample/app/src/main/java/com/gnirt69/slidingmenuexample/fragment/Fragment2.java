@@ -69,6 +69,8 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish{
                         @Override
                         public void onClick(View v) {
                             System.out.println(variableNames[v.getId()]);
+                            ((MainActivity)getActivity()).setVID(variableNames[v.getId()]);
+                            ((MainActivity)getActivity()).replaceFragment(11);
                         }
                     });
                     btn.setTextColor(Color.parseColor("#157065"));
