@@ -3,12 +3,15 @@ package com.gnirt69.slidingmenuexample.fragment;/**
  */
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.gnirt69.slidingmenuexample.LoginActivity;
 import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.R;
 
@@ -27,7 +30,14 @@ public class Fragment5 extends Fragment {
 
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).replaceFragment(0);
+                FragmentManager fm = getFragmentManager(); // or 'getSupportFragmentManager();'
+                int count = fm.getBackStackEntryCount();
+                for(int i = 0; i < count - 1; ++i) {
+                    fm.popBackStack();
+                }
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                ((MainActivity) getActivity()).logOut();
             }
         });
 

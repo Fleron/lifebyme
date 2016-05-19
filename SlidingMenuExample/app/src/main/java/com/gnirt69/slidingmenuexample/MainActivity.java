@@ -329,8 +329,9 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         mSensorManager.unregisterListener(this, mStepDetectorSensor);
     }
 
-
-
+    public void logOut(){
+        this.finish();
+    }
     private class receiver extends BroadcastReceiver{
 
         @Override
