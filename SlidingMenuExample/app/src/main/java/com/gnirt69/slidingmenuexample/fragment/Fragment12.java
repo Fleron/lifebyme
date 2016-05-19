@@ -42,6 +42,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
     String[] keys;
     private static final int MAX_DATA_POINTS = 100000;
     ArrayAdapter<String> adapter;
+    String firstVariable;
     List<String> list =new ArrayList<>();
     private static int x_max = 30;
     String[] values;
@@ -82,6 +83,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         mood = new ArrayList<>();
         workout = new ArrayList<>();
         sleep = new ArrayList<>();
+        firstVariable = ((MainActivity)getActivity()).getVID();
         getDBvalues(4);
 
 
@@ -130,14 +132,21 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         }
         return returnDataSeries;
     }
-    private void runGraph(View rootView){
+    private void runGraph(View rootView,String firstKey){
 
         //Här skapar vi våran graf, lämpligt nog döpt till "graph"
         graph = (GraphView) rootView.findViewById(R.id.graph);
         setupSingleGraph(graph);
-        Iterator<String> keys = dataObject.keys();
-        String key = keys.next();
-        setupDataToGraph(key);
+        if(firstKey != null){
+            //Iterator<String> keys = dataObject.keys();
+            //String key = keys.next();
+            setupDataToGraph(firstKey);
+
+        }else{
+            Iterator<String> keys = dataObject.keys();
+            String key = keys.next();
+            setupDataToGraph(key);
+        }
 
     }
     private String[] getValuesFromObject(String key){
@@ -193,6 +202,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
             serieslineTemp.setTitle(key);
             serieslineTemp.setDrawBackground(true);
             serieslineTemp.setBackgroundColor(Color.argb(50, 204, 255, 204));
+            graph.setTitle(key);
             graph.addSeries(serieslineTemp);
 
         }
@@ -316,9 +326,8 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         graph.getViewport().setBackgroundColor(Color.parseColor("#4DFFFFFF"));
 
 
-        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setVisible(false);
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        graph.setTitle("Activity");
         graph.getGridLabelRenderer().setNumHorizontalLabels(6);
         graph.getGridLabelRenderer().setNumVerticalLabels(6);
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLUE);
@@ -350,7 +359,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         values = task.getValues();
         */
         this.dataObject = task.getDataObject();
-        runGraph(rootView);
+        runGraph(rootView,firstVariable);
     }
     @Override
     public void onTaskFailed() {

@@ -27,6 +27,7 @@ import com.gnirt69.slidingmenuexample.adapter.SlidingMenuAdapter;
 import com.gnirt69.slidingmenuexample.fragment.Fragment1;
 import com.gnirt69.slidingmenuexample.fragment.Fragment10;
 import com.gnirt69.slidingmenuexample.fragment.Fragment11;
+import com.gnirt69.slidingmenuexample.fragment.Fragment12;
 import com.gnirt69.slidingmenuexample.fragment.Fragment2;
 import com.gnirt69.slidingmenuexample.fragment.Fragment3;
 import com.gnirt69.slidingmenuexample.fragment.Fragment4;
@@ -58,6 +59,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private ActionBarDrawerToggle actionBarDrawerToggle;
     String gname;
     String gid;
+    String vid;
     String username;
     String password;
 
@@ -238,7 +240,11 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                 break;
             case 10:
                 fragment = new Fragment11();
-                fragmenttag += "10";
+                fragmenttag += "11";
+                break;
+            case 11:
+                fragment = new Fragment12();
+                fragmenttag += "12";
                 break;
 
             default:
@@ -267,6 +273,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     public String getPassword(){
         return password;
     }
+    public void setVID(String vid){this.vid = vid;}
+    public String getVID(){return vid;}
 
     public String getGname(){
         return gname;
