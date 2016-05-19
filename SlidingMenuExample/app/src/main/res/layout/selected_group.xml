@@ -65,9 +65,22 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="127dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit variables"
+                    android:id="@+id/edit_var"
+                    android:padding="15dp"
+                    android:textSize="20dp"
+                    android:textColor="#167165"
+                    android:background="@drawable/mybutton"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp" />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,9 +91,9 @@
                     android:textColor="#167165"
                     android:background="@drawable/mybutton"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/edit_var"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="50dp" />
+                    android:layout_marginTop="30dp" />
             </RelativeLayout>
 
         </LinearLayout>

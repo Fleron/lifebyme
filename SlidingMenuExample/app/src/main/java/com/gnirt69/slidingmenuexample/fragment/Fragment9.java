@@ -18,6 +18,7 @@ import com.gnirt69.slidingmenuexample.R;
 
 public class Fragment9 extends Fragment {
     Button members;
+    Button edit_var;
     String groupName;
     String groupID;
     TextView title;
@@ -41,6 +42,14 @@ public class Fragment9 extends Fragment {
             @Override
             public void onClick(View view) {
                 ((MainActivity) getActivity()).replaceFragment(10);
+            }
+        });
+        edit_var = (Button)rootView.findViewById(R.id.edit_var);
+        edit_var.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                System.out.println("TRYCK");
             }
         });
         return rootView;
