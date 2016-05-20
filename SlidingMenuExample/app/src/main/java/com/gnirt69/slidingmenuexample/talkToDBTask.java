@@ -29,6 +29,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String requestAnswer;
     private String requestCallback;
     private String sendStatus;
+    private String[] sharedVarName;
+    private String[] sharedVarID;
+    private String[] notSharedName;
+    private String[] notSharedID;
     private JSONObject dataObject;
     private String[] values;
     private String[] keys;
@@ -144,6 +148,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 }
                 else if (checkType(object).contains("EMAIL_NOT_FOUND")) {
                     sendStatus = "EMAIL_NOT_FOUND";
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("SHAREDVAR")) {
+                    storeSharedNotSharedVar(object);
                     output = "TRUE";
                 }
             }
@@ -263,6 +271,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             case 14:
                 sendEmail(email);
                 break;
+            case 15:
+                sharedNotSharedVar(username, GID);
+                break;
         }
     }
     private void getUserVariables(String username,String pwd) {
@@ -305,6 +316,32 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 gnames_request[i] = jsonGroupNamesRequests.getString(i);
                 gids_request[i] = jsonGroupIDRequests.getString(i);
                 request_sender[i] = jsonRequestSender.getString(i);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void storeSharedNotSharedVar(JSONObject object) {
+        try {
+            JSONArray jsonSharedGroupN = object.getJSONArray("NAMESHARED");
+            JSONArray jsonSharedGroupID  = object.getJSONArray("IDSHARED");
+            JSONArray jsonNotSharedGroupN = object.getJSONArray("NAMENOTSHARED");
+            JSONArray jsonNotSharedGroupID = object.getJSONArray("IDNOTSHARED");
+            sharedVarName = new String[jsonSharedGroupN.length()];
+            sharedVarID = new String[jsonSharedGroupID.length()];
+            notSharedName = new String[jsonNotSharedGroupN.length()];
+            notSharedID = new String[jsonNotSharedGroupID.length()];
+
+
+            for (int i = 0; i < jsonSharedGroupN.length(); i++) {
+                sharedVarName[i] = jsonSharedGroupN.getString(i);
+                sharedVarID[i] = jsonSharedGroupID.getString(i);
+            }
+
+            for (int i = 0; i < jsonNotSharedGroupN.length(); i++){
+                notSharedName[i] = jsonNotSharedGroupN.getString(i);
+                notSharedID[i] = jsonNotSharedGroupID.getString(i);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -412,6 +449,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public String[] getVariablesNames(){return this.variablesNames;}
     public String[] getVariablesTypes(){return this.variablesType;}
     public String[] getVariablesID(){return this.variablesID;}
+    public String[] getSharedVarName(){return this.sharedVarName;}
+    public String[] getSharedVarID(){return this.sharedVarID;}
+    public String[] getNotSharedVarName(){return this.notSharedName;}
+    public String[] getNotSharedVarID(){return this.notSharedID;}
     public void setGroupID(String GID){
         this.GID = GID;
     }
@@ -477,6 +518,11 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLSendEmail(email);
         //setupConnection(new String[]{URL});
     }
+    private void sharedNotSharedVar(String username, String GID) {
+        this.URL = setupURLsharedNotSharedVar(username, GID);
+        //setupConnection(new String[]{URL});
+    }
+
 
     private void getValues(String user, String pwd) {
         String program = "getdata.php?";
@@ -738,6 +784,22 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
+    private String setupURLsharedNotSharedVar(String username, String GID) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "mygroupvariables.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("uname", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+            data += "&" + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
 
 
 

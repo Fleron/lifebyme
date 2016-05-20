@@ -28,6 +28,7 @@ import com.gnirt69.slidingmenuexample.fragment.Fragment1;
 import com.gnirt69.slidingmenuexample.fragment.Fragment10;
 import com.gnirt69.slidingmenuexample.fragment.Fragment11;
 import com.gnirt69.slidingmenuexample.fragment.Fragment12;
+import com.gnirt69.slidingmenuexample.fragment.Fragment13;
 import com.gnirt69.slidingmenuexample.fragment.Fragment2;
 import com.gnirt69.slidingmenuexample.fragment.Fragment3;
 import com.gnirt69.slidingmenuexample.fragment.Fragment4;
@@ -245,6 +246,10 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             case 11:
                 fragment = new Fragment12();
                 fragmenttag += "12";
+                break;
+            case 12:
+                fragment = new Fragment13();
+                fragmenttag += "13";
                 break;
 
             default:
