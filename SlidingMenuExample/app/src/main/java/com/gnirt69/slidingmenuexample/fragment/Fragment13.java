@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
+import com.gnirt69.slidingmenuexample.model.ButtonAdapter;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
 
 import java.util.ArrayList;
@@ -36,12 +37,14 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
     String [] sharedVarID;
     String [] notSharedName;
     String [] notSharedID;
+    ArrayList<Button> btnListShared =  new ArrayList<>();
     LinearLayout.LayoutParams params;
     LinearLayout ll;
     LinearLayout ll2;
     int requestType;
     ArrayAdapter<Button> adapterShare;
     ArrayAdapter<Button> adapterUnshare;
+    ButtonAdapter btnAdapter;
     List<Button> listShare = new ArrayList<>();
     List<Button> listUnshare = new ArrayList<>();
 
@@ -57,8 +60,9 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         getPassword();
 
         ListView view = (ListView) rootView.findViewById(R.id.shared_var_list);
-        adapterShare = new ArrayAdapter<Button>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, listShare);
-        view.setAdapter(adapterShare);
+        //adapterShare = new ArrayAdapter<Button>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, listShare);
+        btnAdapter = new ButtonAdapter((MainActivity) getActivity(),btnListShared);
+        view.setAdapter(btnAdapter);
 
         ListView view2 = (ListView) rootView.findViewById(R.id.unshared_var_list);
         adapterUnshare = new ArrayAdapter<Button>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, listUnshare);
@@ -85,29 +89,34 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
 
     void populateSharedVar(){
         ll = (LinearLayout) rootView.findViewById(R.id.shared_var);
+
         if(sharedVarName != null && sharedVarName.length > 0){
             for (int i = 0; i < sharedVarName.length; i++) {
                 Button btn = new Button(getActivity());
                 btn.setText(sharedVarName[i]+" (click to unshare)");
                 btn.setBackgroundResource(R.drawable.mybutton);
                 btn.setTextSize(20);
-                btn.setId(i);
+                //btn.setId(i);
 
 
-
+                /*
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         System.out.println("ID: "+v.getId());
                     }
                 });
+                */
                 btn.setTextColor(Color.parseColor("#157065"));
                 btn.setTypeface(null, Typeface.BOLD);
+                btnListShared.add(btn);
+                btnAdapter.notifyDataSetChanged();
                 params = (LinearLayout.LayoutParams) ll.getLayoutParams();
                 params.setMargins(0,5,0,0);
 
-                ll.addView(btn,params);
+                //ll.addView(btn,params);
             }
+
         }
 
 
