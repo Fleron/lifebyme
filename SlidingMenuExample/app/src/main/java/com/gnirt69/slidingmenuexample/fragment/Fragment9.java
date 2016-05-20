@@ -49,8 +49,7 @@ public class Fragment9 extends Fragment {
 
             @Override
             public void onClick(View view) {
-                System.out.println("TRYCK");
-            }
+                ((MainActivity) getActivity()).replaceFragment(12);            }
         });
         return rootView;
     }
