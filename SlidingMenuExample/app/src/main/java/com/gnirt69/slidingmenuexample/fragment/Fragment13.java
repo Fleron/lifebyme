@@ -45,6 +45,8 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
     LinearLayout ll;
     LinearLayout ll2;
     int requestType;
+    ListView view;
+    ListView view2;
     ArrayAdapter<Button> adapterShare;
     ArrayAdapter<Button> adapterUnshare;
     ArrayButtonAdapter btnAdapterShare;
@@ -63,12 +65,12 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         getUsername();
         getPassword();
 
-        ListView view = (ListView) rootView.findViewById(R.id.shared_var_list);
+        view = (ListView) rootView.findViewById(R.id.shared_var_list);
         //adapterShare = new ArrayAdapter<Button>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, listShare);
         btnAdapterShare = new ArrayButtonAdapter(getActivity().getApplicationContext(),btnListShared,this);
         view.setAdapter(btnAdapterShare);
 
-        ListView view2 = (ListView) rootView.findViewById(R.id.unshared_var_list);
+        view2 = (ListView) rootView.findViewById(R.id.unshared_var_list);
         btnAdapterUnshare = new ArrayButtonAdapter(getActivity().getApplicationContext(),btnListUnshared,this);
         //adapterUnshare = new ArrayAdapter<Button>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, listUnshare);
         view2.setAdapter(btnAdapterUnshare);
@@ -91,6 +93,14 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         GID = ((MainActivity)getActivity()).getGID();
     }
 
+    public void changeListSize(){
+        ViewGroup.LayoutParams paramsList = view.getLayoutParams();
+        paramsList.height = btnListShared.size()*150;
+        view.setLayoutParams(paramsList);
+        paramsList = view2.getLayoutParams();
+        paramsList.height = btnListUnshared.size()*150;
+        view2.setLayoutParams(paramsList);
+    }
 
     void populateSharedVar(){
         ll = (LinearLayout) rootView.findViewById(R.id.shared_var);
@@ -103,7 +113,7 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
                 btn.setText(sharedVarName[i]+" (click to unshare)");
                 btn.setBackgroundResource(R.drawable.mybutton);
                 btn.setTextSize(20);
-                btn.setId(i);
+                btn.setId(Integer.parseInt(sharedVarID[i]));
                 btn.setTag(R.id.TAG_ID,"true");
                 btn.setTag(R.id.TAG_NAME,sharedVarName[i]);
                 btn.setTextColor(Color.parseColor("#157065"));
@@ -132,7 +142,7 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
                 btn.setText(notSharedName[i]+" (click to share)");
                 btn.setBackgroundResource(R.drawable.mybutton);
                 btn.setTextSize(20);
-                btn.setId(i);
+                btn.setId(Integer.parseInt(notSharedID[i]));
                 btn.setTag(R.id.TAG_ID,"false");
                 btn.setTag(R.id.TAG_NAME,notSharedName[i]);
 
@@ -166,22 +176,31 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         System.out.println("settling list share with button: "+button.getId());
         btnListShared.add(button);
         btnAdapterShare.notifyDataSetChanged();
+        String varID = button.getId()+"";
+        shareThread thread = new shareThread(button,task,context,this,17,GID,varID);
+        thread.run();
+
     }
     public void setListUnshare(Button button){
         System.out.println("settling list unshare with button: "+button.getId());
         btnListUnshared.add(button);
         btnAdapterUnshare.notifyDataSetChanged();
+        String varID = button.getId()+"";
+        shareThread thread = new shareThread(button,task,context,this,17,GID,varID);
+        thread.run();
     }
 
     public void removeListShare(Button button){
         System.out.println("removing list share with button: "+button.getId());
         btnListShared.remove(button);
         btnAdapterShare.notifyDataSetChanged();
+
     }
     public void removeListUnshare(Button button){
         System.out.println("removing list ushare with button: "+button.getId());
         btnListUnshared.remove(button);
         btnAdapterUnshare.notifyDataSetChanged();
+
     }
 
     private void unshareVar (int buttonID){
@@ -220,16 +239,48 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
 
     @Override
     public void onTaskCompleted(int request) {
-        sharedVarName = task.getSharedVarName();
-        sharedVarID = task.getSharedVarID();
-        notSharedName = task.getNotSharedVarName();
-        notSharedID = task.getNotSharedVarID();
-        populateSharedVar();
-        populateNotSharedVar();
+        if(request == 15) {
+            sharedVarName = task.getSharedVarName();
+
+            sharedVarID = task.getSharedVarID();
+            notSharedName = task.getNotSharedVarName();
+            notSharedID = task.getNotSharedVarID();
+            populateSharedVar();
+            populateNotSharedVar();
+            changeListSize();
+        }
     }
     @Override
     public void onTaskFailed() {
 
+    }
+}
+class shareThread implements Runnable{
+    Button button;
+    talkToDBTask task;
+    Context context;
+    int requestType;
+    OnTalkToDBFinish finish;
+    String GID;
+    String varID;
+    shareThread(Button button, talkToDBTask task,Context context, OnTalkToDBFinish finish,int requestType, String GID,String varID){
+        this.button = button;
+        this.task = task;
+        this.context = context;
+        this.finish = finish;
+        this.requestType = requestType;
+        this.GID = GID;
+        this.varID = varID;
+    }
+    @Override
+    public void run() {
+        String shared = (String) button.getTag(R.id.TAG_ID);
+        task = new talkToDBTask(finish, context);
+        task.setGroupID(GID);
+        task.setVariableID(varID);
+        task.setSharedStatus(shared);
+        task.setRequestType(requestType);
+        task.execute();
     }
 }
 

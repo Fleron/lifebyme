@@ -71,7 +71,7 @@
 
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="173dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/shared_var_list" />
             </LinearLayout>
 
@@ -107,8 +107,9 @@
 
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="187dp"
-                    android:id="@+id/unshared_var_list" />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/unshared_var_list"
+                    android:layout_marginBottom="30dp" />
             </LinearLayout>
 
 
