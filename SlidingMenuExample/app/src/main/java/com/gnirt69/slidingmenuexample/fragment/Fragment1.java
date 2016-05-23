@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -92,8 +91,9 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         runDBtask(null,null,10);
 
         button = (Button) rootView.findViewById(R.id.submit_button2);
-        Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/CircularStd-Book.otf");
-        button.setTypeface(font);
+
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/CircularStd-Book.otf");
+        button.setTypeface(typeface);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

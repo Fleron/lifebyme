@@ -18,9 +18,12 @@ import android.widget.ListView;
 import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
+import com.gnirt69.slidingmenuexample.model.ArrayButtonAdapter;
+import com.gnirt69.slidingmenuexample.model.ButtonAdapter;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Fragment13 extends Fragment implements OnTalkToDBFinish{
@@ -36,12 +39,18 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
     String [] sharedVarID;
     String [] notSharedName;
     String [] notSharedID;
+    ArrayList<Button> btnListShared =  new ArrayList<>();
+    ArrayList<Button> btnListUnshared =  new ArrayList<>();
     LinearLayout.LayoutParams params;
     LinearLayout ll;
     LinearLayout ll2;
     int requestType;
+    ListView view;
+    ListView view2;
     ArrayAdapter<Button> adapterShare;
     ArrayAdapter<Button> adapterUnshare;
+    ArrayButtonAdapter btnAdapterShare;
+    ArrayButtonAdapter btnAdapterUnshare;
     List<Button> listShare = new ArrayList<>();
     List<Button> listUnshare = new ArrayList<>();
 
@@ -56,13 +65,15 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         getUsername();
         getPassword();
 
-        ListView view = (ListView) rootView.findViewById(R.id.shared_var_list);
-        adapterShare = new ArrayAdapter<Button>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, listShare);
-        view.setAdapter(adapterShare);
+        view = (ListView) rootView.findViewById(R.id.shared_var_list);
+        //adapterShare = new ArrayAdapter<Button>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, listShare);
+        btnAdapterShare = new ArrayButtonAdapter(getActivity().getApplicationContext(),btnListShared,this);
+        view.setAdapter(btnAdapterShare);
 
-        ListView view2 = (ListView) rootView.findViewById(R.id.unshared_var_list);
-        adapterUnshare = new ArrayAdapter<Button>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, listUnshare);
-        view2.setAdapter(adapterUnshare);
+        view2 = (ListView) rootView.findViewById(R.id.unshared_var_list);
+        btnAdapterUnshare = new ArrayButtonAdapter(getActivity().getApplicationContext(),btnListUnshared,this);
+        //adapterUnshare = new ArrayAdapter<Button>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, listUnshare);
+        view2.setAdapter(btnAdapterUnshare);
 
         getGID();
         runDBtaskGetVar(15);
@@ -82,32 +93,39 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         GID = ((MainActivity)getActivity()).getGID();
     }
 
+    public void changeListSize(){
+        ViewGroup.LayoutParams paramsList = view.getLayoutParams();
+        paramsList.height = btnListShared.size()*150;
+        view.setLayoutParams(paramsList);
+        paramsList = view2.getLayoutParams();
+        paramsList.height = btnListUnshared.size()*150;
+        view2.setLayoutParams(paramsList);
+    }
 
     void populateSharedVar(){
         ll = (LinearLayout) rootView.findViewById(R.id.shared_var);
+        System.out.println("in i populate share var");
+
         if(sharedVarName != null && sharedVarName.length > 0){
+            System.out.println(sharedVarName.length);
             for (int i = 0; i < sharedVarName.length; i++) {
                 Button btn = new Button(getActivity());
                 btn.setText(sharedVarName[i]+" (click to unshare)");
                 btn.setBackgroundResource(R.drawable.mybutton);
                 btn.setTextSize(20);
-                btn.setId(i);
-
-
-
-                btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        System.out.println("ID: "+v.getId());
-                    }
-                });
+                btn.setId(Integer.parseInt(sharedVarID[i]));
+                btn.setTag(R.id.TAG_ID,"true");
+                btn.setTag(R.id.TAG_NAME,sharedVarName[i]);
                 btn.setTextColor(Color.parseColor("#157065"));
                 btn.setTypeface(null, Typeface.BOLD);
+                btnListShared.add(btn);
+                btnAdapterShare.notifyDataSetChanged();
                 params = (LinearLayout.LayoutParams) ll.getLayoutParams();
                 params.setMargins(0,5,0,0);
 
-                ll.addView(btn,params);
+                //ll.addView(btn,params);
             }
+
         }
 
 
@@ -115,47 +133,28 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
     }
 
     void populateNotSharedVar(){
+        System.out.println("in i populate unshare var");
         ll2 = (LinearLayout) rootView.findViewById(R.id.not_shared_var);
         if(notSharedName != null && notSharedName.length > 0){
+            System.out.println(Arrays.toString(notSharedName));
             for (int i = 0; i < notSharedName.length; i++) {
                 Button btn = new Button(getActivity());
                 btn.setText(notSharedName[i]+" (click to share)");
                 btn.setBackgroundResource(R.drawable.mybutton);
                 btn.setTextSize(20);
-                btn.setId(i);
-                setListUnshare(btn);
-                btn.setOnClickListener(new View.OnClickListener() {
-                    boolean inShare = false;
-                    @Override
-                    public void onClick(View v) {
-                        System.out.println("ID: "+v.getId());
-                        //shareVar(v.getId());
-                        //ll2.removeView(v);
-                        if(inShare){
-                            inShare = false;
-                            Button btn =(Button)v;
-                            setListUnshare(btn);
-                            removeListShare(btn);
-                        }else{
-                            inShare = true;
-                            Button btn =(Button)v;
-                            removeListUnshare(btn);
-                            setListShare(btn);
-                        }
-                        System.out.println(inShare);
-                    }
-                });
-                btn.setTextColor(Color.parseColor("#157065"));
-                btn.setTypeface(null, Typeface.BOLD);
-                params = (LinearLayout.LayoutParams) ll2.getLayoutParams();
-                params.setMargins(0,5,0,0);
-                setListUnshare(btn);
-                //ll2.addView(btn,params);
+                btn.setId(Integer.parseInt(notSharedID[i]));
+                btn.setTag(R.id.TAG_ID,"false");
+                btn.setTag(R.id.TAG_NAME,notSharedName[i]);
+
+                btnListUnshared.add(btn);
+                btnAdapterUnshare.notifyDataSetChanged();
+
             }
         }
     }
 
     private void shareVar (int bid){
+        System.out.println("in i share var");
         ll = (LinearLayout) rootView.findViewById(R.id.shared_var);
         Button btn2 = new Button(getActivity());
         btn2.setText(notSharedName[bid]+" (click to unshare)");
@@ -163,46 +162,49 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         btn2.setTextSize(20);
         btn2.setId(bid);
         setListShare(btn2);
+        btn2.setTag("true");
         btn2.setTextColor(Color.parseColor("#157065"));
         btn2.setTypeface(null, Typeface.BOLD);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            boolean inShare = true;
-            @Override
-            public void onClick(View v) {
-                System.out.println("ID: "+v.getId());
-                if(inShare){
-                    inShare = false;
-                }else{
-                    inShare = true;
-                }
-                System.out.println(inShare);
-            }
-        });
+
         params = (LinearLayout.LayoutParams) ll.getLayoutParams();
         params.setMargins(0,5,0,0);
         setListShare(btn2);
         //ll.addView(btn2,params);
     }
 
-    private void setListShare(Button button){
-        listShare.add(button);
-        adapterShare.notifyDataSetChanged();
+    public void setListShare(Button button){
+        System.out.println("settling list share with button: "+button.getId());
+        btnListShared.add(button);
+        btnAdapterShare.notifyDataSetChanged();
+        String varID = button.getId()+"";
+        shareThread thread = new shareThread(button,task,context,this,17,GID,varID);
+        thread.run();
+
     }
-    private void setListUnshare(Button button){
-        listUnshare.add(button);
-        adapterUnshare.notifyDataSetChanged();
+    public void setListUnshare(Button button){
+        System.out.println("settling list unshare with button: "+button.getId());
+        btnListUnshared.add(button);
+        btnAdapterUnshare.notifyDataSetChanged();
+        String varID = button.getId()+"";
+        shareThread thread = new shareThread(button,task,context,this,17,GID,varID);
+        thread.run();
     }
 
-    private void removeListShare(Button button){
-        listShare.remove(button);
-        adapterShare.notifyDataSetChanged();
+    public void removeListShare(Button button){
+        System.out.println("removing list share with button: "+button.getId());
+        btnListShared.remove(button);
+        btnAdapterShare.notifyDataSetChanged();
+
     }
-    private void removeListUnshare(Button button){
-        listUnshare.remove(button);
-        adapterUnshare.notifyDataSetChanged();
+    public void removeListUnshare(Button button){
+        System.out.println("removing list ushare with button: "+button.getId());
+        btnListUnshared.remove(button);
+        btnAdapterUnshare.notifyDataSetChanged();
+
     }
 
     private void unshareVar (int buttonID){
+        System.out.println("in i unshare var");
         ll2 = (LinearLayout) rootView.findViewById(R.id.not_shared_var);
         Button btn3 = new Button(getActivity());
         btn3.setText(sharedVarName[buttonID]+" (click to share)");
@@ -215,13 +217,13 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
             @Override
             public void onClick(View v) {
                 System.out.println("ID: "+v.getId());
-                shareVar(v.getId());
-                ll2.removeView(v);
+               // shareVar(v.getId());
+                //ll2.removeView(v);
             }
         });
         params = (LinearLayout.LayoutParams) ll2.getLayoutParams();
         params.setMargins(0,5,0,0);
-        ll2.addView(btn3,params);
+       // ll2.addView(btn3,params);
     }
 
     private void runDBtaskGetVar(int request){
@@ -237,16 +239,48 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
 
     @Override
     public void onTaskCompleted(int request) {
-        sharedVarName = task.getSharedVarName();
-        sharedVarID = task.getSharedVarID();
-        notSharedName = task.getNotSharedVarName();
-        notSharedID = task.getNotSharedVarID();
-        populateSharedVar();
-        populateNotSharedVar();
+        if(request == 15) {
+            sharedVarName = task.getSharedVarName();
+
+            sharedVarID = task.getSharedVarID();
+            notSharedName = task.getNotSharedVarName();
+            notSharedID = task.getNotSharedVarID();
+            populateSharedVar();
+            populateNotSharedVar();
+            changeListSize();
+        }
     }
     @Override
     public void onTaskFailed() {
 
+    }
+}
+class shareThread implements Runnable{
+    Button button;
+    talkToDBTask task;
+    Context context;
+    int requestType;
+    OnTalkToDBFinish finish;
+    String GID;
+    String varID;
+    shareThread(Button button, talkToDBTask task,Context context, OnTalkToDBFinish finish,int requestType, String GID,String varID){
+        this.button = button;
+        this.task = task;
+        this.context = context;
+        this.finish = finish;
+        this.requestType = requestType;
+        this.GID = GID;
+        this.varID = varID;
+    }
+    @Override
+    public void run() {
+        String shared = (String) button.getTag(R.id.TAG_ID);
+        task = new talkToDBTask(finish, context);
+        task.setGroupID(GID);
+        task.setVariableID(varID);
+        task.setSharedStatus(shared);
+        task.setRequestType(requestType);
+        task.execute();
     }
 }
 

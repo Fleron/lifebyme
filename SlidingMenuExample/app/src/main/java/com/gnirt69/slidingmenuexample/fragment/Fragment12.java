@@ -6,6 +6,10 @@ package com.gnirt69.slidingmenuexample.fragment;/**
         import android.app.Fragment;
         import android.content.Context;
         import android.graphics.Color;
+        import android.graphics.CornerPathEffect;
+        import android.graphics.LinearGradient;
+        import android.graphics.Paint;
+        import android.graphics.Shader;
         import android.os.Bundle;
         import android.view.LayoutInflater;
         import android.view.View;
@@ -76,8 +80,16 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
                 String objString = obj.toString();
                 int end = objString.indexOf(":");
                 String k = objString.substring(0,end);
-                graph.removeAllSeries();
-                setupDataToGraph(k);
+
+                //setupDataToGraph(k);
+                if(checkInVariables(k)){
+                    graph.removeAllSeries();
+                    System.out.println(k);
+                    setupDoubleGraph(graph);
+                    setupDoubleLinesToGraph(firstVariable,k);
+                    firstVariable = k;
+                }
+
             }
         });
         mood = new ArrayList<>();
@@ -90,6 +102,16 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
 
 
         return rootView;
+    }
+    private boolean checkInVariables(String item){
+        Iterator<String> keys = dataObject.keys();
+        while(keys.hasNext()){
+            if(keys.next().equals(item)){
+                return true;
+            }
+        }
+        return false;
+
     }
     private void setList(String item,String message) {
         list.add(message+item);
@@ -104,7 +126,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         task.setRequestType(request);
         task.execute();
     }
-    private LineGraphSeries<DataPoint> createDataLine(ArrayList<Double> valueList){
+    private LineGraphSeries<DataPoint> createDataLine(ArrayList<Double> valueList,String[] values){
         LineGraphSeries<DataPoint> returnDataSeries = new LineGraphSeries<>();
         if(values != null) {
             for (int i = 0; i < values.length; i++) {
@@ -191,20 +213,62 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
             valuesForSingleGraph(key);
 
             ArrayList<Double> temp= new ArrayList<>();
-            LineGraphSeries<DataPoint> serieslineTemp =createDataLine(temp);
+            LineGraphSeries<DataPoint> serieslineTemp =createDataLine(temp,values);
             adapter.clear();
             adapter.notifyDataSetChanged();
             getCorrelationList(values);
             setList(makeString(getMean(temp)), key + " Average: ");
             setList(makeString((getMax(temp))),key + " Max: ");
             setList(makeString(getMin(temp)),key + " Min: ");
-            serieslineTemp.setColor(Color.BLUE);
+
             serieslineTemp.setTitle(key);
             serieslineTemp.setDrawBackground(true);
-            serieslineTemp.setBackgroundColor(Color.argb(50, 204, 255, 204));
+            Paint paint = new Paint();
+            paint.setColor(Color.argb(255,198,148,87));
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(8);
+            serieslineTemp.setBackgroundColor(Color.argb(50, 227, 181, 123));
+            serieslineTemp.setCustomPaint(paint);
             graph.setTitle(key);
             graph.addSeries(serieslineTemp);
 
+        }
+    }
+    private void setupDoubleLinesToGraph(String key1,String key2){
+        String[] key1Values = getValuesFromObject(key1);
+        String[] key2Values = getValuesFromObject(key2);
+        if(key1Values != null && key2Values!= null) {
+            ArrayList<Double> temp1 = new ArrayList<>();
+            LineGraphSeries<DataPoint> serieslineTemp = createDataLine(temp1, key1Values);
+            ArrayList<Double> temp2 = new ArrayList<>();
+            LineGraphSeries<DataPoint> serieslineTemp2 = createDataLine(temp2, key2Values);
+            adapter.clear();
+            adapter.notifyDataSetChanged();
+            //getCorrelationList(values);
+
+            setList(checkCorrelation(temp1, temp2), " Correlation: ");
+            serieslineTemp.setTitle(key1);
+            serieslineTemp.setDrawBackground(true);
+
+            serieslineTemp2.setTitle(key2);
+            serieslineTemp2.setDrawBackground(true);
+            Paint paint = new Paint();
+            paint.setColor(Color.argb(255, 198, 148, 87));
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(8);
+            serieslineTemp.setBackgroundColor(Color.argb(50, 227, 181, 123));
+            serieslineTemp.setCustomPaint(paint);
+            Paint paint2 = new Paint();
+            paint2.setColor(Color.argb(255, 182, 80, 104));
+            paint2.setStyle(Paint.Style.STROKE);
+            paint2.setStrokeWidth(8);
+            serieslineTemp2.setCustomPaint(paint2);
+            serieslineTemp2.setBackgroundColor(Color.argb(50, 209, 113, 136));
+            graph.setTitle("Correlation between: " + key1 + " and " + key2);
+            graph.addSeries(serieslineTemp);
+            graph.getSecondScale().setMaxY(serieslineTemp2.getHighestValueY());
+            graph.getSecondScale().setMinY(serieslineTemp2.getLowestValueY());
+            graph.getSecondScale().addSeries(serieslineTemp2);
         }
     }
     private void getCorrelationList(String[] check){
@@ -331,6 +395,27 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         graph.getGridLabelRenderer().setNumHorizontalLabels(6);
         graph.getGridLabelRenderer().setNumVerticalLabels(6);
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLUE);
+    }
+    private void setupDoubleGraph(GraphView graph){
+        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
+        graph.getGridLabelRenderer().setGridColor(Color.WHITE);
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("x-axel");
+
+        graph.getViewport().setXAxisBoundsManual(true);
+
+        graph.getViewport().setMaxX(x_max);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setBackgroundColor(Color.parseColor("#4DFFFFFF"));
+
+
+        graph.getLegendRenderer().setVisible(false);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(6);
+        graph.getGridLabelRenderer().setNumVerticalLabels(6);
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.rgb(161,121, 71));
+        graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.rgb(182,80,104));
     }
     private void setupGraph(GraphView graph){
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);

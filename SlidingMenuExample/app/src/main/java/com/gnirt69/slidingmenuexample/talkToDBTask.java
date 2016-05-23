@@ -23,6 +23,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String toUser;
     private String pwd;
     private String email;
+    private String share;
     private String groupName;
     private String GID;
     private String userRequest;
@@ -46,6 +47,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String[] variablesType;
     private String[] variablesNames;
     private String[] variablesID;
+    private String[] GroupVarNames;
+    private String[] GroupVarIDs;
+    private String[] VarOwner;
     private String URL;
     private int requestType;
     private String variableName;
@@ -152,6 +156,14 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 }
                 else if (checkType(object).contains("SHAREDVAR")) {
                     storeSharedNotSharedVar(object);
+                    output = "TRUE";
+                }
+                else if (checkType(object).contains("GROUPVAR")) {
+                    storeGroupVariables(object);
+                    output = "TRUE";
+                }else if(checkType(object).contains("ADDVAR_SUCCESS")){
+                    output = "TRUE";
+                }else if(checkType(object).contains("REMOVEVAR_SUCCESS")){
                     output = "TRUE";
                 }
             }
@@ -274,8 +286,20 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             case 15:
                 sharedNotSharedVar(username, GID);
                 break;
+            case 16:
+                groupVariables(GID);
+                break;
+            case 17:
+                setSharedNotShared(GID,variableType,share);
+                break;
         }
     }
+
+    private void setSharedNotShared(String gid, String variableType,String add) {
+        String program = "editgroupvariables.php?";
+        this.URL = setupURLeditGroupVariables(variableType,gid,add,program);
+    }
+
     private void getUserVariables(String username,String pwd) {
         String program = "getuservariables.php?";
         this.URL = setupURLBasic(username,pwd,program);
@@ -384,6 +408,27 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         }
 
     }
+    private void storeGroupVariables(JSONObject object) {
+        try {
+            JSONArray jsonVarNames = object.getJSONArray("VARNAME");
+            JSONArray jsonVarIDs = object.getJSONArray("VARID");
+            JSONArray jsonVarOwner = object.getJSONArray("VAROWNER");
+            GroupVarNames = new String[jsonVarNames.length()];
+            GroupVarIDs = new String[jsonVarIDs.length()];
+            VarOwner = new String[jsonVarOwner.length()];
+
+
+            for (int i = 0; i < jsonVarNames.length(); i++) {
+                GroupVarNames[i] = jsonVarNames.getString(i);
+                GroupVarIDs[i] = jsonVarIDs.getString(i);
+                VarOwner[i] = jsonVarOwner.getString(i);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
     private void createUser(String user, String pwd, String email) {
         this.URL = setupURLNewUser(user, pwd, email);
         //setupConnection(new String[]{URL});
@@ -439,6 +484,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public void setKeys(String[] keys){
         this.keys = keys;
     }
+    public void setVariableID(String varID){this.variableType = varID;}
+    public void setSharedStatus(String shared){this.share = shared;}
     public void setRequestType(int requestType){
         this.requestType = requestType;
     }
@@ -481,6 +528,15 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public String [] getRequestSender(){
         return this.request_sender;
     }
+    public String [] getGroupVarNames(){
+        return this.GroupVarNames;
+    }
+    public String [] getGroupVarIDs(){
+        return this.GroupVarIDs;
+    }
+    public String [] getVarOwner(){
+        return this.VarOwner;
+    }
     public String getPwd(){
         return this.pwd;
     }
@@ -522,7 +578,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLsharedNotSharedVar(username, GID);
         //setupConnection(new String[]{URL});
     }
-
+    private void groupVariables(String GID) {
+        this.URL = setupURLGroupVariables(GID);
+        //setupConnection(new String[]{URL});
+    }
 
     private void getValues(String user, String pwd) {
         String program = "getdata.php?";
@@ -739,6 +798,22 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
+    private String setupURLeditGroupVariables(String VID, String GID,String add,String program) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("VID", "UTF-8") + "=" + URLEncoder.encode(VID, "UTF-8");
+            data += "&" + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
+            data += "&" + URLEncoder.encode("add", "UTF-8") + "=" + URLEncoder.encode(add, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
     private String setupURLAnswerRequest(String user, String GID, String requestAnswer) {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
         String program = "requestanswer.php?";
@@ -792,6 +867,20 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         try {
             data = ipadress + program + URLEncoder.encode("uname", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+    private String setupURLGroupVariables(String GID) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "groupvariablelist.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             failureHandler();

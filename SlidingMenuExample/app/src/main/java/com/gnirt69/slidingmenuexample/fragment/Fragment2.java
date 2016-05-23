@@ -57,8 +57,9 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish{
     }
 
     void populateTable(){
+        if(rootView != null) {
             ll = (LinearLayout) rootView.findViewById(R.id.groups_layout);
-            if(variableNames != null && variableNames.length > 0){
+            if (variableNames != null && variableNames.length > 0) {
                 for (int i = 0; i < variableNames.length; i++) {
                     Button btn = new Button(getActivity());
                     btn.setText(variableNames[i]);
@@ -69,18 +70,19 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish{
                         @Override
                         public void onClick(View v) {
                             System.out.println(variableNames[v.getId()]);
-                            ((MainActivity)getActivity()).setVID(variableNames[v.getId()]);
-                            ((MainActivity)getActivity()).replaceFragment(11);
+                            ((MainActivity) getActivity()).setVID(variableNames[v.getId()]);
+                            ((MainActivity) getActivity()).replaceFragment(11);
                         }
                     });
                     btn.setTextColor(Color.parseColor("#157065"));
                     btn.setTypeface(null, Typeface.BOLD);
                     params = (LinearLayout.LayoutParams) ll.getLayoutParams();
-                    params.setMargins(0,5,0,0);
+                    params.setMargins(0, 5, 0, 0);
 
-                    ll.addView(btn,params);
+                    ll.addView(btn, params);
                 }
             }
+        }
 
 
 
