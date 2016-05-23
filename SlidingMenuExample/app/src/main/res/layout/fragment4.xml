@@ -113,19 +113,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="50dp" />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Create group"
-                    android:id="@+id/button3"
-                    android:padding="15dp"
-                    android:textSize="20dp"
-                    android:textColor="#167165"
-                    android:background="@drawable/mybutton"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="50dp" />
+
             </RelativeLayout>
 
         </LinearLayout>

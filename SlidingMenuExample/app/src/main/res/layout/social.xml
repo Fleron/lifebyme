@@ -92,26 +92,6 @@
                 android:id="@+id/textView18" />
         </FrameLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/change_passcode"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Family (Jan)"
-                android:textStyle="bold"
-                android:layout_marginRight="0dp"
-                android:layout_marginLeft="0dp"
-                android:background="@drawable/mybutton"
-                android:textColor="#157065"
-                android:textSize="20sp" />
-        </LinearLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

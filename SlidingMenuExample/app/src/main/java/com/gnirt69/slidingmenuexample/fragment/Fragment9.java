@@ -83,6 +83,7 @@ public class Fragment9 extends Fragment implements OnTalkToDBFinish {
     }
 
     void generateTable(){
+        if(rootView != null) {
         LinearLayout ll = (LinearLayout) rootView.findViewById(R.id.variable_layout);
         for (int i = 0; i < groupVarName.length; i++) {
             Button btn = new Button(getActivity());
@@ -105,6 +106,8 @@ public class Fragment9 extends Fragment implements OnTalkToDBFinish {
             ll.addView(btn,params);
         }
     }
+    }
+
 
     @Override
     public void onTaskCompleted(int request) {

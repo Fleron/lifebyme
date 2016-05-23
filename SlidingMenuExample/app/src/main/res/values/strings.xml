@@ -36,7 +36,6 @@ LifeByME will not sell any personal information to third parties. </string>
     <string name = "share">(click to share)</string>
     <string name = "unshare">(click to unshare)</string>
     <string name = "daily_activity">Daily Activity</string>
-    <string name = "submit">Submit</string>
     <string name = "add_variable">Add new</string>
     <string name="step_detector">
          android.hardware.sensor.stepdetector
