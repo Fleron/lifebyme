@@ -113,10 +113,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="50dp" />
-<<<<<<< HEAD
-=======
 
->>>>>>> ff6ed6f445fe239ad6918c8081c39b2fe53c1cf0
             </RelativeLayout>
 
         </LinearLayout>

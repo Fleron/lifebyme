@@ -40,6 +40,7 @@ public class Fragment3 extends Fragment {
                 ((MainActivity) getActivity()).replaceFragment(0);
 
 
+
             }
         });
 

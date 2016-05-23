@@ -8,14 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.gnirt69.slidingmenuexample.R;
+import com.gnirt69.slidingmenuexample.talkToDBTask;
 
 public class Fragment15 extends Fragment {
     Button change_pwd;
-    ;
-
-
+    private String current_password;
+    private String new_password;
+    private EditText current_password_view;
+    private EditText new_password_view;
+    private int request;
     public Fragment15(){}
 
     @Override
@@ -32,10 +36,16 @@ public class Fragment15 extends Fragment {
             @Override
             public void onClick(View view) {
                 System.out.println("CHANGE!!");
+                current_password = current_password_view.getText().toString();
+                passwordCheck(current_password);
             }
         });
 
 
         return rootView;
+    }
+
+    private Boolean passwordCheck (String check_password) {
+        return true;
     }
 }

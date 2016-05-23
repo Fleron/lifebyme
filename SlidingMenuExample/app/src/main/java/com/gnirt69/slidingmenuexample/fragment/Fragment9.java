@@ -99,7 +99,9 @@ public class Fragment9 extends Fragment implements OnTalkToDBFinish {
                 }
             });
             btn.setTextColor(Color.parseColor("#157065"));
-            btn.setTypeface(null, Typeface.BOLD);
+            //btn.setTypeface(null, Typeface.BOLD);
+            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/CircularStd-Medium.otf");
+            btn.setTypeface(typeface);
             params = (LinearLayout.LayoutParams) ll.getLayoutParams();
             params.setMargins(0,5,0,0);
 

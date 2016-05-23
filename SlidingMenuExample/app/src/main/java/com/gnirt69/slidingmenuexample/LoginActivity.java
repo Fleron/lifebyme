@@ -73,11 +73,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setDefaultFont(this, "DEFAULT", "CircularStd-Medium.otf");
         setDefaultFont(this, "MONOSPACE", "fonts/CircularStd-Book.otf");
-        //setDefaultFont(this, "SERIF", "CircularStd-Medium.otf");
-        //setDefaultFont(this, "SANS_SERIF", "CircularStd-Medium.otf");
-
 
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -85,7 +81,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.email);
-        //checkAllreadyUser();
+        //checkAlreadyUser();
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -123,27 +119,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
         Typeface typeface3 = Typeface.createFromAsset(getAssets(), "fonts/CircularStd-Book.otf");
         forgot_password.setTypeface(typeface3);
-    }
-
-    public static void setDefaultFont(Context context,
-                                      String staticTypefaceFieldName, String fontAssetName) {
-        final Typeface regular = Typeface.createFromAsset(context.getAssets(),
-                fontAssetName);
-        replaceFont(staticTypefaceFieldName, regular);
-    }
-
-    protected static void replaceFont(String staticTypefaceFieldName,
-                                      final Typeface newTypeface) {
-        try {
-            final Field staticField = Typeface.class
-                    .getDeclaredField(staticTypefaceFieldName);
-            staticField.setAccessible(true);
-            staticField.set(null, newTypeface);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void setDefaultFont(Context context,
