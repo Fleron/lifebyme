@@ -30,18 +30,18 @@
 Please note that correlation is not the same thing as causation, i e having two parameters that follow similar patterns does not necessarily mean that these two parameters affect each other. The LifeByMe app will only show mathematical correlation and does not take into account whether parameters are otherwise related or not.
 LifeByME will not sell any personal information to third parties. </string>
 
-    <string name = "skip_day">Skip day</string>
-    <string name = "yes">Yes</string>
-    <string name = "no">No</string>
-    <string name = "share">(click to share)</string>
-    <string name = "unshare">(click to unshare)</string>
-    <string name = "daily_activity">Daily Activity</string>
-    <string name = "submit">Submit</string>
-    <string name = "add_variable">Add new</string>
+    <string name="skip_day">Skip day</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="share">(click to share)</string>
+    <string name="unshare">(click to unshare)</string>
+    <string name="daily_activity">Daily Activity</string>
+    <string name="submit">Submit</string>
+    <string name="add_variable">Add new</string>
     <string name="step_detector">
          android.hardware.sensor.stepdetector
     </string>
-    <string-array name = "values">
+    <string-array name="values">
         <item>item 1</item>
         <item>item 2</item>
         <item>item 3</item>
@@ -55,5 +55,8 @@ LifeByME will not sell any personal information to third parties. </string>
         <item>item 11</item>
         <item>item 12</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

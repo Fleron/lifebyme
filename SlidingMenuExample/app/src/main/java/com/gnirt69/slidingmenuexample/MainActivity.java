@@ -29,6 +29,7 @@ import com.gnirt69.slidingmenuexample.fragment.Fragment10;
 import com.gnirt69.slidingmenuexample.fragment.Fragment11;
 import com.gnirt69.slidingmenuexample.fragment.Fragment12;
 import com.gnirt69.slidingmenuexample.fragment.Fragment13;
+import com.gnirt69.slidingmenuexample.fragment.Fragment14;
 import com.gnirt69.slidingmenuexample.fragment.Fragment2;
 import com.gnirt69.slidingmenuexample.fragment.Fragment3;
 import com.gnirt69.slidingmenuexample.fragment.Fragment4;
@@ -58,6 +59,12 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private ListView listViewSliding;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+
+    String firstValueListName;
+    String secondValueListName;
+    ArrayList<Double> firstValueList;
+    ArrayList<Double> secondValueList;
+
     String gname;
     String gid;
     String vid;
@@ -105,9 +112,6 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         System.out.println(password);
         System.out.println("from main");
 
-        //textView.findViewById(R.id.textViewStep);
-        //textView = (TextView)findViewById(R.id.textViewStep);
-        //Display icon to open/ close sliding list
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Set title
@@ -251,6 +255,10 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                 fragment = new Fragment13();
                 fragmenttag += "13";
                 break;
+            case 13:
+                fragment = new Fragment14();
+                fragmenttag += "14";
+                break;
 
             default:
                 fragment = new Fragment1();
@@ -280,6 +288,14 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     }
     public void setVID(String vid){this.vid = vid;}
     public String getVID(){return vid;}
+    public void setFirstValueListName(String name){this.firstValueListName = name;}
+    public void setSecondValueListName(String name){this.secondValueListName = name;}
+    public void setFirstValueList(ArrayList<Double> valueList){this.firstValueList = valueList;}
+    public void setSecondValueList(ArrayList<Double> valueList){this.secondValueList = valueList;}
+    public String getSecondValueListName(){return this.secondValueListName;}
+    public String getFirstValueListName(){return this.firstValueListName;}
+    public ArrayList<Double> getFirstValueList(){return this.firstValueList;}
+    public ArrayList<Double> getSecondValueList(){return this.secondValueList;}
 
     public String getGname(){
         return gname;
@@ -306,14 +322,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         }
 
         if (sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
-
-            //System.out.println("Step Counter Detected : " + value);
-            //Fragment fragment = getFragmentManager().findFragmentByTag("fragment4");
-            //TextView view = (TextView)fragment.getView().findViewById(R.id.textViewStep);
-            //view.setText("Step Counter Detected : " + value);
         } else if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
-            // For test only. Only allowed value is 1.0 i.e. for step taken
-           // System.out.println("Step Detector Detected : " + value);
         }
     }
 

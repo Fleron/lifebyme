@@ -10,7 +10,8 @@
         android:textSize="30dp"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:id="@+id/textview_frag12" />
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
