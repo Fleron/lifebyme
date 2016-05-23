@@ -4,6 +4,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,10 @@ import com.gnirt69.slidingmenuexample.talkToDBTask;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import java.lang.reflect.Field;
+import android.graphics.Typeface;
+import android.content.Context;
 
 public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     ViewGroup rootView;
@@ -87,6 +92,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         runDBtask(null,null,10);
 
         button = (Button) rootView.findViewById(R.id.submit_button2);
+        Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/CircularStd-Book.otf");
+        button.setTypeface(font);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

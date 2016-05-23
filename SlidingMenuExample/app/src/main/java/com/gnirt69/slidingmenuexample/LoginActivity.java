@@ -33,6 +33,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Typeface;
+import java.lang.reflect.Field;
+import android.content.Context;
+
 
 /**
  * A login screen that offers login via email/password.
@@ -67,6 +71,12 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //setDefaultFont(this, "DEFAULT", "CircularStd-Medium.otf");
+        setDefaultFont(this, "MONOSPACE", "fonts/CircularStd-Book.otf");
+        //setDefaultFont(this, "SERIF", "CircularStd-Medium.otf");
+        //setDefaultFont(this, "SANS_SERIF", "CircularStd-Medium.otf");
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         getWindow().setSoftInputMode(
@@ -98,6 +108,27 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    public static void setDefaultFont(Context context,
+                                      String staticTypefaceFieldName, String fontAssetName) {
+        final Typeface regular = Typeface.createFromAsset(context.getAssets(),
+                fontAssetName);
+        replaceFont(staticTypefaceFieldName, regular);
+    }
+
+    protected static void replaceFont(String staticTypefaceFieldName,
+                                      final Typeface newTypeface) {
+        try {
+            final Field staticField = Typeface.class
+                    .getDeclaredField(staticTypefaceFieldName);
+            staticField.setAccessible(true);
+            staticField.set(null, newTypeface);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     private void checkAllreadyUser() {
