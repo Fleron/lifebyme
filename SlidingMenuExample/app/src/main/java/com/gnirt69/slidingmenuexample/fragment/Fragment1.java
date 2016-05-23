@@ -126,14 +126,6 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             }
         });
 
-/*        skip_day.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity().getApplicationContext(), "Day skipped!", Toast.LENGTH_SHORT).show();
-                System.out.println("skip day");
-            }
-        });*/
 
         return rootView;
     }
@@ -235,25 +227,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                             }
                         }
                     });
-                    /*
-                    mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        String k = j;
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (Tswich == false) {
-                                Tswich = true;
-                                work =""+ 1;
-                                valueMap.put(k,work);
-                            } else {
-                                Tswich = false;
-                                work =""+ 0;
-                                valueMap.put(k,work);
-                            }
-                        }
-                    });
-                    */
                     rl.addView(mCheckBox);
-
                      table.addView(row, i);
 
                 } else if (variableTypes[i].contains("amount")|| variableTypes[i].contains("scale")) {

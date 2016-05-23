@@ -35,6 +35,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String[] notSharedName;
     private String[] notSharedID;
     private JSONObject dataObject;
+    private JSONObject dataObjectDates;
     private String[] values;
     private String[] keys;
     private String[] gnames;
@@ -219,6 +220,12 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         */
     }
     @Override
+    protected void onCancelled(){
+        listener.onTaskFailed();
+        System.out.println("AsyncTask Cancelled");
+        super.onCancelled();
+    }
+    @Override
     protected void onPostExecute(String result) {
         System.out.println(result);
         System.out.println(requestType);
@@ -389,20 +396,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     private void storeValues(JSONObject object) {
         try {
-            this.dataObject = object.getJSONObject("DICT");
-            /*
-            JSONArray jsonKeys = object.getJSONArray("KEYS");
-            JSONArray jsonValues = object.getJSONArray("VALUES");
-            System.out.println(jsonKeys.getString(0));
-            keys = new String[jsonKeys.length()];
-            values = new String[jsonValues.length()];
-
-            for (int i = 0; i < jsonKeys.length(); i++) {
-                keys[i] = jsonKeys.getString(i);
-                values[i] = jsonValues.getString(i);
-            }
-            System.out.println(values[0]);
-            */
+            this.dataObject = object.getJSONObject("VALUES");
+            this.dataObjectDates = object.getJSONObject("DATES");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -493,6 +488,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.requestAnswer = requestAnswer;
     }
     public JSONObject getDataObject(){return this.dataObject;}
+    public JSONObject getDataObjectDates(){return this.dataObjectDates;}
     public String[] getVariablesNames(){return this.variablesNames;}
     public String[] getVariablesTypes(){return this.variablesType;}
     public String[] getVariablesID(){return this.variablesID;}
