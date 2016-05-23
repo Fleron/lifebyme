@@ -70,7 +70,7 @@
                 </LinearLayout>
 
                 <ListView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/shared_var_list" />
             </LinearLayout>
@@ -106,9 +106,10 @@
                 </LinearLayout>
 
                 <ListView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/unshared_var_list" />
+                    android:id="@+id/unshared_var_list"
+                    android:layout_marginBottom="30dp" />
             </LinearLayout>
 
 
