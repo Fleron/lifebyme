@@ -133,7 +133,8 @@
                 android:layout_marginRight="40dp"
                 android:textColor="#ffffff"
                 android:background="@android:color/transparent"
-                android:onClick="onButtonClick" />
+                android:onClick="onButtonClick"
+                android:textSize="15dp" />
 
             <Button
                 android:layout_width="match_parent"
@@ -147,7 +148,8 @@
                 android:layout_marginRight="40dp"
                 android:textColor="#fdfdfd"
                 android:background="@android:color/transparent"
-                android:onClick="onButtonClick" />
+                android:onClick="onButtonClick"
+                android:textSize="15dp" />
 
         </LinearLayout>
     </ScrollView>

@@ -30,6 +30,7 @@
 Please note that correlation is not the same thing as causation, i e having two parameters that follow similar patterns does not necessarily mean that these two parameters affect each other. The LifeByMe app will only show mathematical correlation and does not take into account whether parameters are otherwise related or not.
 LifeByME will not sell any personal information to third parties. </string>
 
+
     <string name="skip_day">Skip day</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
