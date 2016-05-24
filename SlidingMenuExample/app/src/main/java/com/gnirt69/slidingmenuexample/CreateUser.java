@@ -1,12 +1,9 @@
 package com.gnirt69.slidingmenuexample;
 
 import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.support.v7.app.AlertDialog;
 
 import android.view.View;
@@ -102,11 +99,11 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
     public void getFieldValues(){
         email = ((EditText) findViewById(R.id.email)).getText().toString();
         username = ((EditText) findViewById(R.id.username)).getText().toString();
-        password = ((EditText) findViewById(R.id.password)).getText().toString();
+        password = ((EditText) findViewById(R.id.new_password)).getText().toString();
         confirm_password = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
     }
     public void clearFields(){
-        EditText editTextPassword = ((EditText) findViewById(R.id.password));
+        EditText editTextPassword = ((EditText) findViewById(R.id.new_password));
         EditText editTextconfirmedpassword = ((EditText) findViewById(R.id.confirm_password));
         editTextPassword.setText("");
         editTextconfirmedpassword.setText("");
@@ -151,7 +148,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
 
 
     private void onUserAlreadyExists(){
-        EditText editTextPassword = ((EditText) findViewById(R.id.password));
+        EditText editTextPassword = ((EditText) findViewById(R.id.new_password));
         EditText editTextUsername = ((EditText) findViewById(R.id.username));
         EditText editTextconfirmedpassword = ((EditText) findViewById(R.id.confirm_password));
         Toast.makeText(getApplicationContext(), "Username already exist", Toast.LENGTH_SHORT).show();
