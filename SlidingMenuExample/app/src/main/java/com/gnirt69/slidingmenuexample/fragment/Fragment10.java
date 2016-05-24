@@ -39,7 +39,10 @@ public class Fragment10 extends Fragment {
             @Override
             public void onClick(View view) {
                 receiverUser = user_to_add.getText().toString();
-                groupID = ((MainActivity)getActivity()).getGID();
+                if(getActivity()!= null){
+                    groupID = ((MainActivity)getActivity()).getGID();
+                }
+
                 getUsername();
                 
                 //runDBtaskAddUserToGroup();
@@ -53,32 +56,9 @@ public class Fragment10 extends Fragment {
     }
 
     public void getUsername(){
-        senderUser = ((MainActivity)getActivity()).getUser();
-    }
+        if(getActivity() != null){
+            senderUser = ((MainActivity)getActivity()).getUser();
+        }
 
-/*    private void runDBtaskSendUserRequest(int request){
-
-        talkToDBTask task = new talkToDBTask(this);
-        requestType = request;
-        task.setUsername(user);
-        task.set
-        task.setRequestType(requestType);
-        task.execute();
     }
-
-    private void userWasAdded(){
-        Toast.makeText(getActivity().getApplicationContext(), "User added to group!", Toast.LENGTH_SHORT).show();
-        //Send user to Social, add Toast.
-    }
-    @Override
-    public void onTaskCompleted() {
-        userWasAdded();
-    }
-
-    @Override
-    public void onTaskFailed() {
-        System.out.println("error error error");
-    }
-}*/
-
 }

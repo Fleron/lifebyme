@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#36b550</color>
     <color name="colorAccentCheckBox">#f8f8f8</color>
-    <color name="colorUncheckedBox">#298029</color>
+    <color name="colorUncheckedBox">#014f01</color>
     <color name="apptheme_color">#476903</color>
     <color name="divider_white">#ffffff</color>
 </resources>

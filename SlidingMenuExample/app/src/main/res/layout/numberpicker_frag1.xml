@@ -8,4 +8,5 @@
         android:layout_marginRight="60dp"
         android:layout_marginEnd="60dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:theme="@android:style/Theme.DeviceDefault" />

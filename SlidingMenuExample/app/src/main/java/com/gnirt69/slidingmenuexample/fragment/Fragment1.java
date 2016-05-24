@@ -5,6 +5,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -207,14 +208,14 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
                 } else if (variableTypes[i].contains("binary")) {
 
-                    //View view = inflater.inflate(R.layout.switch_button,rl,false);
-                    View view = inflater.inflate(R.layout.checkbox,rl,false);
-                    mCheckBox = (CheckBox)view.findViewById(R.id.checkbox_frag1);
-                    //mySwitch = (Switch) view.findViewById(R.id.switch1);
+                    View view = inflater.inflate(R.layout.switch_button,rl,false);
+                    //View view = inflater.inflate(R.layout.checkbox,rl,false);
+                    //mCheckBox = (CheckBox)view.findViewById(R.id.checkbox_frag1);
+                    mySwitch = (Switch) view.findViewById(R.id.switch1);
 
                     Tswich = false;
                     valueMap.put(j,"0");
-                    mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         String k = j;
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -227,7 +228,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                             }
                         }
                     });
-                    rl.addView(mCheckBox);
+                    rl.addView(mySwitch);
                      table.addView(row, i);
 
                 } else if (variableTypes[i].contains("amount")|| variableTypes[i].contains("scale")) {
@@ -245,9 +246,9 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                         np.setMinValue(0);
                         np.setMaxValue(nums.length-1);
                         np.setValue(nums.length/2);
-
                         valueMap.put(j,"0");
                     }
+
                     np.setWrapSelectorWheel(false);
                     np.setClickable(false);
                     
@@ -286,5 +287,13 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     @Override
     public void onTaskFailed(int responseCode) {
         Toast.makeText(getActivity().getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPause() {
+        if(task!= null &&task.getStatus() == AsyncTask.Status.RUNNING){
+            task.cancel(true);
+        }
+        super.onPause();
     }
 }

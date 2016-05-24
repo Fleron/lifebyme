@@ -37,7 +37,10 @@ public class Fragment3 extends Fragment {
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
                 System.out.println(year+"-"+month+"-"+dayOfMonth);
-                ((MainActivity) getActivity()).replaceFragment(0);
+                if(getActivity() != null){
+                    ((MainActivity) getActivity()).replaceFragment(0);
+                }
+
 
 
 

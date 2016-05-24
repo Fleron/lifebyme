@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.gnirt69.slidingmenuexample.R;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -26,6 +28,7 @@ import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,6 +38,14 @@ public class Fragment14 extends Fragment {
     View rootView;
     ListView view;
     TextView textView;
+    final static int COLOR_RGB_FIRSTLINE_PRIMARY = Color.rgb(198,148,87);
+    final static int COLOR_RGB_FIRSTLINE_SECONDARY= Color.rgb(161, 121, 71);
+    final static int COLOR_RGB_SECONDLINE_PRIMARY = Color.rgb(182,80,104);
+    final static int BACKGROUNDCOLOR_ARGB_FIRSTLINE = Color.argb(50, 227, 181, 123);
+    final static int BACKGROUNDCOLOR_ARGB_SECONDLINE = Color.argb(50, 209, 113, 136);
+
+    int colorARGBFirstLinePrimary;
+    int colorARGBSecondLinePrimary;
     private static final int MAX_DATA_POINTS = 100000;
     private static int x_max = 30;
     List<String> list =new ArrayList<>();
@@ -43,6 +54,8 @@ public class Fragment14 extends Fragment {
     String valueList1Name;
     ArrayList<Double> valueList2;
     String valueList2Name;
+    Date[] dateList1;
+    Date[] dateList2;
 
     public Fragment14() {
         // Required empty public constructor
@@ -57,21 +70,23 @@ public class Fragment14 extends Fragment {
         textView = (TextView) rootView.findViewById(R.id.textview_frag14);
         adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,list);
         view.setAdapter(adapter);
-
-        valueList1Name = ((MainActivity)getActivity()).getFirstValueListName();
-        valueList2Name = ((MainActivity)getActivity()).getSecondValueListName();
-        valueList1 = ((MainActivity)getActivity()).getFirstValueList();
-        valueList2 = ((MainActivity)getActivity()).getSecondValueList();
-        runGraph();
-
+        if(getActivity() != null){
+            valueList1Name = ((MainActivity)getActivity()).getFirstValueListName();
+            valueList2Name = ((MainActivity)getActivity()).getSecondValueListName();
+            dateList1 = ((MainActivity)getActivity()).getFirstValueDates();
+            dateList2 = ((MainActivity)getActivity()).getSecondValueDates();
+            valueList1 = ((MainActivity)getActivity()).getFirstValueList();
+            valueList2 = ((MainActivity)getActivity()).getSecondValueList();
+            runGraph();
+        }
         return rootView;
     }
-    private LineGraphSeries<DataPoint> createDataLine(ArrayList<Double> valueList){
+    private LineGraphSeries<DataPoint> createDataLine(ArrayList<Double> valueList,Date[] dateList){
         LineGraphSeries<DataPoint> returnDataSeries = new LineGraphSeries<>();
-        if(valueList != null) {
+        if(valueList != null && dateList != null) {
             for (int i = 0; i < valueList.size(); i++) {
                 Double tempValue = valueList.get(i);
-                returnDataSeries.appendData(new DataPoint(i, tempValue),false,MAX_DATA_POINTS);
+                returnDataSeries.appendData(new DataPoint(dateList[i], tempValue),false,MAX_DATA_POINTS);
             }
         }
         return returnDataSeries;
@@ -80,8 +95,8 @@ public class Fragment14 extends Fragment {
 
         if(valueList1 != null && valueList2 != null) {
 
-            LineGraphSeries<DataPoint> serieslineTemp = createDataLine(valueList1);
-            LineGraphSeries<DataPoint> serieslineTemp2 = createDataLine(valueList2);
+            LineGraphSeries<DataPoint> serieslineTemp = createDataLine(valueList1,dateList1);
+            LineGraphSeries<DataPoint> serieslineTemp2 = createDataLine(valueList2,dateList2);
             adapter.clear();
             adapter.notifyDataSetChanged();
             //getCorrelationList(values);
@@ -92,24 +107,48 @@ public class Fragment14 extends Fragment {
 
             serieslineTemp2.setTitle(valueList2Name);
             serieslineTemp2.setDrawBackground(true);
-            serieslineTemp.setColor(Color.rgb(198,148,87));
-            serieslineTemp2.setColor(Color.rgb(182,80,104));
+            serieslineTemp.setColor(COLOR_RGB_FIRSTLINE_PRIMARY);
+            serieslineTemp2.setColor(COLOR_RGB_SECONDLINE_PRIMARY);
             Paint paint = new Paint();
-            paint.setColor(Color.argb(255, 198, 148, 87));
+            paint.setColor(COLOR_RGB_FIRSTLINE_PRIMARY);
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(8);
-            serieslineTemp.setBackgroundColor(Color.argb(50, 227, 181, 123));
+            serieslineTemp.setBackgroundColor(BACKGROUNDCOLOR_ARGB_FIRSTLINE);
             serieslineTemp.setCustomPaint(paint);
             Paint paint2 = new Paint();
-            paint2.setColor(Color.argb(255, 182, 80, 104));
+            paint2.setColor(COLOR_RGB_SECONDLINE_PRIMARY);
             paint2.setStyle(Paint.Style.STROKE);
             paint2.setStrokeWidth(8);
             serieslineTemp2.setCustomPaint(paint2);
-            serieslineTemp2.setBackgroundColor(Color.argb(50, 209, 113, 136));
+            serieslineTemp2.setBackgroundColor(BACKGROUNDCOLOR_ARGB_SECONDLINE);
             //graph.setTitle("Correlation between: " + valueList1Name + " and " + valueList2Name);
             textView.setText("Correlation between: " + valueList1Name + " and " + valueList2Name);
 
+
+            if(dateList1.length >= dateList2.length) {
+                graph.getViewport().setMinX(dateList1[0].getTime());
+                if(dateList1.length < 11){
+                    graph.getViewport().setMaxX(dateList1[dateList1.length-1].getTime());
+                    Log.d("graphxMax","datelist1 longest. length < 11. maxX set to: "+dateList1[dateList1.length-1].getTime());
+
+                }else{
+                    graph.getViewport().setMaxX(dateList1[10].getTime());
+                    Log.d("graphxMax","datelist1 longest. length >= 11 maxX set to: "+dateList1[10].getTime());
+                }
+
+            }else{
+                graph.getViewport().setMinX(dateList2[0].getTime());
+                if(dateList2.length < 11){
+                    graph.getViewport().setMaxX(dateList2[dateList2.length-1].getTime());
+                    Log.d("graphxMax","datelist2 longest. length < 11. maxX set to: "+dateList2[dateList2.length-1].getTime());
+                }else{
+                    graph.getViewport().setMaxX(dateList2[10].getTime());
+                    Log.d("graphxMax","datelist longest. length >= 11 maxX set to: "+dateList2[10].getTime());
+                }
+
+            }
             graph.addSeries(serieslineTemp);
+            graph.getViewport().setXAxisBoundsManual(true);
             graph.getSecondScale().setMaxY(serieslineTemp2.getHighestValueY()+5);
             graph.getSecondScale().setMinY(serieslineTemp2.getLowestValueY()-5);
             graph.getSecondScale().addSeries(serieslineTemp2);
@@ -177,12 +216,13 @@ public class Fragment14 extends Fragment {
     private void setupDoubleGraph() {
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
         graph.getGridLabelRenderer().setGridColor(Color.WHITE);
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("Day");
+        //graph.getGridLabelRenderer().setHorizontalAxisTitle("Day");
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
 
-        graph.getViewport().setXAxisBoundsManual(true);
+        //graph.getViewport().setXAxisBoundsManual(true);
 
-        graph.getViewport().setMaxX(x_max);
-        graph.getViewport().setMinX(0);
+        //graph.getViewport().setMaxX(x_max);
+        //graph.getViewport().setMinX(0);
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScalable(true);
         graph.getViewport().setBackgroundColor(Color.parseColor("#4DFFFFFF"));
@@ -192,10 +232,10 @@ public class Fragment14 extends Fragment {
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         graph.getLegendRenderer().setBackgroundColor(Color.argb(50,255,255,255));
         graph.getLegendRenderer().setTextColor(Color.rgb(48,110, 85));
-        graph.getGridLabelRenderer().setNumHorizontalLabels(6);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
         graph.getGridLabelRenderer().setNumVerticalLabels(6);
-        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.rgb(161, 121, 71));
-        graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.rgb(182, 80, 104));
+        graph.getGridLabelRenderer().setVerticalLabelsColor(COLOR_RGB_FIRSTLINE_SECONDARY);
+        graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(COLOR_RGB_SECONDLINE_PRIMARY);
         graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.rgb(255,255,255));
         graph.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.rgb(255,255,255));
     }

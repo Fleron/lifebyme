@@ -4,6 +4,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 
 import android.app.Fragment;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
     String username;
     int requestType;
     Context context;
+    talkToDBTask task;
 
     public Fragment8() {
     }
@@ -62,7 +64,7 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
 
     private void runDBtaskCreateGroup(int request){
 
-        talkToDBTask task = new talkToDBTask(this,context);
+        task = new talkToDBTask(this,context);
         requestType = request;
         task.setGname(gname);
         task.setUsername(username);
@@ -82,5 +84,12 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
     @Override
     public void onTaskFailed(int responseCode) {
         System.out.println("error error error");
+    }
+    @Override
+    public void onPause() {
+        if(task!= null &&task.getStatus() == AsyncTask.Status.RUNNING){
+            task.cancel(true);
+        }
+        super.onPause();
     }
 }

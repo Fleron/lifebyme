@@ -9,6 +9,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -193,5 +194,12 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
     @Override
     public void onTaskFailed(int responseCode) {
         System.out.println("error error error");
+    }
+    @Override
+    public void onPause() {
+        if(task!= null &&task.getStatus() == AsyncTask.Status.RUNNING){
+            task.cancel(true);
+        }
+        super.onPause();
     }
 }

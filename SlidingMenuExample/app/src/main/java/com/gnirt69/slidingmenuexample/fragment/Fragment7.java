@@ -2,6 +2,7 @@ package com.gnirt69.slidingmenuexample.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,5 +93,12 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
     @Override
     public void onTaskFailed(int responseCode) {
         Toast.makeText(getActivity().getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onPause() {
+        if(task!= null &&task.getStatus() == AsyncTask.Status.RUNNING){
+            task.cancel(true);
+        }
+        super.onPause();
     }
 }

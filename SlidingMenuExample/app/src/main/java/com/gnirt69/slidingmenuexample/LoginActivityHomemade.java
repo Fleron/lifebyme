@@ -1,6 +1,7 @@
 package com.gnirt69.slidingmenuexample;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 public class LoginActivityHomemade extends ActionBarActivity implements OnTalkToDBFinish{
     String username;
     String password;
+    private talkToDBTask task;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,7 @@ public class LoginActivityHomemade extends ActionBarActivity implements OnTalkTo
         }
     }
     private void runDBtask(){
-        talkToDBTask task = new talkToDBTask(this,this);
+        task = new talkToDBTask(this,this);
         task.setUsername(username);
         task.setPwd(password);
         task.setRequestType(1);
@@ -71,5 +73,12 @@ public class LoginActivityHomemade extends ActionBarActivity implements OnTalkTo
     @Override
     public void onTaskFailed(int responseCode) {
         System.out.println("fail");
+    }
+    @Override
+    public void onPause() {
+        if(task!= null &&task.getStatus() == AsyncTask.Status.RUNNING){
+            task.cancel(true);
+        }
+        super.onPause();
     }
 }

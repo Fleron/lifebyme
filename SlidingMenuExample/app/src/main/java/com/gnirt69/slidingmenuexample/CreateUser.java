@@ -5,6 +5,7 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +27,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
     String confirm_password;
     int requestType;
     private AccountManager mAccountManager;
+    talkToDBTask task;
     CheckBox checkBox;
 
 
@@ -123,7 +125,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
 
     }*/
     public void checkUserExists(int request){
-        talkToDBTask task = new talkToDBTask(this,this);
+        task = new talkToDBTask(this,this);
         task.setUsername(username);
         task.setPwd(password);
         requestType = request;
@@ -202,5 +204,12 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
         if(requestType == 2){
             System.out.println("error");
         }
+    }
+    @Override
+    public void onPause() {
+        if(task!= null &&task.getStatus() == AsyncTask.Status.RUNNING){
+            task.cancel(true);
+        }
+        super.onPause();
     }
 }

@@ -10,6 +10,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
         import android.graphics.LinearGradient;
         import android.graphics.Paint;
         import android.graphics.Shader;
+        import android.os.AsyncTask;
         import android.os.Bundle;
         import android.util.Log;
         import android.view.LayoutInflater;
@@ -91,19 +92,15 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
                 int end = objString.indexOf(":");
                 String k = objString.substring(0,end);
 
-                //setupDataToGraph(k);
                 if(checkInVariables(k)){
                     graph.removeAllSeries();
                     System.out.println(k);
                     if(getActivity() != null){
                         ((MainActivity)getActivity()).setSecondValueListName(k);
                         ((MainActivity)getActivity()).setSecondValueList(createArrayList(k));
+                        ((MainActivity)getActivity()).setSecondValueDates(getDatesFromObject(k));
                         ((MainActivity) getActivity()).replaceFragment(13);
                     }
-
-                    //setupDoubleGraph(graph);
-                    //setupDoubleLinesToGraph(firstVariable,k);
-                    //firstVariable = k;
                 }
 
             }
@@ -129,6 +126,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         }
         return false;
     }
+
     private ArrayList<Double> createArrayList(String key){
         String[] temp = getValuesFromObject(key);
         ArrayList<Double> returnList = new ArrayList<>();
@@ -209,7 +207,6 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         }
     }
     private Date[] getDatesFromObject(String key){
-
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             JSONArray jsonValues = dataObjectDates.getJSONArray(key);
@@ -247,7 +244,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         return valueList;
     }
     private void setupDataToGraph(String key){
-        if(dataObject != null){
+        if(dataObject != null && dataObjectDates != null){
 
             valuesForSingleGraph(key);
             Date[] dateTemp = getDatesFromObject(key);
@@ -256,12 +253,13 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
             if(getActivity()!= null){
                 ((MainActivity)getActivity()).setFirstValueList(temp);
                 ((MainActivity)getActivity()).setFirstValueListName(key);
+                ((MainActivity)getActivity()).setFirstValueDates(dateTemp);
             }
 
             adapter.clear();
             adapter.notifyDataSetChanged();
             getCorrelationList(values);
-            setList(makeString(getMean(temp)), key + " Average: ");
+            setList(makeString(getMean(temp)),key + " Average: ");
             setList(makeString((getMax(temp))),key + " Max: ");
             setList(makeString(getMin(temp)),key + " Min: ");
 
@@ -276,7 +274,11 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
 
             //graph.setTitle(key);
             graph.getViewport().setMinX(dateTemp[0].getTime());
-            graph.getViewport().setMaxX(dateTemp[10].getTime());
+            if(dateTemp.length < 11){
+                graph.getViewport().setMaxX(dateTemp[dateTemp.length-1].getTime());
+            }else{
+                graph.getViewport().setMaxX(dateTemp[10].getTime());
+            }
             graph.getViewport().setXAxisBoundsManual(true);
             textView.setText(key);
             graph.addSeries(serieslineTemp);
@@ -428,7 +430,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
     private void setupSingleGraph(GraphView graph){
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
         graph.getGridLabelRenderer().setGridColor(Color.WHITE);
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("Day");
+        // graph.getGridLabelRenderer().setHorizontalAxisTitle("Day");
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
 
 
@@ -499,5 +501,12 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
     @Override
     public void onTaskFailed(int responseCode) {
         Log.d("lifebyme",this.getTag() +" onTaskFailed() ran.");
+    }
+    @Override
+    public void onPause() {
+        if(task!= null &&task.getStatus() == AsyncTask.Status.RUNNING){
+            task.cancel(true);
+        }
+        super.onPause();
     }
 }

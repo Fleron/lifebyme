@@ -1,6 +1,7 @@
 package com.gnirt69.slidingmenuexample;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -72,5 +73,12 @@ public class ForgotPassword extends ActionBarActivity implements OnTalkToDBFinis
     @Override
     public void onTaskFailed(int responseCode) {
 
+    }
+    @Override
+    public void onPause() {
+        if(task!= null &&task.getStatus() == AsyncTask.Status.RUNNING){
+            task.cancel(true);
+        }
+        super.onPause();
     }
 }

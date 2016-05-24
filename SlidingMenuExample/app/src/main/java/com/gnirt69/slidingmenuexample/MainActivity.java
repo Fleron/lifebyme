@@ -42,6 +42,7 @@ import com.gnirt69.slidingmenuexample.fragment.Fragment9;
 import com.gnirt69.slidingmenuexample.model.ItemSlideMenu;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,6 +66,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     String secondValueListName;
     ArrayList<Double> firstValueList;
     ArrayList<Double> secondValueList;
+    Date[] secondValueDates;
+    Date[] firstValueDates;
 
     String gname;
     String gid;
@@ -298,11 +301,14 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     public void setSecondValueListName(String name){this.secondValueListName = name;}
     public void setFirstValueList(ArrayList<Double> valueList){this.firstValueList = valueList;}
     public void setSecondValueList(ArrayList<Double> valueList){this.secondValueList = valueList;}
+    public void setSecondValueDates(Date[] dateList){this.secondValueDates = dateList;}
+    public void setFirstValueDates(Date[] dateList){this.firstValueDates = dateList;}
     public String getSecondValueListName(){return this.secondValueListName;}
     public String getFirstValueListName(){return this.firstValueListName;}
     public ArrayList<Double> getFirstValueList(){return this.firstValueList;}
     public ArrayList<Double> getSecondValueList(){return this.secondValueList;}
-
+    public Date[] getFirstValueDates(){return this.firstValueDates;}
+    public Date[] getSecondValueDates(){return this.secondValueDates;}
     public String getGname(){
         return gname;
     }

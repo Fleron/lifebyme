@@ -10,6 +10,10 @@
 
         <!--<item name="android:checkboxStyle">@style/CheckBoxAppTheme</item>-->
     </style>
+    <style name ="switchtext" parent ="Theme.AppCompat.Light.DarkActionBar">
+        <item name = "android:textColor">#ffffff</item>
+        <item name ="android:textSize">15sp</item>
+    </style>
     <!--<style name="CheckBoxAppTheme" parent="android:Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/apptheme_btn_check_holo_light</item>
     </style>

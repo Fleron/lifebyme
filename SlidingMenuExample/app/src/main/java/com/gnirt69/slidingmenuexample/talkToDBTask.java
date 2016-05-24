@@ -222,7 +222,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onCancelled(){
         int responseCode = 32;
-        listener.onTaskFailed(32);
+        listener.onTaskFailed(responseCode);
         System.out.println("AsyncTask Cancelled");
         super.onCancelled();
     }

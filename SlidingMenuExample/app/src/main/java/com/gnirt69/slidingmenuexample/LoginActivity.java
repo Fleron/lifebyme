@@ -68,6 +68,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     private String password;
     private SharedPreferences prefSettings;
     private SharedPreferences.Editor prefEditor;
+    private talkToDBTask task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +151,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
 
         //start login task.
-        talkToDBTask task = new talkToDBTask(this,this);
+        task = new talkToDBTask(this,this);
         task.setUsername(username);
         task.setPwd(password);
         task.setRequestType(1);
@@ -223,7 +224,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             showProgress(true);
 
             //start login task.
-            talkToDBTask task = new talkToDBTask(this,this);
+            task = new talkToDBTask(this,this);
             task.setUsername(username);
             task.setPwd(password);
             task.setRequestType(1);
@@ -356,6 +357,13 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             mPasswordView.requestFocus();
         }
         showProgress(false);
+    }
+    @Override
+    public void onPause() {
+        if(task!= null &&task.getStatus() == AsyncTask.Status.RUNNING){
+            task.cancel(true);
+        }
+        super.onPause();
     }
 
 
