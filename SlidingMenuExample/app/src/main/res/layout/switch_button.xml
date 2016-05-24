@@ -7,11 +7,7 @@
     android:showText="true"
     android:textOff="@string/no"
     android:textOn="@string/yes"
-<<<<<<< HEAD
-=======
     android:textColor="#ffffff"
->>>>>>> 0ceaa6d36b4c7420d07567387ec9fd0c211d29ce
-
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
     android:layout_marginTop="37dp"
