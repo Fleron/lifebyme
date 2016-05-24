@@ -32,10 +32,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import java.lang.reflect.Field;
-import android.graphics.Typeface;
-import android.content.Context;
-
 public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     ViewGroup rootView;
     ViewGroup rootView2;
@@ -236,8 +232,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     View view = inflater.inflate(R.layout.numberpicker_frag1,rl,false);
                     np = (NumberPicker) view.findViewById(R.id.numberPicker2);
                     if(variableTypes[i].contains("amount")){
-                        np.setDisplayedValues(cs);
-                        np.setMaxValue(cs.length-1);
+                        //np.setDisplayedValues(cs);
+                        np.setMaxValue(100);
                         np.setMinValue(0);
                         np.setValue(8);
                         valueMap.put(j,"8");
@@ -259,10 +255,16 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                         @Override
                         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                             String[] list = picker.getDisplayedValues();
-                            hoursSleep = list[newVal];
-                            valueMap.put(k,hoursSleep);
-                            System.out.println("nyckel: "+k);
-
+                            if (list != null ) {
+                                hoursSleep = list[newVal];
+                                valueMap.put(k, hoursSleep);
+                                System.out.println("nyckel: " + k);
+                            }
+                            else{
+                                hoursSleep = String.valueOf(newVal);
+                                valueMap.put(k, hoursSleep);
+                                System.out.println("nyckel: " + k);
+                            }
                         }
                     });
 
