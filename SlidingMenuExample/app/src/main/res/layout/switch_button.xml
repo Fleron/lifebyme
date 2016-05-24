@@ -7,7 +7,6 @@
     android:showText="true"
     android:textOff="@string/no"
     android:textOn="@string/yes"
-    android:textColor="@color/colorAccent"
 
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
@@ -17,7 +16,7 @@
     android:layout_marginEnd="50dp"
     android:layout_marginLeft="50dp"
     android:layout_marginStart="53dp"
-    style="@android:style/Theme.Holo"
+    style="@style/AppTheme"
     android:height="20dp"
     android:theme="@android:style/Theme.Holo"
     android:drawableTint="#ffffff"

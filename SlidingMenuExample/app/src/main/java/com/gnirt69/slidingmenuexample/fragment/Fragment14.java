@@ -29,7 +29,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
+
 import java.util.List;
 
 
@@ -44,10 +44,7 @@ public class Fragment14 extends Fragment {
     final static int BACKGROUNDCOLOR_ARGB_FIRSTLINE = Color.argb(50, 227, 181, 123);
     final static int BACKGROUNDCOLOR_ARGB_SECONDLINE = Color.argb(50, 209, 113, 136);
 
-    int colorARGBFirstLinePrimary;
-    int colorARGBSecondLinePrimary;
     private static final int MAX_DATA_POINTS = 100000;
-    private static int x_max = 30;
     List<String> list =new ArrayList<>();
     ArrayAdapter<String> adapter;
     ArrayList<Double> valueList1;
@@ -135,7 +132,11 @@ public class Fragment14 extends Fragment {
                     graph.getViewport().setMaxX(dateList1[10].getTime());
                     Log.d("graphxMax","datelist1 longest. length >= 11 maxX set to: "+dateList1[10].getTime());
                 }
-
+                graph.addSeries(serieslineTemp);
+                graph.getViewport().setXAxisBoundsManual(true);
+                graph.getSecondScale().setMaxY(serieslineTemp2.getHighestValueY()+5);
+                graph.getSecondScale().setMinY(serieslineTemp2.getLowestValueY()-5);
+                graph.getSecondScale().addSeries(serieslineTemp2);
             }else{
                 graph.getViewport().setMinX(dateList2[0].getTime());
                 if(dateList2.length < 11){
@@ -145,13 +146,15 @@ public class Fragment14 extends Fragment {
                     graph.getViewport().setMaxX(dateList2[10].getTime());
                     Log.d("graphxMax","datelist longest. length >= 11 maxX set to: "+dateList2[10].getTime());
                 }
-
+                graph.addSeries(serieslineTemp2);
+                graph.getViewport().setXAxisBoundsManual(true);
+                graph.getSecondScale().setMaxY(serieslineTemp.getHighestValueY()+5);
+                graph.getSecondScale().setMinY(serieslineTemp.getLowestValueY()-5);
+                graph.getSecondScale().addSeries(serieslineTemp);
+                graph.getGridLabelRenderer().setVerticalLabelsColor(COLOR_RGB_SECONDLINE_PRIMARY);
+                graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(COLOR_RGB_FIRSTLINE_PRIMARY);
             }
-            graph.addSeries(serieslineTemp);
-            graph.getViewport().setXAxisBoundsManual(true);
-            graph.getSecondScale().setMaxY(serieslineTemp2.getHighestValueY()+5);
-            graph.getSecondScale().setMinY(serieslineTemp2.getLowestValueY()-5);
-            graph.getSecondScale().addSeries(serieslineTemp2);
+
         }
     }
     private void setList(String item,String message) {
@@ -216,13 +219,8 @@ public class Fragment14 extends Fragment {
     private void setupDoubleGraph() {
         graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
         graph.getGridLabelRenderer().setGridColor(Color.WHITE);
-        //graph.getGridLabelRenderer().setHorizontalAxisTitle("Day");
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
 
-        //graph.getViewport().setXAxisBoundsManual(true);
-
-        //graph.getViewport().setMaxX(x_max);
-        //graph.getViewport().setMinX(0);
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScalable(true);
         graph.getViewport().setBackgroundColor(Color.parseColor("#4DFFFFFF"));
@@ -234,10 +232,12 @@ public class Fragment14 extends Fragment {
         graph.getLegendRenderer().setTextColor(Color.rgb(48,110, 85));
         graph.getGridLabelRenderer().setNumHorizontalLabels(3);
         graph.getGridLabelRenderer().setNumVerticalLabels(6);
+        graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(15);
         graph.getGridLabelRenderer().setVerticalLabelsColor(COLOR_RGB_FIRSTLINE_SECONDARY);
         graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(COLOR_RGB_SECONDLINE_PRIMARY);
         graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.rgb(255,255,255));
         graph.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.rgb(255,255,255));
+        graph.getGridLabelRenderer();
     }
 
 }

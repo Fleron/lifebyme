@@ -231,7 +231,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     rl.addView(mySwitch);
                      table.addView(row, i);
 
-                } else if (variableTypes[i].contains("amount")|| variableTypes[i].contains("scale")) {
+                } else if (variableTypes[i].contains("amount")|| variableTypes[i].contains("scale")|| variableTypes[i].contains("hours")) {
 
                     View view = inflater.inflate(R.layout.numberpicker_frag1,rl,false);
                     np = (NumberPicker) view.findViewById(R.id.numberPicker2);
@@ -241,7 +241,13 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                         np.setMinValue(0);
                         np.setValue(8);
                         valueMap.put(j,"8");
-                    }else{
+                    }else if(variableTypes[i].contains("hours")){
+                        np.setMaxValue(24);
+                        np.setMinValue(0);
+                        np.setValue(8);
+                        valueMap.put(j,"8");
+                    }
+                    else{
                         np.setDisplayedValues(nums);
                         np.setMinValue(0);
                         np.setMaxValue(nums.length-1);

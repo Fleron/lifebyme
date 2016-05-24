@@ -61,6 +61,7 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
                         scale = "scale";
                         // mood
                         break;
+
                 }
             }
         });
