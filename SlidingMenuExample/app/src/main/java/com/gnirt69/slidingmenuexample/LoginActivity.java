@@ -34,10 +34,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.Typeface;
-import java.lang.reflect.Field;
-import android.content.Context;
-
 
 /**
  * A login screen that offers login via email/password.
@@ -85,7 +81,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         //checkAlreadyUser();
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = (EditText) findViewById(R.id.new_password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {

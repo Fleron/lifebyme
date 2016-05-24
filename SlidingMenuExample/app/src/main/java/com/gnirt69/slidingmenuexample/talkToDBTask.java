@@ -26,6 +26,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String share;
     private String groupName;
     private String GID;
+    private String currentPassword;
+    private String newPassword;
     private String userRequest;
     private String requestAnswer;
     private String requestCallback;
@@ -166,6 +168,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     output = "TRUE";
                 }else if(checkType(object).contains("REMOVEVAR_SUCCESS")){
                     output = "TRUE";
+                }else if(checkType(object).contains("CHANGEPW_SUCCESS")){
+                    output = "TRUE";
                 }
             }
 
@@ -300,6 +304,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 break;
             case 17:
                 setSharedNotShared(GID,variableType,share);
+                break;
+            case 18:
+                changePassword(username,currentPassword,newPassword);
                 break;
         }
     }
@@ -454,6 +461,12 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     public void setUsername(String username){
         this.username = username;
     }
+    public void setCurrentPwd(String currentPdw){
+        this.currentPassword = currentPdw;
+    }
+    public void setNewPwd(String newPdw){
+        this.newPassword = newPdw;
+    }
     public void setToUser(String toUser){
         this.toUser = toUser;
     }
@@ -564,6 +577,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     private void leaveGroup(String user, String GID) {
         this.URL = setupURLLeaveGroup(user, GID);
+        //setupConnection(new String[]{URL});
+    }
+    private void changePassword(String user, String currentPassword, String newPassword) {
+        this.URL = setupURLChangePassword(user, currentPassword, newPassword);
         //setupConnection(new String[]{URL});
     }
     private void sendEmail(String email) {
@@ -875,6 +892,23 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         try {
             data = ipadress + program + URLEncoder.encode("GID", "UTF-8") + "=" + URLEncoder.encode(GID, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+        return data;
+    }
+
+    private String setupURLChangePassword(String user, String c_pwd, String n_pwd ) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "changepassword.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("uname", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8");
+            data += "&" + URLEncoder.encode("oldpw", "UTF-8") + "=" + URLEncoder.encode(c_pwd, "UTF-8");
+            data += "&" + URLEncoder.encode("newpw", "UTF-8") + "=" + URLEncoder.encode(n_pwd, "UTF-8");
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             failureHandler();
