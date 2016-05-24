@@ -4,11 +4,16 @@
         android:layout_height="102dp"
         android:id="@+id/numberPicker2"
         android:orientation="horizontal"
-
+        android:scaleX="1.3"
+        android:scaleY="1.3"
         android:layout_marginRight="60dp"
+<<<<<<< HEAD
         android:layout_marginEnd="60dp"
         android:scaleX="1.2"
         android:scaleY="1.2"
+=======
+        android:layout_marginEnd="65dp"
+>>>>>>> 0ceaa6d36b4c7420d07567387ec9fd0c211d29ce
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:theme="@android:style/Theme.DeviceDefault" />
