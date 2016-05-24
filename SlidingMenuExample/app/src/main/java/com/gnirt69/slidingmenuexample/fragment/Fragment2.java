@@ -108,7 +108,7 @@ public class Fragment2 extends Fragment implements OnTalkToDBFinish{
         populateTable();
     }
     @Override
-    public void onTaskFailed() {
+    public void onTaskFailed(int responseCode) {
 
     }
 }

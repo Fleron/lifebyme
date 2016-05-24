@@ -195,7 +195,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
     }
 
     @Override
-    public void onTaskFailed() {
+    public void onTaskFailed(int responseCode) {
         if(requestType == 1){
             runDBtaskAddUser(2,true);
         }

@@ -121,7 +121,7 @@ public class Fragment9 extends Fragment implements OnTalkToDBFinish {
     }
 
     @Override
-    public void onTaskFailed() {
+    public void onTaskFailed(int responseCode) {
         System.out.println("ERROR ERROR ERRRRRROR...");
     }
 }

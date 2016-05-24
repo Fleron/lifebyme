@@ -343,7 +343,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     }
 
     @Override
-    public void onTaskFailed() {
+    public void onTaskFailed(int responseCode) {
         if(username.contains("alex")){
             mUsernameView.setError("this user does not exist");
             mUsernameView.requestFocus();

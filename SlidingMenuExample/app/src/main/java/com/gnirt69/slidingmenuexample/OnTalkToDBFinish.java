@@ -5,5 +5,5 @@ package com.gnirt69.slidingmenuexample;
  */
 public interface OnTalkToDBFinish {
     void onTaskCompleted(int request);
-    void onTaskFailed();
+    void onTaskFailed(int responseCode);
 }

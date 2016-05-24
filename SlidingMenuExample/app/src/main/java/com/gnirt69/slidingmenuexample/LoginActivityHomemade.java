@@ -69,7 +69,7 @@ public class LoginActivityHomemade extends ActionBarActivity implements OnTalkTo
     }
 
     @Override
-    public void onTaskFailed() {
+    public void onTaskFailed(int responseCode) {
         System.out.println("fail");
     }
 }

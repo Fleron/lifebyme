@@ -497,7 +497,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         runGraph(rootView,firstVariable);
     }
     @Override
-    public void onTaskFailed() {
+    public void onTaskFailed(int responseCode) {
         Log.d("lifebyme",this.getTag() +" onTaskFailed() ran.");
     }
 }

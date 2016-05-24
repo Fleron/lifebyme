@@ -70,7 +70,7 @@ public class ForgotPassword extends ActionBarActivity implements OnTalkToDBFinis
     }
 
     @Override
-    public void onTaskFailed() {
+    public void onTaskFailed(int responseCode) {
 
     }
 }

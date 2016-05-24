@@ -80,7 +80,7 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
     }
 
     @Override
-    public void onTaskFailed() {
+    public void onTaskFailed(int responseCode) {
         System.out.println("error error error");
     }
 }
