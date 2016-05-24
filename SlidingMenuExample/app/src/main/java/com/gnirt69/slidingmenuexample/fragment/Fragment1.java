@@ -261,17 +261,12 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                             hoursSleep = list[newVal];
                             valueMap.put(k,hoursSleep);
                             System.out.println("nyckel: "+k);
+
                         }
                     });
 
                     rl.addView(np);
                     table.addView(row, i);
-
-
-
-                } else {
-
-
                 }
             }
         }
@@ -288,7 +283,6 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             Toast.makeText(getActivity().getApplicationContext(), "Variables added!", Toast.LENGTH_SHORT).show();
         }
     }
-
     @Override
     public void onTaskFailed(int responseCode) {
         Toast.makeText(getActivity().getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();

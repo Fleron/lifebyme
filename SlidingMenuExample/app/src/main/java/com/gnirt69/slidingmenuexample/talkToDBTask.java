@@ -221,7 +221,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     @Override
     protected void onCancelled(){
-        listener.onTaskFailed();
+        int responseCode = 32;
+        listener.onTaskFailed(32);
         System.out.println("AsyncTask Cancelled");
         super.onCancelled();
     }
@@ -237,7 +238,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             System.out.println("values added");
         }
         else{
-            listener.onTaskFailed();
+            int responseCode = 0;
+            listener.onTaskFailed(responseCode);
             System.out.println("nått gick snett!");
         }
 
@@ -301,12 +303,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 break;
         }
     }
-
     private void setSharedNotShared(String gid, String variableType,String add) {
         String program = "editgroupvariables.php?";
         this.URL = setupURLeditGroupVariables(variableType,gid,add,program);
     }
-
     private void getUserVariables(String username,String pwd) {
         String program = "getuservariables.php?";
         this.URL = setupURLBasic(username,pwd,program);
@@ -578,7 +578,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLGroupVariables(GID);
         //setupConnection(new String[]{URL});
     }
-
     private void getValues(String user, String pwd) {
         String program = "getdata.php?";
         this.URL = setupURLBasic(user, pwd, program);
@@ -623,7 +622,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             connection.setDoOutput(true);
             connection.setDoInput(true);
 
-            if (connection == null) listener.onTaskFailed();
+            if (connection == null) listener.onTaskFailed(32);
             InputStream is = connection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line = null;
@@ -809,7 +808,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
-
     private String setupURLAnswerRequest(String user, String GID, String requestAnswer) {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
         String program = "requestanswer.php?";
@@ -884,11 +882,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
         return data;
     }
-
-
-
-
-
 }
 
 
