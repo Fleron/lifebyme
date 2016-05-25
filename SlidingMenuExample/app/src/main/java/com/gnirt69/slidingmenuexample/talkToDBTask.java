@@ -2,6 +2,7 @@ package com.gnirt69.slidingmenuexample;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -170,6 +171,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     output = "TRUE";
                 }else if(checkType(object).contains("CHANGEPW_SUCCESS")){
                     output = "TRUE";
+                }else if(checkType(object).contains("SINGLE DATA")){
+                    storeValues(object);
+                    output = "TRUE";
                 }
             }
 
@@ -264,7 +268,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 System.out.println("sending values");
                 break;
             case 4:
-                getValues(username, pwd);
+                getValues(username);
                 break;
             case 5:
                 addVariable(username,pwd,variableName,variableType);
@@ -308,8 +312,19 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             case 18:
                 changePassword(username,currentPassword,newPassword);
                 break;
+            case 19:
+                storeGroupVariableData();
+                break;
         }
     }
+
+    private void storeGroupVariableData() {
+
+            String program = "groupvariabledata.php?";
+            this.URL = setupURLGroupValue(variableType,program);
+            //setupConnection(new String[]{URL});
+    }
+
     private void setSharedNotShared(String gid, String variableType,String add) {
         String program = "editgroupvariables.php?";
         this.URL = setupURLeditGroupVariables(variableType,gid,add,program);
@@ -595,9 +610,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.URL = setupURLGroupVariables(GID);
         //setupConnection(new String[]{URL});
     }
-    private void getValues(String user, String pwd) {
+    private void getValues(String user) {
         String program = "getdata.php?";
-        this.URL = setupURLBasic(user, pwd, program);
+        this.URL = setupURLBasic(user,null, program);
         //setupConnection(new String[]{URL});
     }
     private String checkType(JSONObject object) {
@@ -639,7 +654,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             connection.setDoOutput(true);
             connection.setDoInput(true);
 
-            if (connection == null) listener.onTaskFailed(32);
+            if (connection == null) listener.onTaskFailed(31);
             InputStream is = connection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line = null;
@@ -657,7 +672,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
     }
     private void failureHandler() {
-
+        Log.i("lifebyme","Failurehandler in talk to DBTask");
     }
     private String setupURLAddVariable(String program, String username, String password, String valueName, String varType) {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
@@ -702,6 +717,21 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         //System.out.println(url);
         return url;
     }
+    private String setupURLGroupValue(String VID, String program){
+
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+
+        String data = null;
+        try {
+            data = ipadress + program + URLEncoder.encode("VID", "UTF-8") + "=" + URLEncoder.encode(VID, "UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
     private String setupURLBasic(String username, String password, String program) {
 
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
@@ -709,7 +739,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         String data = null;
         try {
             data = ipadress + program + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
-            data += "&" + URLEncoder.encode("pwd", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+            if(password != null){
+                data += "&" + URLEncoder.encode("pwd", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+            }
+
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -898,7 +931,6 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         }
         return data;
     }
-
     private String setupURLChangePassword(String user, String c_pwd, String n_pwd ) {
         String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
         String program = "changepassword.php?";

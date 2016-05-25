@@ -7,12 +7,19 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
@@ -28,8 +35,11 @@ import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
 import com.gnirt69.slidingmenuexample.R;
 import com.gnirt69.slidingmenuexample.talkToDBTask;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Fragment1 extends Fragment implements OnTalkToDBFinish{
@@ -46,6 +56,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             "3","2","1","0","-1","-2","-3"
     };
     NumberPicker np;
+    String defaultSeperator;
 
     TableLayout table;
     LayoutInflater inflater;
@@ -60,6 +71,7 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     String mood;
     String work;
     String j;
+    EditText numberEdit;
     private Switch mySwitch;
     private CheckBox mCheckBox;
     boolean Tswich;
@@ -227,23 +239,52 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                     rl.addView(mySwitch);
                      table.addView(row, i);
 
-                } else if (variableTypes[i].contains("amount")|| variableTypes[i].contains("scale")|| variableTypes[i].contains("hours")) {
+                }else if(variableTypes[i].contains("amount")){
+                    // System.out.println(k+" key amount");
+                    //valueMap.put(k,numberEdit.getText().toString());
+                    View view = inflater.inflate(R.layout.free_input_frag1,rl,false);
+                    numberEdit = (EditText) view.findViewById(R.id.editNumber);
+                    valueMap.put(j,"0");
+                    numberEdit.addTextChangedListener(new TextWatcher() {
+                        String k = j;
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            System.out.println(k+": key to numberEdit");
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            System.out.println(s.toString());
+                            valueMap.put(k,s.toString());
+                        }
+                    });
+                    rl.addView(numberEdit);
+                    table.addView(row, i);
+                }
+                else if (variableTypes[i].contains("scale")|| variableTypes[i].contains("hours")) {
 
                     View view = inflater.inflate(R.layout.numberpicker_frag1,rl,false);
                     np = (NumberPicker) view.findViewById(R.id.numberPicker2);
-                    if(variableTypes[i].contains("amount")){
+                    /*if(variableTypes[i].contains("amount")){
                         //np.setDisplayedValues(cs);
                         np.setMaxValue(100);
                         np.setMinValue(0);
                         np.setValue(8);
                         valueMap.put(j,"8");
-                    }else if(variableTypes[i].contains("hours")){
+                    }
+                    */if(variableTypes[i].contains("hours")){
                         np.setMaxValue(24);
                         np.setMinValue(0);
                         np.setValue(8);
                         valueMap.put(j,"8");
                     }
-                    else{
+                    else if(variableTypes[i].contains("scale")){
                         np.setDisplayedValues(nums);
                         np.setMinValue(0);
                         np.setMaxValue(nums.length-1);
@@ -295,7 +336,23 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
     @Override
     public void onTaskFailed(int responseCode) {
         if(getActivity() != null){
-            Toast.makeText(getActivity().getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+            switch (responseCode){
+                case 32:
+                    Log.i("lifebyme","DBTask Cancelled");
+                    break;
+                case 31:
+                    if(getActivity()!= null){
+                        Toast.makeText(getActivity().getApplicationContext(), "No Connection!", Toast.LENGTH_SHORT).show();
+                    }Log.i("lifebyme","responseCode: "+ String.valueOf(responseCode)+ ": onTaskFailed Daily Activity");
+                    break;
+                case 0:
+                    if(getActivity()!= null){
+                        Toast.makeText(getActivity().getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                    }Log.i("lifebyme","responseCode: "+ String.valueOf(responseCode)+ ": onTaskFailed Daily Activity");
+                    break;
+
+            }
+
         }
 
     }

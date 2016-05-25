@@ -72,11 +72,12 @@ public class Fragment11 extends Fragment implements OnTalkToDBFinish {
             @Override
             public void onClick(View view) {
                 toUser = user_to_add.getText().toString();
-                if(!toUser.equals(fromUser)){
+                if(!toUser.equals(fromUser) && toUser.length() > 0){
                     runDBtaskSendRequest(11);
                     final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                 }
+
                 else{
                     Toast.makeText(getActivity().getApplicationContext(), "You are already in this group...", Toast.LENGTH_SHORT).show();
                     final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
