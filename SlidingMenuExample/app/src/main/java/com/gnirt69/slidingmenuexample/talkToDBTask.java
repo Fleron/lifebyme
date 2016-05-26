@@ -236,8 +236,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     @Override
     protected void onPostExecute(String result) {
-        System.out.println(result);
-        System.out.println(requestType);
+        System.out.println("Result: "+result);
+        System.out.println("R Code: "+requestType);
 
         if(result.contains("TRUE")){
 

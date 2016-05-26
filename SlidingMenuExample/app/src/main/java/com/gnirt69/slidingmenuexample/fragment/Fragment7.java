@@ -61,10 +61,6 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
                         scale = "scale";
                         // mood
                         break;
-                    case R.id.radioButton4:
-                        scale = "hours";
-                        // hours
-                        break;
                 }
             }
         });

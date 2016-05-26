@@ -135,30 +135,6 @@
                         android:layout_alignStart="@+id/radioButton2"
                         android:checked="false"
                         android:textSize="20dp" />
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hours"
-                        android:textColor="#ffffff"
-                        android:buttonTint="#ffffff"
-                        android:id="@+id/radioButton4"
-                        android:layout_below="@+id/radioButton3"
-                        android:layout_alignLeft="@+id/radioButton3"
-                        android:layout_alignStart="@+id/radioButton3"
-                        android:checked="false"
-                        android:textSize="20dp" />
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="#ffffff"
-                        android:buttonTint="#ffffff"
-                        android:id="@+id/radioButton5"
-                        android:layout_below="@+id/radioButton4"
-                        android:layout_alignLeft="@+id/radioButton4"
-                        android:layout_alignStart="@+id/radioButton4"
-                        android:checked="false"
-                        android:textSize="20dp" />
                 </RadioGroup>
 
             </RelativeLayout>
