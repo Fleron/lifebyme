@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="SlidingMenuExample"
+            android:label="LifeByME"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
 
