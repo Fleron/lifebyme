@@ -28,6 +28,7 @@ import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import java.util.List;
@@ -97,7 +98,7 @@ public class Fragment14 extends Fragment {
             adapter.clear();
             adapter.notifyDataSetChanged();
             //getCorrelationList(values);
-
+            trimListForCorrelation(valueList1,valueList2,dateList1,dateList2);
             setList(checkCorrelation(valueList1, valueList2), " Correlation: ");
             serieslineTemp.setTitle(valueList1Name);
             serieslineTemp.setDrawBackground(true);
@@ -157,6 +158,31 @@ public class Fragment14 extends Fragment {
 
         }
     }
+    private void trimListForCorrelation(ArrayList<Double> list1,ArrayList<Double> list2,Date[] dateList1, Date[] dateList2){
+        if(list1 != null && list2 != null && dateList1 != null && dateList2 != null){
+            int i = 0;
+            while(list1.size() != list2.size()){
+                if(list1.size() > list2.size()) {
+                    if (!Arrays.asList(dateList2).contains(dateList1[i])) {
+                        if(i< list1.size()){
+                            list1.remove(i);
+                        }
+                    }else{
+                        i++;
+                    }
+                }else{
+                    if (!Arrays.asList(dateList1).contains(dateList2[i])) {
+                        if(i< list2.size()){
+                            list2.remove(i);
+                        }
+                    }else{
+                        i++;
+                    }
+                }
+                System.out.println(i);
+            }
+        }
+    }
     private void setList(String item,String message) {
         list.add(message+item);
         adapter.notifyDataSetChanged();
@@ -190,18 +216,13 @@ public class Fragment14 extends Fragment {
             double[] y = toPrimitive(ys);
             corr = new KendallsCorrelation().correlation(x,y);
         }
-        DecimalFormat df = new DecimalFormat("#.#");
-        df.setRoundingMode(RoundingMode.CEILING);
-
-
-        String item = df.format(corr*100)+"%";
-
+        String item = makeString(corr);
         return item;
     }
     private String makeString(double x){
         DecimalFormat df = new DecimalFormat("#.#");
         df.setRoundingMode(RoundingMode.CEILING);
-        String item = df.format(x);
+        String item = df.format(x*100)+"%";
         return item;
     }
     public static double[] toPrimitive(Double[] array) {

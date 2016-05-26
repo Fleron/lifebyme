@@ -81,19 +81,15 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
 
         return rootView;
     }
-
     public void getUsername(){
         username = ((MainActivity)getActivity()).getUser();
     }
-
     public void getPassword(){
         password = ((MainActivity)getActivity()).getPassword();
     }
-
     public void getGID(){
         GID = ((MainActivity)getActivity()).getGID();
     }
-
     public void changeListSize(){
         ViewGroup.LayoutParams paramsList = view.getLayoutParams();
         paramsList.height = btnListShared.size()*150;
@@ -102,7 +98,6 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         paramsList.height = btnListUnshared.size()*150;
         view2.setLayoutParams(paramsList);
     }
-
     void populateSharedVar(){
         ll = (LinearLayout) rootView.findViewById(R.id.shared_var);
         System.out.println("in i populate share var");
@@ -126,13 +121,8 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
 
                 //ll.addView(btn,params);
             }
-
         }
-
-
-
     }
-
     void populateNotSharedVar(){
         System.out.println("in i populate unshare var");
         ll2 = (LinearLayout) rootView.findViewById(R.id.not_shared_var);
@@ -153,7 +143,6 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
             }
         }
     }
-
     private void shareVar (int bid){
         System.out.println("in i share var");
         ll = (LinearLayout) rootView.findViewById(R.id.shared_var);
@@ -172,7 +161,6 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         setListShare(btn2);
         //ll.addView(btn2,params);
     }
-
     public void setListShare(Button button){
         System.out.println("settling list share with button: "+button.getId());
         btnListShared.add(button);
@@ -190,12 +178,10 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         shareThread thread = new shareThread(button,task,context,this,17,GID,varID);
         thread.run();
     }
-
     public void removeListShare(Button button){
         System.out.println("removing list share with button: "+button.getId());
         btnListShared.remove(button);
         btnAdapterShare.notifyDataSetChanged();
-
     }
     public void removeListUnshare(Button button){
         System.out.println("removing list ushare with button: "+button.getId());
@@ -203,7 +189,6 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         btnAdapterUnshare.notifyDataSetChanged();
 
     }
-
     private void unshareVar (int buttonID){
         System.out.println("in i unshare var");
         ll2 = (LinearLayout) rootView.findViewById(R.id.not_shared_var);
@@ -226,7 +211,6 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         params.setMargins(0,5,0,0);
        // ll2.addView(btn3,params);
     }
-
     private void runDBtaskGetVar(int request){
 
         task = new talkToDBTask(this, context);
@@ -237,7 +221,6 @@ public class Fragment13 extends Fragment implements OnTalkToDBFinish{
         task.setRequestType(requestType);
         task.execute();
     }
-
     @Override
     public void onTaskCompleted(int request) {
         if(request == 15) {

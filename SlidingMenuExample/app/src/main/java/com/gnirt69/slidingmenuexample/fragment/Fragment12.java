@@ -18,6 +18,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
         import android.view.ViewGroup;
         import android.widget.AdapterView;
         import android.widget.ArrayAdapter;
+        import android.widget.Button;
         import android.widget.ListView;
         import android.widget.TextView;
         import android.widget.Toast;
@@ -25,6 +26,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
         import com.gnirt69.slidingmenuexample.MainActivity;
         import com.gnirt69.slidingmenuexample.OnTalkToDBFinish;
         import com.gnirt69.slidingmenuexample.R;
+        import com.gnirt69.slidingmenuexample.model.ButtonAdapter;
         import com.gnirt69.slidingmenuexample.talkToDBTask;
         import com.jjoe64.graphview.GraphView;
         import com.jjoe64.graphview.GridLabelRenderer;
@@ -56,7 +58,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 public class Fragment12 extends Fragment implements OnTalkToDBFinish {
     String[] keys,values,items;
     private static final int MAX_DATA_POINTS = 100000;
-    ArrayAdapter<String> adapter;
+    ButtonAdapter adapter;
     String firstVariable;
     List<String> list =new ArrayList<>();
     private static int x_max = 30;
@@ -66,6 +68,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
     ArrayList<Double> mood,workout,sleep;
     ListView view;
     TextView textView;
+    TextView textViewMaxMinAvg;
     JSONObject dataObjectForeign;
     JSONObject dataObjectForeignDates;
     JSONObject dataObject;
@@ -83,7 +86,9 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         setRetainInstance(true);
         view = (ListView) rootView.findViewById(R.id.listView);
         textView = (TextView) rootView.findViewById(R.id.textview_frag12);
-        adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,list);
+        textViewMaxMinAvg = (TextView) rootView.findViewById(R.id.textViewStatistics);
+
+        adapter = new ButtonAdapter(((MainActivity)getActivity()),list,this);
         view.setAdapter(adapter);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -121,6 +126,38 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
 
         return rootView;
     }
+    public void onButtonClick(ButtonAdapter parent, int position){
+        //String objString = obj.toString();
+        //int end = objString.indexOf("");
+
+        String k = (String) parent.getName(position);
+        System.out.println(k+ " HEEEELLO");
+        if(checkInVariables(k)){
+            graph.removeAllSeries();
+            System.out.println(k);
+            if(getActivity() != null){
+                ((MainActivity)getActivity()).setSecondValueListName(k);
+                ((MainActivity)getActivity()).setSecondValueList(createArrayList(k,dataObject));
+                ((MainActivity)getActivity()).setSecondValueDates(getDatesFromObject(k,dataObjectDates));
+                ((MainActivity) getActivity()).replaceFragment(13);
+            }
+        }else{
+            ((MainActivity)getActivity()).setSecondValueListName(k);
+            ((MainActivity)getActivity()).setSecondValueList(createArrayList(k,dataObjectForeign));
+            ((MainActivity)getActivity()).setSecondValueDates(getDatesFromObject(k,dataObjectForeignDates));
+            ((MainActivity) getActivity()).replaceFragment(13);
+        }
+
+    }
+    private boolean checkInVariablesForeign(String item, JSONObject object){
+        Iterator<String> keys = object.keys();
+        while(keys.hasNext()){
+            if(keys.next().equals(item)){
+                return true;
+            }
+        }
+        return false;
+    }
     private boolean checkInVariables(String item){
         Iterator<String> keys = dataObject.keys();
         while(keys.hasNext()){
@@ -137,7 +174,8 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         return returnList;
     }
     private void setList(String item,String message) {
-        list.add(message+item);
+        list.add(item + message);
+        adapter.setName(item);
         adapter.notifyDataSetChanged();
     }
     private void getValueFromDBSingleVID(int request,String VID){
@@ -193,17 +231,29 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         if(firstKey != null){
             //Iterator<String> keys = dataObject.keys();
             //String key = keys.next();
-            if(!checkInVariables(firstKey)){
+            if(!checkInVariables(firstKey) && dataObjectForeign != null){
                 System.out.println("pass check in variables = false");
                 Iterator<String> keys = dataObjectForeign.keys();
                 String key = keys.next();
                 setupDataToGraph(key,false);
             }else{
-                Iterator<String> keys = dataObject.keys();
-                String key = keys.next();
-                setupDataToGraph(key,true);
+                if(dataObjectForeign!= null) {
+                    System.out.println(dataObjectForeign.toString());
+                    if (checkInVariablesForeign(firstKey, dataObjectForeign)){
+                        Iterator<String> keys = dataObjectForeign.keys();
+                        String key = keys.next();
+                        setupDataToGraph(key, false);
+                    }
+                }else{
+                    setupDataToGraph(firstKey,true);
+                }
             }
+        }else{
+            Iterator<String> keys = dataObject.keys();
+            String key = keys.next();
+            setupDataToGraph(key,true);
         }
+
     }
     private String[] getValuesFromObject(String key,JSONObject dataObject){
         try {
@@ -288,10 +338,10 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
 
             adapter.clear();
             adapter.notifyDataSetChanged();
-            getCorrelationList(values,dataObject);
-            setList(makeString(getMean(temp)),key + " Average: ");
-            setList(makeString((getMax(temp))),key + " Max: ");
-            setList(makeString(getMin(temp)),key + " Min: ");
+            String tempText = "Max: "+makeString(getMax(temp))+ "      Min: "+makeString(getMin(temp)) + "      Average: "+ makeString(getMean(temp));
+            textViewMaxMinAvg.setText(tempText);
+
+            getCorrelationList(values,dateTemp,dataObject,dataObjectDates);
 
             serieslineTemp.setTitle(key);
             serieslineTemp.setDrawBackground(true);
@@ -361,22 +411,47 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
 //            graph.getSecondScale().addSeries(serieslineTemp2);
 //        }
     }
-    private void getCorrelationList(String[] checkList,JSONObject dataObject){
-
+    private void trimListForCorrelation(ArrayList<Double> list1,ArrayList<Double> list2,Date[] dateList1, Date[] dateList2){
+        if(list1 != null && list2 != null && dateList1 != null && dateList2 != null){
+            int i = 0;
+            while(list1.size() != list2.size()){
+                if(list1.size() > list2.size()) {
+                    if (!Arrays.asList(dateList2).contains(dateList1[i])) {
+                        if(i< list1.size()){
+                            list1.remove(i);
+                        }
+                    }else{
+                        i++;
+                    }
+                }else{
+                    if (!Arrays.asList(dateList1).contains(dateList2[i])) {
+                        if(i< list2.size()){
+                            list2.remove(i);
+                        }
+                    }else{
+                        i++;
+                    }
+                }
+                System.out.println(i);
+            }
+        }
+    }
+    private void getCorrelationList(String[] checkList,Date[] dateCheck,JSONObject dataObject,JSONObject dataObjectDates){
+        System.out.println("in i getCorrelation");
         if(dataObject != null) {
             Iterator<String> keys = dataObject.keys();
             ArrayList<Double> checkArray = makeArrayListFromStringList(checkList);
-            System.out.println("check arr: "+ Arrays.toString(checkList));
+
             while(keys.hasNext()) {
                 String key = keys.next();
                 String[] valueTemp = getValuesFromObject(key,dataObject);
-                System.out.println("valueTemp: "+Arrays.toString(valueTemp));
-                if(!(Arrays.equals(valueTemp,checkList))){
-                    System.out.println(valueTemp.equals(checkList));
-                    ArrayList<Double> valueTempDouble = makeArrayListFromStringList(valueTemp);
+                Date[] dateTemp = getDatesFromObject(key, dataObjectDates);
 
+                if(!(Arrays.equals(valueTemp,checkList))){
+                    ArrayList<Double> valueTempDouble = makeArrayListFromStringList(valueTemp);
+                    trimListForCorrelation(checkArray,valueTempDouble,dateCheck,dateTemp);
                     String corr = checkCorrelation(checkArray,valueTempDouble);
-                    setList(corr,key+ ": ");
+                    setList(key," and "+firstVariable+": " + corr);
 
                 }
 
@@ -402,7 +477,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         double corr = 0;
         if (list1 != null && list2 != null){
             while(!(list1.size() == list2.size())){
-                if(list1.size()> list2.size()){
+                if(list1.size() > list2.size()){
                     list1.remove(list1.size()-1);
                 }else list2.remove(list2.size()-1);
             }
