@@ -73,7 +73,9 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     String gid;
     String vid;
     String username;
+    String tempUser;
     String password;
+    boolean ownUser;
 
 
     @Override
@@ -309,6 +311,10 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     public ArrayList<Double> getSecondValueList(){return this.secondValueList;}
     public Date[] getFirstValueDates(){return this.firstValueDates;}
     public Date[] getSecondValueDates(){return this.secondValueDates;}
+    public void setTempUser(String user){this.tempUser = user;}
+    public String getTempUser(){return this.tempUser;}
+    public void setOwnVariable(boolean own){this.ownUser = own;}
+    public boolean getOwnVariable(){return this.ownUser;}
     public String getGname(){
         return gname;
     }

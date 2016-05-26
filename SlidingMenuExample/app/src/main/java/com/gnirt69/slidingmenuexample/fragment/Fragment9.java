@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +96,12 @@ public class Fragment9 extends Fragment implements OnTalkToDBFinish {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Function not available yet..", Toast.LENGTH_SHORT).show();
+                    if(getActivity() != null){
+                        Log.d("fragment9",groupVarID.toString());
+                        ((MainActivity) getActivity()).setVID(groupVarID[v.getId()]);
+                        ((MainActivity)getActivity()).setFirstValueListName(groupVarName[v.getId()]+" ("+varOwner[v.getId()]+")");
+                        ((MainActivity) getActivity()).replaceFragment(11);
+                    }
 
                 }
             });

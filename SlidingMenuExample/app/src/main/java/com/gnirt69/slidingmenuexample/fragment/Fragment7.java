@@ -96,7 +96,9 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
 
     @Override
     public void onTaskFailed(int responseCode) {
-        Toast.makeText(getActivity().getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+        if(getActivity() != null){
+            Toast.makeText(getActivity().getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+        }
     }
     @Override
     public void onPause() {

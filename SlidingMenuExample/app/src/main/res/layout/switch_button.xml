@@ -8,6 +8,7 @@
     android:textOff="@string/no"
     android:textOn="@string/yes"
     android:textColor="#ffffff"
+
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
     android:layout_marginTop="37dp"
