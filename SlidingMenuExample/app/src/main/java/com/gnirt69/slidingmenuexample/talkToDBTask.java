@@ -27,6 +27,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     private String share;
     private String groupName;
     private String GID;
+    private String varID;
     private String currentPassword;
     private String newPassword;
     private String userRequest;
@@ -175,6 +176,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     storeValues(object);
                     output = "TRUE";
                 }
+                else if (checkType(object).contains("REMOVEVARIABLE_SUCCESS")) {
+                    output = "TRUE";
+                }
             }
 
 
@@ -314,6 +318,9 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 break;
             case 19:
                 storeGroupVariableData();
+                break;
+            case 20:
+                deleteVariable(varID);
                 break;
         }
     }
@@ -508,6 +515,8 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         this.keys = keys;
     }
     public void setVariableID(String varID){this.variableType = varID;}
+    public void setVarIDToDelete(String varID){this.varID = varID;}
+
     public void setSharedStatus(String shared){this.share = shared;}
     public void setRequestType(int requestType){
         this.requestType = requestType;
@@ -600,6 +609,10 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     private void sendEmail(String email) {
         this.URL = setupURLSendEmail(email);
+        //setupConnection(new String[]{URL});
+    }
+    private void deleteVariable(String varID) {
+        this.URL = setupURLDeleteVar(varID);
         //setupConnection(new String[]{URL});
     }
     private void sharedNotSharedVar(String username, String GID) {
@@ -940,6 +953,22 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
             data = ipadress + program + URLEncoder.encode("uname", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8");
             data += "&" + URLEncoder.encode("oldpw", "UTF-8") + "=" + URLEncoder.encode(c_pwd, "UTF-8");
             data += "&" + URLEncoder.encode("newpw", "UTF-8") + "=" + URLEncoder.encode(n_pwd, "UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            failureHandler();
+        }
+
+        return data;
+    }
+
+    private String setupURLDeleteVar(String varID) {
+        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String program = "removevariable.php?";
+        String data = null;
+
+        try {
+            data = ipadress + program + URLEncoder.encode("VID", "UTF-8") + "=" + URLEncoder.encode(varID, "UTF-8");
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
