@@ -4,9 +4,11 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -143,6 +145,15 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         task.setRequestType(request);
         task.execute();
     }
+
+    public void runDBtaskDeleteActivity(int request, String varID){
+        task = new talkToDBTask(this,context);
+        task.setVarIDToDelete(varID);
+        task.setRequestType(request);
+        task.execute();
+    }
+
+
     void populateTable() {
 
         table = (TableLayout) rootView.findViewById(R.id.table_layout);
@@ -155,10 +166,44 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                 j = variableIDS[i];
                 System.out.println(j);
                 TableRow row = new TableRow(getActivity());
-                RelativeLayout rl = new RelativeLayout(getActivity());
+                final RelativeLayout rl = new RelativeLayout(getActivity());
+                rl.setId(Integer.parseInt(j));
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
                 row.setBackgroundResource(R.drawable.tableborder);
+
+                rl.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                                .setTitle("Delete activity")
+                                .setMessage("Are you sure you want to delete this activity?")
+                                .setCancelable(true)
+                                .setNegativeButton("no",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int id) {
+                                                // no action
+                                            }
+                                        })
+                                .setPositiveButton("yes",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int id) {
+
+                                                String varID = String.valueOf(rl.getId());
+                                                runDBtaskDeleteActivity(20,varID);
+                                            }
+                                        });
+
+
+                        builder.create().show();
+
+
+
+                        return false;
+                    }
+                });
 
                 row.addView(rl, params);
 
@@ -325,6 +370,10 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             Toast.makeText(getActivity().getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT).show();
         }else if(request == 3){
             Toast.makeText(getActivity().getApplicationContext(), "Variables added!", Toast.LENGTH_SHORT).show();
+        }else if(request == 20){
+            Toast.makeText(getActivity().getApplicationContext(), "Variables removed!", Toast.LENGTH_SHORT).show();
+            ((MainActivity) getActivity()).replaceFragment(0);
+
         }
     }
     @Override

@@ -88,7 +88,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
         if(V.getId() == R.id.textView5){
                 new AlertDialog.Builder(CreateUser.this)
                         .setTitle("Disclaimer")
-                        .setMessage("When using the LifeByMe app please note that correlation is not the same thing as causation, i e having two parameters that follow similar patterns does not necessarily mean that these two parameters affect each other. The LifeByMe app will only show mathematical correlation and does not take into account whether parameters are otherwise related or not.")
+                        .setMessage("When using the LifeByME app please note that correlation is not the same thing as causation, i e having two parameters that follow similar patterns does not necessarily mean that these two parameters affect each other. The LifeByME app will only show mathematical correlation and does not take into account whether parameters are otherwise related or not.")
                         .setCancelable(true)
                         .create().show();
             }
