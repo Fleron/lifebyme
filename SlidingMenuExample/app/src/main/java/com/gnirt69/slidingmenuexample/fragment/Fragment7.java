@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.gnirt69.slidingmenuexample.MainActivity;
@@ -41,6 +42,13 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
         setRetainInstance(true);
         button = (Button) rootView.findViewById(R.id.button3);
         text = (EditText) rootView.findViewById(R.id.add_variable);
+        text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)text.setHint("");
+                else text.setHint("Enter activity name");
+            }
+        });
         username = ((MainActivity)getActivity()).getUser();
         password = ((MainActivity)getActivity()).getPassword();
         radioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
