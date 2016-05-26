@@ -41,10 +41,12 @@ package com.gnirt69.slidingmenuexample.fragment;/**
 
         import org.apache.commons.math3.stat.StatUtils;
         import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
+        import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
         import org.json.JSONArray;
         import org.json.JSONException;
         import org.json.JSONObject;
 
+        import java.lang.reflect.Array;
         import java.math.RoundingMode;
         import java.text.DecimalFormat;
         import java.text.ParseException;
@@ -326,6 +328,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
                 dateTemp = getDatesFromObject(key,dataObjectDates);
             }
             dataObject = this.dataObject;
+            dataObjectDates = this.dataObjectDates;
             ArrayList<Double> temp= new ArrayList<>();
             final LineGraphSeries<DataPoint> serieslineTemp =createDataLine(temp,values,dateTemp);
             if(getActivity()!= null){
@@ -411,28 +414,40 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
 //            graph.getSecondScale().addSeries(serieslineTemp2);
 //        }
     }
-    private void trimListForCorrelation(ArrayList<Double> list1,ArrayList<Double> list2,Date[] dateList1, Date[] dateList2){
-        if(list1 != null && list2 != null && dateList1 != null && dateList2 != null){
+    private void trimListForCorrelation(ArrayList<Double> list1,ArrayList<Double> list2,Date[] dateList1
+            , Date[] dateList2,ArrayList<Double>templist1,ArrayList<Double>templist2 ){
+        for (Double temp:list1){
+            templist1.add(temp);
+        }
+        for (Double temp2:list2){
+            templist2.add(temp2);
+        }
+
+        if(templist1 != null && templist2 != null && dateList1 != null && dateList2 != null){
             int i = 0;
-            while(list1.size() != list2.size()){
-                if(list1.size() > list2.size()) {
+            System.out.println("datelist1: " + dateList1.length);
+            System.out.println("list1: " + list1.size());
+            System.out.println("datelist2: " + dateList2.length);
+            System.out.println("list2: " + list2.size());
+
+            while(templist1.size() != templist2.size()){
+                if(templist1.size() > templist2.size()) {
                     if (!Arrays.asList(dateList2).contains(dateList1[i])) {
-                        if(i< list1.size()){
-                            list1.remove(i);
+                        if(i< templist1.size()){
+                            templist1.remove(i);
                         }
                     }else{
                         i++;
                     }
                 }else{
                     if (!Arrays.asList(dateList1).contains(dateList2[i])) {
-                        if(i< list2.size()){
-                            list2.remove(i);
+                        if(i< templist2.size()){
+                            templist2.remove(i);
                         }
                     }else{
                         i++;
                     }
                 }
-                System.out.println(i);
             }
         }
     }
@@ -449,8 +464,12 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
 
                 if(!(Arrays.equals(valueTemp,checkList))){
                     ArrayList<Double> valueTempDouble = makeArrayListFromStringList(valueTemp);
-                    trimListForCorrelation(checkArray,valueTempDouble,dateCheck,dateTemp);
-                    String corr = checkCorrelation(checkArray,valueTempDouble);
+
+                    ArrayList<Double>templist1 = new ArrayList<>(checkArray.size());
+                    ArrayList<Double>templist2 = new ArrayList<>(valueTempDouble.size());
+
+                    trimListForCorrelation(checkArray,valueTempDouble,dateCheck,dateTemp,templist1,templist2);
+                    String corr = checkCorrelation(templist1,templist2);
                     setList(key," and "+firstVariable+": " + corr);
 
                 }
@@ -474,18 +493,14 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         return item;
     }
     private String checkCorrelation(ArrayList<Double> list1, ArrayList<Double> list2) {
+
         double corr = 0;
-        if (list1 != null && list2 != null){
-            while(!(list1.size() == list2.size())){
-                if(list1.size() > list2.size()){
-                    list1.remove(list1.size()-1);
-                }else list2.remove(list2.size()-1);
-            }
+        if(list1.size() == list2.size()) {
             Double[] xs = list1.toArray(new Double[list1.size()]);
             Double[] ys = list2.toArray(new Double[list2.size()]);
             double[] x = toPrimitive(xs);
             double[] y = toPrimitive(ys);
-            corr = new KendallsCorrelation().correlation(x,y);
+            corr = new SpearmansCorrelation().correlation(x, y);
         }
         DecimalFormat df = new DecimalFormat("#.#");
         df.setRoundingMode(RoundingMode.CEILING);

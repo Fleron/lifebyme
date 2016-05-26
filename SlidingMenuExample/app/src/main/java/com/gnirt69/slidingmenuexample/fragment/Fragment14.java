@@ -24,6 +24,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
+import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -91,7 +92,7 @@ public class Fragment14 extends Fragment {
     }
     private void setupDoubleLinesToGraph(){
 
-        if(valueList1 != null && valueList2 != null) {
+        if(valueList1 != null && valueList2 != null && dateList1 != null && dateList2 != null) {
 
             LineGraphSeries<DataPoint> serieslineTemp = createDataLine(valueList1,dateList1);
             LineGraphSeries<DataPoint> serieslineTemp2 = createDataLine(valueList2,dateList2);
@@ -214,7 +215,7 @@ public class Fragment14 extends Fragment {
             Double[] ys = list2.toArray(new Double[list2.size()]);
             double[] x = toPrimitive(xs);
             double[] y = toPrimitive(ys);
-            corr = new KendallsCorrelation().correlation(x,y);
+            corr = new SpearmansCorrelation().correlation(x,y);
         }
         String item = makeString(corr);
         return item;

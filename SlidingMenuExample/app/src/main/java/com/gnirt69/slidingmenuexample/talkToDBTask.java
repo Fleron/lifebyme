@@ -100,7 +100,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     storeValues(object);
                     output = "TRUE";
                 } else if (checkType(object).contains("VAR ADDED")) {
-                    storeKeysLocal(object);
+                    //storeKeysLocal(object);
                     System.out.println("lägg in sharedpref här för nyckel!");
                     output = "TRUE";
                 }
