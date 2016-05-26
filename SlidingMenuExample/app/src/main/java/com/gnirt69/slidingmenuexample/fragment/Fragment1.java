@@ -83,13 +83,11 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         setRetainInstance(true);
         this.inflater = inflater;
         rootView = (ViewGroup) inflater.inflate(R.layout.add_values, container,false);
-        //LinearLayout view = (LinearLayout)LayoutInflater.from(getActivity()).inflate(R.layout.test,null);
 
 
         context = rootView.getContext();
 
         add_variable = (ImageButton)rootView.findViewById(R.id.add_button2);
-        //skip_day = (Button)rootView.findViewById(R.id.skip_button2);
         username = ((MainActivity)getActivity()).getUser();
         password = ((MainActivity)getActivity()).getPassword();
 
@@ -103,21 +101,12 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Timmars sömn: " + hoursSleep);
-                System.out.println("Tränat: " + Tswich);
-                System.out.println("Humör: " + mood);
-
                 int i = 0;
                 for(String key : valueMap.keySet()){
                     values[i] = valueMap.get(key);
                     keys[i] = key;
                     i++;
                 }
-                System.out.println(Arrays.asList(valueMap));
-                System.out.println(Arrays.toString(values));
-                System.out.println(Arrays.toString(keys));
-                System.out.println(username);
-                System.out.println(password);
                 runDBtask(values, keys, 3);
             }
         });
@@ -127,7 +116,6 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
             @Override
             public void onClick(View view) {
                 ((MainActivity) getActivity()).replaceFragment(6);
-                System.out.println("add variable");
             }
         });
 
@@ -268,10 +256,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if(isChecked){
                                 valueMap.put(k,""+1);
-                                System.out.println("nyckel: "+k);
                             }else{
                                 valueMap.put(k,""+0);
-                                System.out.println("nyckel: "+k);
                             }
                         }
                     });
@@ -279,8 +265,6 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                      table.addView(row, i);
 
                 }else if(variableTypes[i].contains("amount")){
-                    // System.out.println(k+" key amount");
-                    //valueMap.put(k,numberEdit.getText().toString());
                     View view = inflater.inflate(R.layout.free_input_frag1,rl,false);
                     numberEdit = (EditText) view.findViewById(R.id.editNumber);
                     valueMap.put(j,"0");
@@ -310,14 +294,8 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
 
                     View view = inflater.inflate(R.layout.numberpicker_frag1,rl,false);
                     np = (NumberPicker) view.findViewById(R.id.numberPicker2);
-                    /*if(variableTypes[i].contains("amount")){
-                        //np.setDisplayedValues(cs);
-                        np.setMaxValue(100);
-                        np.setMinValue(0);
-                        np.setValue(8);
-                        valueMap.put(j,"8");
-                    }
-                    */if(variableTypes[i].contains("hours")){
+
+                    if(variableTypes[i].contains("hours")){
                         np.setMaxValue(24);
                         np.setMinValue(0);
                         np.setValue(8);
@@ -344,12 +322,10 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
                             if (list != null ) {
                                 hoursSleep = list[newVal];
                                 valueMap.put(k, hoursSleep);
-                                System.out.println("nyckel: " + k);
                             }
                             else{
                                 hoursSleep = String.valueOf(newVal);
                                 valueMap.put(k, hoursSleep);
-                                System.out.println("nyckel: " + k);
                             }
                         }
                     });
@@ -369,9 +345,9 @@ public class Fragment1 extends Fragment implements OnTalkToDBFinish{
         if(request == 1){
             Toast.makeText(getActivity().getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT).show();
         }else if(request == 3){
-            Toast.makeText(getActivity().getApplicationContext(), "Variables added!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Activity added!", Toast.LENGTH_SHORT).show();
         }else if(request == 20){
-            Toast.makeText(getActivity().getApplicationContext(), "Variables removed!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Activity removed!", Toast.LENGTH_SHORT).show();
             ((MainActivity) getActivity()).replaceFragment(0);
 
         }

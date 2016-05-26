@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Variables"
+                    android:text="Activities"
                     android:textColor="#ffffff"
                     android:textSize="20dp"
                     android:layout_marginLeft="20dp"
@@ -71,7 +71,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit variables"
+                    android:text="Edit Activities"
                     android:id="@+id/edit_var"
                     android:padding="15dp"
                     android:textSize="20dp"

@@ -58,7 +58,7 @@ package com.gnirt69.slidingmenuexample.fragment;/**
         import java.util.List;
 
 public class Fragment12 extends Fragment implements OnTalkToDBFinish {
-    String[] keys,values,items;
+    String[] keys,values;
     private static final int MAX_DATA_POINTS = 100000;
     ButtonAdapter adapter;
     String firstVariable;
@@ -80,7 +80,6 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
     View rootView;
     public Fragment12() {
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment2, container, false);
@@ -129,11 +128,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         return rootView;
     }
     public void onButtonClick(ButtonAdapter parent, int position){
-        //String objString = obj.toString();
-        //int end = objString.indexOf("");
-
-        String k = (String) parent.getName(position);
-        System.out.println(k+ " HEEEELLO");
+        String k = parent.getName(position);
         if(checkInVariables(k)){
             graph.removeAllSeries();
             System.out.println(k);
@@ -197,9 +192,8 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         task.execute();
     }
     private LineGraphSeries<DataPoint> createDataLine(ArrayList<Double> valueList,String[] values,Date[] dates){
-        System.out.println(dates.toString());
         LineGraphSeries<DataPoint> returnDataSeries = new LineGraphSeries<>();
-        if(values != null) {
+        if(values != null && dates != null) {
             for (int i = 0; i < values.length; i++) {
                 Double tempValue = Double.valueOf(values[i]);
                 valueList.add(tempValue);
@@ -209,38 +203,18 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         }
         return returnDataSeries;
     }
-    private LineGraphSeries<DataPoint> receivedDataLine(int key,ArrayList<Double> valueList){
-        LineGraphSeries<DataPoint> returnDataSeries = new LineGraphSeries<>();
-        int j = 0;
-        if(keys != null) {
-            for (int i = 0; i < keys.length; i++) {
-                int tempKey = Integer.parseInt(keys[i]);
-                Double tempValue = Double.valueOf(values[i]);
-                if (tempKey == key) {
-                    valueList.add(tempValue);
-                    returnDataSeries.appendData(new DataPoint(j, tempValue), false, 100);
-                    j++;
-                }
-            }
-        }
-        return returnDataSeries;
-    }
     private void runGraph(View rootView,String firstKey){
         //Här skapar vi våran graf, lämpligt nog döpt till "graph"
         graph = (GraphView) rootView.findViewById(R.id.graph);
         setupSingleGraph(graph);
-        System.out.println(firstKey);
         if(firstKey != null){
-            //Iterator<String> keys = dataObject.keys();
-            //String key = keys.next();
+
             if(!checkInVariables(firstKey) && dataObjectForeign != null){
-                System.out.println("pass check in variables = false");
                 Iterator<String> keys = dataObjectForeign.keys();
                 String key = keys.next();
                 setupDataToGraph(key,false);
             }else{
                 if(dataObjectForeign!= null) {
-                    System.out.println(dataObjectForeign.toString());
                     if (checkInVariablesForeign(firstKey, dataObjectForeign)){
                         Iterator<String> keys = dataObjectForeign.keys();
                         String key = keys.next();
@@ -354,20 +328,18 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
             paint.setStrokeWidth(8);
             serieslineTemp.setBackgroundColor(Color.argb(50, 227, 181, 123));
             serieslineTemp.setCustomPaint(paint);
-
-            //graph.setTitle(key);
-            graph.getViewport().setMinX(dateTemp[0].getTime());
-            if(dateTemp.length < 11){
-                graph.getViewport().setMaxX(dateTemp[dateTemp.length-1].getTime());
-            }else{
-                graph.getViewport().setMaxX(dateTemp[10].getTime());
+            if(dateTemp.length > 0) {
+                graph.getViewport().setMinX(dateTemp[0].getTime());
+                if (dateTemp.length < 11) {
+                    graph.getViewport().setMaxX(dateTemp[dateTemp.length - 1].getTime());
+                } else {
+                    graph.getViewport().setMaxX(dateTemp[10].getTime());
+                }
             }
             if(!inList){
                 String title = ((MainActivity)getActivity()).getFirstValueListName();
-                System.out.println("title is: "+title+" inList = false");
                 textView.setText(title);
             }else{
-                System.out.println("title is: "+key);
                 textView.setText(key);
             }
             graph.getViewport().setXAxisBoundsManual(true);
@@ -376,43 +348,6 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
 
         }
 
-    }
-    private void setupDoubleLinesToGraph(String key1,String key2){
-//        String[] key1Values = getValuesFromObject(key1);
-//        String[] key2Values = getValuesFromObject(key2);
-//        if(key1Values != null && key2Values!= null) {
-//            ArrayList<Double> temp1 = new ArrayList<>();
-//            LineGraphSeries<DataPoint> serieslineTemp = createDataLine(temp1, key1Values);
-//            ArrayList<Double> temp2 = new ArrayList<>();
-//            LineGraphSeries<DataPoint> serieslineTemp2 = createDataLine(temp2, key2Values);
-//            adapter.clear();
-//            adapter.notifyDataSetChanged();
-//            //getCorrelationList(values);
-//
-//            setList(checkCorrelation(temp1, temp2), " Correlation: ");
-//            serieslineTemp.setTitle(key1);
-//            serieslineTemp.setDrawBackground(true);
-//
-//            serieslineTemp2.setTitle(key2);
-//            serieslineTemp2.setDrawBackground(true);
-//            Paint paint = new Paint();
-//            paint.setColor(Color.argb(255, 198, 148, 87));
-//            paint.setStyle(Paint.Style.STROKE);
-//            paint.setStrokeWidth(8);
-//            serieslineTemp.setBackgroundColor(Color.argb(50, 227, 181, 123));
-//            serieslineTemp.setCustomPaint(paint);
-//            Paint paint2 = new Paint();
-//            paint2.setColor(Color.argb(255, 182, 80, 104));
-//            paint2.setStyle(Paint.Style.STROKE);
-//            paint2.setStrokeWidth(8);
-//            serieslineTemp2.setCustomPaint(paint2);
-//            serieslineTemp2.setBackgroundColor(Color.argb(50, 209, 113, 136));
-//            graph.setTitle("Correlation between: " + key1 + " and " + key2);
-//            graph.addSeries(serieslineTemp);
-//            graph.getSecondScale().setMaxY(serieslineTemp2.getHighestValueY());
-//            graph.getSecondScale().setMinY(serieslineTemp2.getLowestValueY());
-//            graph.getSecondScale().addSeries(serieslineTemp2);
-//        }
     }
     private void trimListForCorrelation(ArrayList<Double> list1,ArrayList<Double> list2,Date[] dateList1
             , Date[] dateList2,ArrayList<Double>templist1,ArrayList<Double>templist2 ){
@@ -425,11 +360,6 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
 
         if(templist1 != null && templist2 != null && dateList1 != null && dateList2 != null){
             int i = 0;
-            System.out.println("datelist1: " + dateList1.length);
-            System.out.println("list1: " + list1.size());
-            System.out.println("datelist2: " + dateList2.length);
-            System.out.println("list2: " + list2.size());
-
             while(templist1.size() != templist2.size()){
                 if(templist1.size() > templist2.size()) {
                     if (!Arrays.asList(dateList2).contains(dateList1[i])) {
@@ -452,7 +382,6 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         }
     }
     private void getCorrelationList(String[] checkList,Date[] dateCheck,JSONObject dataObject,JSONObject dataObjectDates){
-        System.out.println("in i getCorrelation");
         if(dataObject != null) {
             Iterator<String> keys = dataObject.keys();
             ArrayList<Double> checkArray = makeArrayListFromStringList(checkList);
@@ -477,15 +406,6 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
             }
         }
     }
-    private void setupSomethingToGraph() {
-        if(dataObject != null){
-            Iterator<String> keys = dataObject.keys();
-            while(keys.hasNext()){
-                String key = keys.next();
-                //paintSingleGraph(key);
-            }
-        }
-    }
     private String makeString(double x){
         DecimalFormat df = new DecimalFormat("#.#");
         df.setRoundingMode(RoundingMode.CEILING);
@@ -495,7 +415,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
     private String checkCorrelation(ArrayList<Double> list1, ArrayList<Double> list2) {
 
         double corr = 0;
-        if(list1.size() == list2.size()) {
+        if(list1.size() == list2.size() && list1.size()>1 && list2.size()>1) {
             Double[] xs = list1.toArray(new Double[list1.size()]);
             Double[] ys = list2.toArray(new Double[list2.size()]);
             double[] x = toPrimitive(xs);
@@ -581,48 +501,6 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
         graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.rgb(255,255,255));
         graph.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.rgb(255,255,255));
     }
-    private void setupDoubleGraph(GraphView graph){
-        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
-        graph.getGridLabelRenderer().setGridColor(Color.WHITE);
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("x-axel");
-
-        graph.getViewport().setXAxisBoundsManual(true);
-
-        graph.getViewport().setMaxX(x_max);
-        graph.getViewport().setMinX(0);
-        graph.getViewport().setScrollable(true);
-        graph.getViewport().setScalable(true);
-        graph.getViewport().setBackgroundColor(Color.parseColor("#4DFFFFFF"));
-
-
-        graph.getLegendRenderer().setVisible(false);
-        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        graph.getGridLabelRenderer().setNumHorizontalLabels(6);
-        graph.getGridLabelRenderer().setNumVerticalLabels(6);
-        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.rgb(161,121, 71));
-        graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.rgb(182,80,104));
-    }
-    private void setupGraph(GraphView graph){
-        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.BOTH);
-        graph.getGridLabelRenderer().setGridColor(Color.WHITE);
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("x-axel");
-
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMaxX(17);
-        graph.getViewport().setMinX(0);
-        graph.getViewport().setScrollable(true);
-        graph.getViewport().setBackgroundColor(Color.parseColor("#4DFFFFFF"));
-        graph.getSecondScale().setMinY(-5);
-        graph.getSecondScale().setMaxY(5);
-
-        graph.getLegendRenderer().setVisible(true);
-        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        graph.setTitle("Activity");
-        graph.getGridLabelRenderer().setNumHorizontalLabels(6);
-        graph.getGridLabelRenderer().setNumVerticalLabels(6);
-        graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.parseColor("#CC5920"));
-        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLUE);
-    }
     @Override
     public void onTaskCompleted(int request) {
         if(request == 4){
@@ -636,7 +514,6 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
             }
         }else if(request == 19){
             this.dataObjectForeign = task.getDataObject();
-            System.out.println(this.dataObjectForeign);
             this.dataObjectForeignDates = task.getDataObjectDates();
             Iterator<String> keys = dataObjectForeign.keys();
             firstVariable = keys.next();
@@ -646,7 +523,7 @@ public class Fragment12 extends Fragment implements OnTalkToDBFinish {
     }
     @Override
     public void onTaskFailed(int responseCode) {
-        Log.d("lifebyme",this.getTag() +" onTaskFailed() ran.");
+        Log.d("lifebyme",this.getTag() +" AsyncTask Failed.");
     }
     @Override
     public void onPause() {

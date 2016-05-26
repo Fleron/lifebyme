@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -69,7 +70,8 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
             public void onClick(View view) {
                 variableName = text.getText().toString();
                 runDBtask(5);
-                ((MainActivity) getActivity()).replaceFragment(0);
+                final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
             }
         });
 
@@ -87,7 +89,8 @@ public class Fragment7 extends Fragment implements OnTalkToDBFinish{
 
     @Override
     public void onTaskCompleted(int request) {
-        Toast.makeText(getActivity().getApplicationContext(), "Variable added!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(), "Activity added!", Toast.LENGTH_SHORT).show();
+        ((MainActivity) getActivity()).replaceFragment(0);
     }
 
     @Override

@@ -211,11 +211,14 @@ public class Fragment14 extends Fragment {
                     list1.remove(list1.size()-1);
                 }else list2.remove(list2.size()-1);
             }
-            Double[] xs = list1.toArray(new Double[list1.size()]);
-            Double[] ys = list2.toArray(new Double[list2.size()]);
-            double[] x = toPrimitive(xs);
-            double[] y = toPrimitive(ys);
-            corr = new SpearmansCorrelation().correlation(x,y);
+            if(list1.size() > 1 && list2.size()> 1){
+                Double[] xs = list1.toArray(new Double[list1.size()]);
+                Double[] ys = list2.toArray(new Double[list2.size()]);
+                double[] x = toPrimitive(xs);
+                double[] y = toPrimitive(ys);
+                corr = new SpearmansCorrelation().correlation(x,y);
+            }
+
         }
         String item = makeString(corr);
         return item;
@@ -261,5 +264,4 @@ public class Fragment14 extends Fragment {
         graph.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.rgb(255,255,255));
         graph.getGridLabelRenderer();
     }
-
 }
