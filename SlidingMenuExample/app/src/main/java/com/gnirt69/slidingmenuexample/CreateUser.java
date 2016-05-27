@@ -65,7 +65,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
             getFieldValues();
             hideSoftKeyboard(this);
 
-            if (password.length()>4){
+            if (password.length()>4 && username.length()>2){
                 if(passwordValid()) {
                     if (checkBox.isChecked()) {
                         runDBtaskAddUser(1, false);
@@ -81,7 +81,7 @@ public class CreateUser extends Activity implements OnTalkToDBFinish {
             }
             else{
                 clearFields();
-                Toast.makeText(getApplicationContext(), "Password must be larger than four characters", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Password must be larger than four characters and username larger than two.", Toast.LENGTH_SHORT).show();
 
             }
         }

@@ -62,6 +62,7 @@
                     android:textColorHint="#ffffff"
                     android:backgroundTint="@android:color/white"
                     android:layout_gravity="center_horizontal|right"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
                     android:textColor="#ffffff"
                     android:layout_below="@+id/textView12"
                     android:layout_alignParentLeft="true"

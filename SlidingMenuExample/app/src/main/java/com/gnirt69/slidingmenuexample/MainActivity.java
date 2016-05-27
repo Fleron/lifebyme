@@ -16,6 +16,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,7 @@ import com.gnirt69.slidingmenuexample.fragment.Fragment9;
 import com.gnirt69.slidingmenuexample.model.ItemSlideMenu;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -68,6 +70,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     ArrayList<Double> secondValueList;
     Date[] secondValueDates;
     Date[] firstValueDates;
+    long calendarTime = 0;
 
     String gname;
     String gid;
@@ -196,6 +199,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
             //additional code
         } else {
             getFragmentManager().popBackStack();
+
         }
     }
 
@@ -204,89 +208,108 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     public void replaceFragment(int pos) {
         Fragment fragment = null;
 
-        String fragmenttag = "fragment";
+        String fragmenttag;
         switch (pos) {
             case 0:
                 fragment = new Fragment1();
-                fragmenttag += "1";
+                fragmenttag = "1";
                 break;
             case 1:
                 fragment = new Fragment2();
-                fragmenttag += "2";
+                fragmenttag = "2";
                 break;
             case 2:
                 fragment = new Fragment3();
-                fragmenttag += "3";
+                fragmenttag = "3";
                 break;
             case 3:
                 fragment = new Fragment4();
-                fragmenttag += "4";
+                fragmenttag = "4";
                 break;
             case 4:
                 fragment = new Fragment5();
-                fragmenttag += "5";
+                fragmenttag = "5";
                 break;
             case 5:
                 fragment = new Fragment6();
-                fragmenttag += "6";
+                fragmenttag = "6";
                 break;
             case 6:
                 fragment = new Fragment7();
-                fragmenttag += "7";
+                fragmenttag = "7";
                 break;
 
             case 7:
                 fragment = new Fragment8();
-                fragmenttag += "8";
+                fragmenttag = "8";
                 break;
 
             case 8:
                 fragment = new Fragment9();
-                fragmenttag += "9";
+                fragmenttag = "9";
                 break;
 
             case 9:
                 fragment = new Fragment10();
-                fragmenttag += "10";
+                fragmenttag = "10";
                 break;
             case 10:
                 fragment = new Fragment11();
-                fragmenttag += "11";
+                fragmenttag = "11";
                 break;
             case 11:
                 fragment = new Fragment12();
-                fragmenttag += "12";
+                fragmenttag = "12";
                 break;
             case 12:
                 fragment = new Fragment13();
-                fragmenttag += "13";
+                fragmenttag = "13";
                 break;
             case 13:
                 fragment = new Fragment14();
-                fragmenttag += "14";
+                fragmenttag = "14";
                 break;
 
             case 14:
                 fragment = new Fragment15();
-                fragmenttag += "15";
+                fragmenttag = "15";
                 break;
 
             default:
                 fragment = new Fragment1();
-                fragmenttag += "1";
+                fragmenttag = "1";
                 break;
         }
 
-        if(null!=fragment) {
+        if(fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            System.out.println(fragmenttag);
+            fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+                @Override
+                public void onBackStackChanged() {
+                    String tag = getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount()-1).getName();
+                    int pos = Integer.parseInt(tag);
+                    if(pos < 6){
+                        listViewSliding.setItemChecked(pos-1, true);
+                        listViewSliding.setSelection(pos-1);
+                        setTitle(listSliding.get(pos-1).getTitle());
+                        drawerLayout.closeDrawer(listViewSliding);
+                    }
+                }
+            });
+
             transaction.replace(R.id.main_content, fragment,fragmenttag);
-            transaction.addToBackStack(null);
-            transaction.commit();
-            listViewSliding.setItemChecked(pos, true);
+            transaction.addToBackStack(fragmenttag)
+                    .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit();
+
+
             if(pos < 6) {
+                Log.d("fragmentTransaction",""+pos);
+                listViewSliding.setItemChecked(pos, true);
+                listViewSliding.setSelection(pos);
                 setTitle(listSliding.get(pos).getTitle());
+                drawerLayout.closeDrawer(listViewSliding);
             }
         }
     }
@@ -299,6 +322,9 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     }
     public void setVID(String vid){this.vid = vid;}
     public String getVID(){return vid;}
+    public void setCalendarTime(long time){calendarTime = time;}
+    public long getCalendarTime(){return calendarTime;}
+
     public void setFirstValueListName(String name){this.firstValueListName = name;}
     public void setSecondValueListName(String name){this.secondValueListName = name;}
     public void setFirstValueList(ArrayList<Double> valueList){this.firstValueList = valueList;}

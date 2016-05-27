@@ -12,6 +12,8 @@ import android.widget.CalendarView;
 import com.gnirt69.slidingmenuexample.MainActivity;
 import com.gnirt69.slidingmenuexample.R;
 
+import java.util.Calendar;
+
 public class Fragment3 extends Fragment {
 
     public Fragment3(){}
@@ -37,7 +39,14 @@ public class Fragment3 extends Fragment {
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
                 System.out.println(year+"-"+month+"-"+dayOfMonth);
+                Calendar tempCalendar = Calendar.getInstance();
+                tempCalendar.set(Calendar.YEAR, year);
+                tempCalendar.set(Calendar.MONTH, month);
+                tempCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                long milliTime = tempCalendar.getTimeInMillis();
                 if(getActivity() != null){
+                    ((MainActivity)getActivity()).setCalendarTime(milliTime);
+                    calendar.setDate(milliTime,true,true);
                     ((MainActivity) getActivity()).replaceFragment(0);
                 }
 
@@ -63,7 +72,12 @@ public class Fragment3 extends Fragment {
         // here we set Monday as the first day of the Calendar
 
         calendar.setFirstDayOfWeek(2);
-
+        if(getActivity() != null){
+            long milliTime = ((MainActivity)getActivity()).getCalendarTime();
+            if(milliTime != 0){
+                calendar.setDate(milliTime,true,true);
+            }
+        }
 
 
 

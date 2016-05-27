@@ -43,6 +43,7 @@ public class Fragment14 extends Fragment {
     final static int COLOR_RGB_FIRSTLINE_PRIMARY = Color.rgb(198,148,87);
     final static int COLOR_RGB_FIRSTLINE_SECONDARY= Color.rgb(161, 121, 71);
     final static int COLOR_RGB_SECONDLINE_PRIMARY = Color.rgb(182,80,104);
+    final static int COLOR_RGB_SECONDLINE_SECONDARY = Color.rgb(169,130, 83);
     final static int BACKGROUNDCOLOR_ARGB_FIRSTLINE = Color.argb(50, 227, 181, 123);
     final static int BACKGROUNDCOLOR_ARGB_SECONDLINE = Color.argb(50, 209, 113, 136);
 

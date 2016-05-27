@@ -94,6 +94,7 @@
                     android:inputType="textPersonName"
                     android:id="@+id/search_user"
                     android:hint="Enter username"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
                     android:textSize="20sp"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"

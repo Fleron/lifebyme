@@ -13,7 +13,7 @@
         android:textAlignment="center"
         android:textColorHint="#e1dede"
         android:backgroundTint="#ffffff"
-        android:textCursorDrawable="@null"
+        android:textCursorDrawable="@drawable/cursor_drawable"
         android:imeOptions="actionDone"
         android:ems="10"
         android:id="@+id/editNumber"

@@ -50,6 +50,7 @@
                 android:inputType="textPersonName"
                 android:id="@+id/add_group"
                 android:hint="Enter name here"
+                android:textCursorDrawable="@drawable/cursor_drawable"
                 android:textSize="20dp"
                 android:textColorHint="#ffffff"
                 android:textColor="#ffffff"
