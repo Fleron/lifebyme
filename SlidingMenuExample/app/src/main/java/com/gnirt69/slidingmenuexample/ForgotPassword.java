@@ -58,7 +58,7 @@ public class ForgotPassword extends ActionBarActivity implements OnTalkToDBFinis
     public void onTaskCompleted(int request) {
         sendStatus = task.getSendStatus();
         if(sendStatus.equals("SENDEMAIL_SUCCESS")){
-            Toast.makeText(getApplicationContext(), "An email has been send to "+email_string, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "An email has been sent to "+email_string, Toast.LENGTH_SHORT).show();
             Intent r = new Intent(ForgotPassword.this, LoginActivity.class);
             startActivity(r);
 
