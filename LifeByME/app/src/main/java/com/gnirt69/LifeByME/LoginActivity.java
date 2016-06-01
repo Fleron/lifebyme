@@ -78,7 +78,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.email);
-        //checkAlreadyUser();
+        checkAlreadyUser();
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.new_password);
@@ -139,7 +139,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 
-    private void checkAllreadyUser() {
+    private void checkAlreadyUser() {
         prefSettings = getSharedPreferences(LOGIN_CREDENTIALS,MODE_PRIVATE);
         username = prefSettings.getString("user","@error_code");
         password = prefSettings.getString("pwd","@error_code");
