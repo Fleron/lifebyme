@@ -52,7 +52,9 @@ public class Fragment5 extends Fragment {
                     fm.popBackStack();
                 }
                 ((MainActivity) getActivity()).logOut();
+
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.putExtra("logout",false);
                 startActivity(intent);
 
             }

@@ -60,6 +60,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private boolean login = false;
     private String username;
     private String password;
     private SharedPreferences prefSettings;
@@ -71,7 +72,8 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
 
         setDefaultFont(this, "MONOSPACE", "fonts/CircularStd-Book.otf");
-
+        login = getIntent().getBooleanExtra("logout",true);
+        System.out.println("Login = " +login);
         setContentView(R.layout.activity_login);
         // Set up the login form.
         getWindow().setSoftInputMode(
@@ -147,11 +149,14 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
 
         //start login task.
-        task = new talkToDBTask(this,this);
-        task.setUsername(username);
-        task.setPwd(password);
-        task.setRequestType(1);
-        task.execute();
+        if(login){
+            task = new talkToDBTask(this,this);
+            task.setUsername(username);
+            task.setPwd(password);
+            task.setRequestType(1);
+            task.execute();
+        }
+
     }
 
     public void onButtonClick(View V){
@@ -165,6 +170,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             startActivity(r);
         }
     }
+
 
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);

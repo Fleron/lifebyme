@@ -94,7 +94,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 } else if (checkType(object).contains("VAL ADDED")) {
                     System.out.println("gick in i val added");
                     if (checkCorrectUser(object)) {
-                        System.out.println("check correct user funkar");
+                       // System.out.println("check correct user funkar");
                         output = "TRUE";
                     }
                 } else if (checkType(object).contains("RETR DATA")) {
@@ -102,7 +102,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                     output = "TRUE";
                 } else if (checkType(object).contains("VAR ADDED")) {
                     //storeKeysLocal(object);
-                    System.out.println("lägg in sharedpref här för nyckel!");
+                   // System.out.println("lägg in sharedpref här för nyckel!");
                     output = "TRUE";
                 }
                 else if (checkType(object).contains("GROUPDATA")) {
@@ -178,6 +178,13 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
                 }
                 else if (checkType(object).contains("REMOVEVARIABLE_SUCCESS")) {
                     output = "TRUE";
+                }
+                else if(checkType(object).contains("GROUP_ADD")){
+                    if(checkCorrectUser(object)){
+                        output = "TRUE";
+                    }else{
+                        output = "FALSE";
+                    }
                 }
             }
 
