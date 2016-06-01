@@ -204,7 +204,15 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             mUsernameView.setError(getString(R.string.error_field_required));
             focusView = mUsernameView;
             cancel = true;
-        } else if (!isEmailValid(username)) {
+
+        }
+        else if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        else if (!isEmailValid(username)) {
             mUsernameView.setError(getString(R.string.error_invalid_email));
             focusView = mUsernameView;
             cancel = true;

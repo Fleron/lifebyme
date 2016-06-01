@@ -49,9 +49,8 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
                 final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                 groupName.setText("");
-                Toast.makeText(getActivity().getApplicationContext(), "Group created!", Toast.LENGTH_SHORT).show();
                 runDBtaskCreateGroup(6);
-                ((MainActivity) getActivity()).replaceFragment(3);
+
             }
         });
 
@@ -79,6 +78,7 @@ public class Fragment8 extends Fragment implements OnTalkToDBFinish {
     @Override
     public void onTaskCompleted(int request) {
         groupWasAdded();
+        ((MainActivity) getActivity()).replaceFragment(3);
     }
 
     @Override
