@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="default_showLeadingZeros">false</bool>
+    <declare-styleable name="HorizontalNumberPicker"><attr format="integer" name="value"/><attr format="integer" name="minValue"/><attr format="integer" name="maxValue"/><attr format="string" name="plusButtonText"/><attr format="string" name="minusButtonText"/><attr format="integer" name="repeatDelay"/><attr format="integer" name="stepSize"/><attr format="boolean" name="showLeadingZeros"/></declare-styleable>
+    <integer name="default_maxValue">999</integer>
+    <integer name="default_minValue">0</integer>
+    <integer name="default_stepSize">1</integer>
+    <integer name="default_updateInterval">100</integer>
+    <integer name="default_value">0</integer>
+    <string name="defaultButtonMinus">-</string>
+    <string name="defaultButtonPlus">+</string>
+</resources>

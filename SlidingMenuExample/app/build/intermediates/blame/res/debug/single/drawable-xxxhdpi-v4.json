@@ -1,0 +1,222 @@
+[
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_search_api_mtrl_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_search_api_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/social.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/social.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/list_item_notselected.xml",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/list_item_notselected.xml"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/baraloggamartin.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/baraloggamartin.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/ic_action_settings.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/ic_action_settings.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_star_half_black_16dp.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_star_half_black_16dp.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/lock.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/lock.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/settings.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/settings.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_star_half_black_36dp.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_star_half_black_36dp.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/aboutus2.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/aboutus2.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/logga1.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/logga1.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/cancel.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/cancel.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_tab_indicator_mtrl_alpha.9.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_tab_indicator_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_btn_check_to_on_mtrl_015.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_btn_check_to_on_mtrl_015.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_btn_switch_to_on_mtrl_00012.9.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_btn_switch_to_on_mtrl_00012.9.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/logga2.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/logga2.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/list_item_selected.xml",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/list_item_selected.xml"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_btn_switch_to_on_mtrl_00001.9.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_btn_switch_to_on_mtrl_00001.9.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_scrubber_control_to_pressed_mtrl_005.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_scrubber_control_to_pressed_mtrl_005.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/security.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/security.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/checked.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/checked.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/search.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/search.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/home2.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/home2.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/social2.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/social2.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_menu_share_mtrl_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_menu_share_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_btn_radio_to_on_mtrl_000.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_btn_radio_to_on_mtrl_000.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/list_item_style.xml",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/list_item_style.xml"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/bakgrund.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/bakgrund.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_voice_search_api_mtrl_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_voice_search_api_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_clear_mtrl_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_clear_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/arrow2.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/arrow2.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/cornersbutton.xml",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/cornersbutton.xml"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/aboutus.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/aboutus.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/plus.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/plus.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_ab_back_mtrl_am_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_ab_back_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_switch_track_mtrl_alpha.9.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_switch_track_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_btn_radio_to_on_mtrl_015.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_btn_radio_to_on_mtrl_015.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/arrow.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/arrow.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/home.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/home.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_star_black_16dp.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_star_black_16dp.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_scrubber_control_to_pressed_mtrl_000.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_scrubber_control_to_pressed_mtrl_000.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/calendar.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/calendar.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/home3.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/home3.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_menu_moreoverflow_mtrl_alpha.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_menu_moreoverflow_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/settings2.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/settings2.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_btn_check_to_on_mtrl_000.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_btn_check_to_on_mtrl_000.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/ic_action_about.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/ic_action_about.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/logga3.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/logga3.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_spinner_mtrl_am_alpha.9.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/abc_ic_star_black_36dp.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-xxxhdpi-v4/abc_ic_star_black_36dp.png"
+    },
+    {
+        "merged": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4/finaltextlogga.png",
+        "source": "/Users/Martin/git/lifebyme/SlidingMenuExample/app/src/main/res/drawable-xxxhdpi/finaltextlogga.png"
+    }
+]

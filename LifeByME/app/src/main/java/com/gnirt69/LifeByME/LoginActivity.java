@@ -139,7 +139,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 
-    private void checkAllreadyUser() {
+    private void checkAlreadyUser() {
         prefSettings = getSharedPreferences(LOGIN_CREDENTIALS,MODE_PRIVATE);
         username = prefSettings.getString("user","@error_code");
         password = prefSettings.getString("pwd","@error_code");
@@ -204,7 +204,15 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             mUsernameView.setError(getString(R.string.error_field_required));
             focusView = mUsernameView;
             cancel = true;
-        } else if (!isEmailValid(username)) {
+
+        }
+        else if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        else if (!isEmailValid(username)) {
             mUsernameView.setError(getString(R.string.error_invalid_email));
             focusView = mUsernameView;
             cancel = true;

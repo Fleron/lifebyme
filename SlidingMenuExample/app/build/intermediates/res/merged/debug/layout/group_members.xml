@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/bakgrund"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView4" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <FrameLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title"
+                    android:textSize="30sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="20dp"
+                    android:textColor="#ffffff"
+                    android:id="@+id/groupName" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Members"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/textView18"
+                    android:layout_marginBottom="10dp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/members_layout">
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Add member"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/textView20"
+                    android:layout_marginBottom="10dp" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="156dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="50dp">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:id="@+id/search_user"
+                    android:hint="Enter username"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:backgroundTint="@android:color/white"
+                    android:layout_gravity="center_horizontal|right"
+                    android:maxLength="15"
+                    android:layout_alignBottom="@+id/add_member"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add member"
+                    android:id="@+id/add_member"
+                    android:textSize="15sp"
+                    android:textColor="#167165"
+                    android:background="@drawable/mybutton"
+                    android:onClick="onButtonClick"
+                    android:layout_weight="0"
+                    android:layout_gravity="right"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/search_user"
+                    android:layout_toEndOf="@+id/search_user"
+                    android:layout_marginLeft="20dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Leave this group"
+                    android:id="@+id/leave_group"
+                    android:padding="15dp"
+                    android:textSize="15dp"
+                    android:textColor="#167165"
+                    android:background="@drawable/mybutton"
+                    android:onClick="onButtonClick"
+                    android:layout_weight="0"
+                    android:layout_gravity="right"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

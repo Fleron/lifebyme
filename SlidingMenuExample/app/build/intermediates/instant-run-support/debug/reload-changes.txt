@@ -1,0 +1,5 @@
+CHANGED,/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class
+CHANGED,/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/gnirt69/slidingmenuexample/fragment/Fragment1$override.class
+CHANGED,/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/gnirt69/slidingmenuexample/fragment/Fragment1$3$1$override.class
+CHANGED,/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/gnirt69/slidingmenuexample/talkToDBTask$override.class
+CHANGED,/Users/Martin/git/lifebyme/SlidingMenuExample/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/gnirt69/slidingmenuexample/CreateUser$override.class
