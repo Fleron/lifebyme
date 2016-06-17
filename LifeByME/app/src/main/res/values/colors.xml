@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3b8768</color>
+    <color name="colorPrimary">#3fb65c</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#3b8768</color>
+    <color name="colorAccent">#3fb65c</color>
     <color name="colorAccentCheckBox">#f8f8f8</color>
     <color name="colorUncheckedBox">#014f01</color>
     <color name="apptheme_color">#476903</color>

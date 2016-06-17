@@ -695,7 +695,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         Log.i("lifebyme","Failurehandler in talk to DBTask");
     }
     private String setupURLAddVariable(String program, String username, String password, String valueName, String varType) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String url = "";
 
         try {
@@ -713,7 +713,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
     }
     private String setupURLValueSend(String username, String password, String[] values, String[] keys) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String url = "";
         String program = "addval.php?";
 
@@ -739,7 +739,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     private String setupURLGroupValue(String VID, String program){
 
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
 
         String data = null;
         try {
@@ -754,7 +754,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
     private String setupURLBasic(String username, String password, String program) {
 
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
 
         String data = null;
         try {
@@ -773,7 +773,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
 
     }
     private String setupURLNewUser(String username, String password, String email) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "NewUser.php?";
         String data = null;
 
@@ -790,7 +790,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLNewGroup(String groupName, String username) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "NewGroup.php?";
         String data = null;
 
@@ -805,7 +805,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLAddUserToGroup(String groupName, String username) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "NewGroup.php?";
         String data = null;
 
@@ -820,7 +820,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLGetGroupsAndRequests(String username) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "grouplist.php?";
         String data = null;
 
@@ -834,7 +834,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLGetGroupMembers(String GID) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "showgroupmembers.php?";
         String data = null;
 
@@ -848,7 +848,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLsendRequest(String fromUser, String toUser,String GID) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "usersearch.php?";
         String data = null;
 
@@ -864,7 +864,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLeditGroupVariables(String VID, String GID,String add,String program) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String data = null;
 
         try {
@@ -879,7 +879,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLAnswerRequest(String user, String GID, String requestAnswer) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "requestanswer.php?";
         String data = null;
 
@@ -895,7 +895,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLLeaveGroup(String user, String GID) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "removeuser.php?";
         String data = null;
 
@@ -910,7 +910,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLSendEmail(String email) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "sendnewpassword.php?";
         String data = null;
 
@@ -924,7 +924,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLsharedNotSharedVar(String username, String GID) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "mygroupvariables.php?";
         String data = null;
 
@@ -939,7 +939,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLGroupVariables(String GID) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "groupvariablelist.php?";
         String data = null;
 
@@ -952,7 +952,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
         return data;
     }
     private String setupURLChangePassword(String user, String c_pwd, String n_pwd ) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "changepassword.php?";
         String data = null;
 
@@ -970,7 +970,7 @@ public class talkToDBTask extends AsyncTask<String, Void, String> {
     }
 
     private String setupURLDeleteVar(String varID) {
-        String ipadress = "http://www.lifebyme.stsvt16.student.it.uu.se/php/";
+        String ipadress = "http://www.lifebymeapp.com/php_scripts/";
         String program = "removevariable.php?";
         String data = null;
 
